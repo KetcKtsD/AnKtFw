@@ -1,7 +1,11 @@
 package tech.ketc.anktfw.androidarch.lifecycle
 
 import android.arch.lifecycle.*
+import java.lang.ref.WeakReference
 
+/**
+ * A interface that run arbitrary functions when [LifecycleOwner] is Active
+ */
 interface IOnActiveRunner {
     /**
      * Set at the beginning of the life cycle
@@ -17,12 +21,19 @@ interface IOnActiveRunner {
     fun runOnActive(handle: () -> Unit)
 }
 
+/**
+ *
+ */
 class OnActiveRunner : IOnActiveRunner {
-    private val mObserver = createOnActiveLifeCycleObserver()
+
+    private var mOwnerRef: WeakReference<LifecycleOwner>? = null
+    private val mOwner by lazy { requireNotNull(mOwnerRef?.get()) }
+    private val mObserver by lazy { createOnActiveLifeCycleObserver(mOwner) }
     private var mIsOwnerInitialized = false
 
     override fun setOwner(owner: LifecycleOwner) {
         if (mIsOwnerInitialized) throw IllegalStateException("owner already set")
+        mOwnerRef = WeakReference(owner)
         owner.lifecycle.addObserver(mObserver)
         mIsOwnerInitialized = true
     }
@@ -32,8 +43,8 @@ class OnActiveRunner : IOnActiveRunner {
         mObserver.run(handle)
     }
 
-    private fun createOnActiveLifeCycleObserver() = object : LifecycleObserver {
-
+    private fun createOnActiveLifeCycleObserver(owner: LifecycleOwner) = object : LifecycleObserver {
+        private val mOwnerRef = WeakReference(owner)
         private var isSafe = false
         private val tasks = ArrayList<() -> Unit>()
 
@@ -60,6 +71,8 @@ class OnActiveRunner : IOnActiveRunner {
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
             isSafe = false
+            val owner1 = mOwnerRef.get() ?: return
+            owner1.lifecycle.removeObserver(this)
         }
     }
 }

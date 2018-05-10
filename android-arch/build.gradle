@@ -1,11 +1,10 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 23
@@ -48,6 +47,8 @@ dependencies {
 
     //test
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "org.junit.platform:junit-platform-runner:1.0.0"
+    testImplementation 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
 }
 
 kotlin {

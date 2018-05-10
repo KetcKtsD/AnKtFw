@@ -1,19 +1,19 @@
 package tech.ketc.anktfw.androidarch.croutine
 
 /**
- * response such as async processing
+ * Response such as async processing
  * @param R something process result type
  */
 sealed class Response<R>
 
 /**
- * class representing success of something
+ * Class representing success of something
  * @property result something process result object
  */
 data class Success<R>(val result: R) : Response<R>()
 
 /**
- *  class representing success of something
+ *  Class representing success of something
  *  @property error exception that occurred during some process
  */
 data class Failure<R>(val error: Throwable) : Response<R>()
@@ -21,23 +21,17 @@ data class Failure<R>(val error: Throwable) : Response<R>()
 //extensions
 
 /**
- * @return  cast to [Success] if successful,  null otherwise
+ * @return  Cast to [Success] if successful,  null otherwise
  */
-fun <R> Response<R>.success(): Success<R>? = when {
-    this is Success -> this
-    else -> null
-}
+fun <R> Response<R>.success(): Success<R>? = this as? Success
 
 /**
- * @return  cast to [Failure] if failed,  null otherwise
+ * @return  Cast to [Failure] if failed,  null otherwise
  */
-fun <R> Response<R>.failure(): Failure<R>? = when {
-    this is Failure -> this
-    else -> null
-}
+fun <R> Response<R>.failure(): Failure<R>? = this as? Failure
 
 /**
- * if it is [Success], run do [handle]
+ * If it is [Success], run do [handle]
  *
  * @param handle if it succeeded
  */
@@ -47,7 +41,7 @@ inline fun <R> Response<R>.successIf(handle: (R) -> Unit) {
 }
 
 /**
- * if it is [Failure], run do [handle]
+ * If it is [Failure], run do [handle]
  *
  * @param handle if it failed
  */
@@ -58,7 +52,7 @@ inline fun <R> Response<R>.failureIf(handle: (Throwable) -> Unit) {
 
 
 /**
- * if it is [Success], return the result, otherwise return the [default] result.
+ * If it is [Success], return the result, otherwise return the [default] result.
  *
  * @param default generate default value
  */
@@ -66,7 +60,7 @@ fun <R> Response<R>.getOrElse(default: () -> R): R = success()?.result ?: defaul
 
 
 /**
- * transform the result to an arbitrary form.
+ * Transform the result to an arbitrary form.
  *
  * @param transform transformation processing
  */

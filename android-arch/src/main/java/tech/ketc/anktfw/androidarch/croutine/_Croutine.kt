@@ -40,11 +40,12 @@ fun <R> asyncResponse(context: CoroutineContext,
 
 
 //bindLauncher
+
 private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
-    val mRef = WeakReference<Job>(job)
+    val mJobRef = WeakReference<Job>(job)
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-        val j = mRef.get() ?: return
+        val j = mJobRef.get() ?: return
         val completed = j.isCompleted
         if (!completed) {
             j.cancel()
