@@ -6,6 +6,7 @@ import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
 import java.lang.ref.WeakReference
 import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.experimental.coroutineContext
 import kotlin.reflect.KClass
 
 typealias DeferredResponse<R> = Deferred<Response<R>>
@@ -53,7 +54,7 @@ private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
 }
 
 /**
- * start [Job] bound to [LifecycleOwner]
+ * Start [Job] bound to [LifecycleOwner]
  * @param owner target of bind
  * @param context context of the coroutine. The default value is [DefaultDispatcher].
  * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
@@ -68,3 +69,9 @@ fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI, start: Cor
     lifecycle.addObserver(observer)
     invokeOnCompletion { lifecycle.removeObserver(observer) }
 }
+
+/**
+ * Get [CommonPool] with [coroutineContext]
+ */
+val CoroutineScope.defaultContext: CoroutineContext
+    get() = coroutineContext + CommonPool

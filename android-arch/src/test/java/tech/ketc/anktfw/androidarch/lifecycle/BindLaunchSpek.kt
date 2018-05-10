@@ -8,6 +8,7 @@ import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
+import tech.ketc.anktfw.androidarch.croutine.defaultContext
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -24,7 +25,7 @@ class BindLaunchSpek : Spek({
 
             var executed = false
             owner.bindLaunch(CommonPool) {
-                asyncResponse(CommonPool + coroutineContext) {
+                asyncResponse(defaultContext) {
                     100
                 }.await()
                 executed = true
@@ -34,7 +35,7 @@ class BindLaunchSpek : Spek({
 
             owner.bindLaunch(CommonPool) {
                 println("execute 2")
-                asyncResponse(CommonPool + coroutineContext) {
+                asyncResponse(defaultContext) {
                     println("async start")
                     registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                     println("owner destroyed")

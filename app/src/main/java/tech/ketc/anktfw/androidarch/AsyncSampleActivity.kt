@@ -9,6 +9,7 @@ import tech.ketc.anktfw.R
 import kotlinx.android.synthetic.main.activity_async_sample.*
 import kotlinx.coroutines.experimental.CommonPool
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
+import tech.ketc.anktfw.androidarch.croutine.defaultContext
 import tech.ketc.anktfw.androidarch.lifecycle.IOnActiveRunner
 import tech.ketc.anktfw.androidarch.lifecycle.OnActiveRunner
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
@@ -29,7 +30,7 @@ class AsyncSampleActivity : AppCompatActivity(), IOnActiveRunner by OnActiveRunn
         //cancel job when onDestroy()
         bindLaunch {
             //after 5sec return Unit
-            asyncResponse(coroutineContext + CommonPool) { Thread.sleep(5000L) }.await()
+            asyncResponse(defaultContext) { Thread.sleep(5000L) }.await()
             //run when activity is active
             runOnActive { Snackbar.make(v, "snackbar", Snackbar.LENGTH_LONG).show() }
         }
