@@ -1,7 +1,6 @@
 package tech.ketc.anktfw.androidarch.croutine
 
 import android.arch.lifecycle.*
-import android.util.Log
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
 import java.lang.ref.WeakReference
