@@ -4,12 +4,12 @@ buildscript {
     ext.kotlin_version = '1.2.41'
     ext.kotlin_croutine_ver = '0.22.5'
     ext.android_support_ver = '27.1.1'
-    ext.arch_ver = "1.1.1"
-    ext.spek_ver = "1.1.5"
-    ext.an_test_runner_ver = "1.0.2"
-    ext.espresso_ver = "3.0.2"
-    ext.junit_ver = "4.12"
-    ext.android_junit5_ver = "1.0.32"
+    ext.arch_ver = '1.1.1'
+    ext.spek_ver = '1.1.5'
+    ext.an_test_runner_ver = '1.0.2'
+    ext.espresso_ver = '3.0.2'
+    ext.junit_ver = '4.12'
+    ext.junit_platform_ver = '1.0.0'
 
     repositories {
         google()
@@ -18,11 +18,11 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:$android_junit5_ver"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.0.32"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junit_platform_ver"
     }
 }
+
 
 allprojects {
     repositories {
@@ -30,7 +30,6 @@ allprojects {
         jcenter()
     }
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

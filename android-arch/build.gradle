@@ -1,7 +1,8 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-kapt"
 apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: "kotlin-kapt"
+apply plugin: "jacoco"
 
 android {
     compileSdkVersion 27
@@ -13,8 +14,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
+
 
     buildTypes {
         release {
@@ -22,8 +24,25 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    testOptions.junitPlatform {
+        filters {
+            includeClassNamePatterns '.*Spek'
+            engines.include 'spek'
+        }
+
+        jacocoOptions {
+            html {
+                enabled true
+                destination project.file("${buildDir}/jacoco-report/result/")
+            }
+        }
+    }
 }
 
+jacoco {
+    reportsDir = file("$buildDir/jacoco-report/")
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -47,12 +66,46 @@ dependencies {
 
     //test
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testImplementation "org.junit.platform:junit-platform-runner:1.0.0"
-    testImplementation 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
+    testImplementation "org.junit.platform:junit-platform-engine:$junit_platform_ver"
 }
 
 kotlin {
     experimental {
         coroutines "enable"
+    }
+}
+
+// junit report xml to html
+
+configurations {
+    junitXmlToHtml
+}
+
+dependencies {
+    junitXmlToHtml 'org.apache.ant:ant-junit:1.10.3'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    def junitPlatformTest = ":android-arch:test"
+    println("whenReady $junitPlatformTest")
+    if (!taskGraph.hasTask(junitPlatformTest)) return
+    println("hasTask")
+    taskGraph.allTasks.find { it.name == "test" }.doLast {
+        def reportsDirPath = "$buildDir/test-reports"
+        (new File(reportsDirPath)).mkdirs()
+
+        ant.taskdef(name: 'junitReport',
+                classname: 'org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator',
+                classpath: configurations.junitXmlToHtml.asPath)
+
+        ["debug", "release"].forEach { dirName ->
+            def xmlReportDir = "$buildDir/test-results/$dirName/junit-platform"
+            ant.junitReport(todir: xmlReportDir, tofile: "aggregated-test-results.xml") {
+                fileset(dir: xmlReportDir)
+                def dir = new File("$reportsDirPath/$dirName/")
+                dir.mkdirs()
+                report(format: 'noframes', todir: dir)
+            }
+        }
     }
 }
