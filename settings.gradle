@@ -1,1 +1,1 @@
-include ':app', ':core', ':di', ':android-arch'
+include ':app', ':core', ':di2', ':android-arch', ':di'
