@@ -52,7 +52,7 @@ inline fun <R> Response<R>.failureIf(handle: (Throwable) -> Unit) {
 
 
 /**
- * If it is [Success], return the result, otherwise return the [default] result.
+ * If it is [Success] and nonnull, return the [Success.result], otherwise return the [default] result.
  *
  * @param default generate default value
  */
