@@ -2,18 +2,18 @@ package tech.ketc.anktfw.di.module.container
 
 import kotlin.reflect.KProperty
 
-interface Container<T> {
+interface Container<T : Any> {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T
 }
 
-class EachContainer<T>(private val initializer: () -> T) : Container<T> {
+internal class LazyContainer<T : Any>(initializer: () -> T) : Container<T> {
+    private val value by lazy(initializer)
 
-    override operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return initializer()
-    }
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
 }
 
-class SingletonContainer<T>(private val initializer: () -> T) : Container<T> {
-    private val value by lazy(initializer)
+internal class SimpleContainer<T : Any>(initializer: () -> T) : Container<T> {
+    private val value = initializer()
+
     override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
 }
