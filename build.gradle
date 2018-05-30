@@ -4,6 +4,7 @@ buildscript {
     ext.kotlin_version = '1.2.41'
     ext.kotlin_croutine_ver = '0.22.5'
     ext.android_support_ver = '27.1.1'
+    ext.build_tool_ver = '27.0.3'
     ext.arch_ver = '1.1.1'
     ext.spek_ver = '1.1.5'
     ext.an_test_runner_ver = '1.0.2'
