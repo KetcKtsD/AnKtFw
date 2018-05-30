@@ -2,13 +2,14 @@ package tech.ketc.anktfw.androidarch
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import tech.ketc.anktfw.R
-
-import kotlinx.android.synthetic.main.activity_async_sample.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.CoroutineDispatcher
+import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.asCoroutineDispatcher
+import kotlinx.coroutines.experimental.delay
+import org.jetbrains.anko.setContentView
 import tech.ketc.anktfw.androidarch.croutine.Failure
 import tech.ketc.anktfw.androidarch.croutine.Success
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
@@ -19,7 +20,9 @@ import java.util.*
 import java.util.concurrent.Executors
 import kotlin.coroutines.experimental.CoroutineContext
 
-class AsyncSampleActivity : AppCompatActivity(), IOnActiveRunner by OnActiveRunner() {
+class AsyncSampleActivity : AppCompatActivity(),
+        IOnActiveRunner by OnActiveRunner(),
+        IAsyncSampleUI by AsyncSampleUI() {
 
     //For example, define such a frequently used asynchronous CoroutineContext in an external file.
     //To be an external file
@@ -32,12 +35,12 @@ class AsyncSampleActivity : AppCompatActivity(), IOnActiveRunner by OnActiveRunn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(this)
         //setLifecycleOwner
         setOwner(this)
-        setContentView(R.layout.activity_async_sample)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener(::showSnackbar)
+        button.setOnClickListener(::showSnackbar)
     }
 
     private fun showSnackbar(v: View) {
