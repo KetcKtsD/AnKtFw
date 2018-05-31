@@ -32,6 +32,7 @@ ext.anko_version = '0.10.5'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':android-arch')
+    implementation project(':di')
     //android
 
     implementation "com.android.support:appcompat-v7:$android_support_ver"
