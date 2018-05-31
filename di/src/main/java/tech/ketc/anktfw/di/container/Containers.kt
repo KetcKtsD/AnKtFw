@@ -1,4 +1,4 @@
-package tech.ketc.anktfw.di.module.container
+package tech.ketc.anktfw.di.container
 
 import kotlin.reflect.KProperty
 

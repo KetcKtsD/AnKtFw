@@ -1,18 +1,26 @@
 package tech.ketc.anktfw.di.module
 
-import tech.ketc.anktfw.di.module.container.Container
+import tech.ketc.anktfw.di.container.Container
 import kotlin.reflect.KClass
-import kotlin.reflect.KProperty
 
 
-abstract class Module(dsl: ModuleInitializer.() -> Unit) {
+abstract class Module(dsl: DependencyProvider.() -> Unit) {
     private val dependencyContainer = DependencyContainer().apply(dsl)
 
+    /**
+     * Search and retrieve dependency.
+     * @param T is the dependency to searched
+     * @param clazz is the dependency to searched
+     *
+     * @return Property object with dependency
+     * @throws IllegalArgumentException thrown when dependency can not be resolved
+     */
     fun <T : Any> resolve(clazz: KClass<T>): Container<T> = dependencyContainer.get(clazz)
-
-    inline operator fun <reified T : Any> getValue(thisRef: Any?, property: KProperty<*>): T {
-        return resolve(T::class).getValue(thisRef, property)
-    }
 }
 
+/**
+ * Search and retrieve dependency.
+ * @param C [Module] containing the dependency you want to resolve
+ * @param T is the dependency to searched
+ */
 inline fun <C : Module, reified T : Any> C.resolve() = this.resolve(T::class)
