@@ -26,14 +26,50 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
+    //spek
     testImplementation "org.jetbrains.spek:spek-api:$spek_ver"
     testImplementation "org.jetbrains.spek:spek-junit-platform-engine:$spek_ver"
-    
-    testImplementation "junit:junit:$junit_ver"
+
+    //test
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
+//test report xml to html
+
+configurations {
+    junitXmlToHtml
+}
+
+dependencies {
+    junitXmlToHtml 'org.apache.ant:ant-junit:1.10.3'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    def junitPlatformTest = ":di:test"
+    println("whenReady $junitPlatformTest")
+    if (!taskGraph.hasTask(junitPlatformTest)) return
+    println("hasTask")
+    taskGraph.allTasks.find { it.name == "test" }.doLast {
+        def reportsDirPath = "$buildDir/test-reports"
+        (new File(reportsDirPath)).mkdirs()
+
+        ant.taskdef(name: 'junitReport',
+                classname: 'org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator',
+                classpath: configurations.junitXmlToHtml.asPath)
+
+        def xmlReportDir = "$buildDir/test-results/junit-platform"
+        ant.junitReport(todir: xmlReportDir, tofile: "aggregated-test-results.xml") {
+            fileset(dir: xmlReportDir)
+            def dir = new File("$reportsDirPath/")
+            dir.mkdirs()
+            report(format: 'noframes', todir: dir)
+        }
+    }
+}
