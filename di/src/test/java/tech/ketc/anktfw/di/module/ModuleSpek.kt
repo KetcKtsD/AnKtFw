@@ -160,7 +160,7 @@ private class DependencyBImpl(init: () -> Unit = {}) : DependencyB {
     }
 }
 
-private class InjectionTarget(override val module: Module) : InjectSupport {
+private class InjectionTarget(override val module: Module) : InjectionSupport {
     val dependencyA1: DependencyA by resolve()
     val dependencyA2: DependencyA by resolve()
     val dependencyB1: DependencyB by resolve()
