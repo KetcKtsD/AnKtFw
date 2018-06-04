@@ -1,7 +1,7 @@
 package tech.ketc.anktfw.di.module
 
-interface InjectSupport {
+interface InjectionSupport {
     val module: Module
 }
 
-inline fun <reified T : Any> InjectSupport.resolve() = module.resolve(T::class)
+inline fun <reified T : Any> InjectionSupport.resolve() = module.resolve(T::class)

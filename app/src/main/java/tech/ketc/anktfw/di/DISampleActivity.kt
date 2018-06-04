@@ -7,11 +7,11 @@ import android.widget.ImageView
 import tech.ketc.anktfw.androidarch.croutine.failureIf
 import tech.ketc.anktfw.androidarch.croutine.successIf
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
-import tech.ketc.anktfw.di.module.InjectSupport
+import tech.ketc.anktfw.di.module.InjectionSupport
 import tech.ketc.anktfw.di.module.Module
 import tech.ketc.anktfw.di.module.resolve
 
-class DISampleActivity : AppCompatActivity(), InjectSupport, IDISampleUI by DISampleUI() {
+class DISampleActivity : AppCompatActivity(), InjectionSupport, IDISampleUI by DISampleUI() {
     override val module: Module
         get() = SampleModule
 
