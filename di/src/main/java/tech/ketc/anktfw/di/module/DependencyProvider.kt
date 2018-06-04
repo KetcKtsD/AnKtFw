@@ -59,11 +59,12 @@ internal class DependencyContainer : DependencyProvider {
         private const val INITIAL_CAPACITY = 16
         private const val LOAD_FACTOR = 0.75f
         private const val ACCESS_ORDER = true
+        private fun <K, V> lruMap() = LinkedHashMap<K, V>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
     }
 
-    private val singletonMap = LinkedHashMap<KClass<*>, Container<*>>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
+    private val singletonMap: LinkedHashMap<KClass<*>, Container<*>> = lruMap()
 
-    private val eachMap = LinkedHashMap<KClass<*>, () -> Container<*>>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
+    private val eachMap: LinkedHashMap<KClass<*>, () -> Container<*>> = lruMap()
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> get(clazz: KClass<T>): Container<T> {
