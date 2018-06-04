@@ -8,7 +8,6 @@ import android.widget.RelativeLayout
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
-import tech.ketc.anktfw.R
 import tech.ketc.anktfw.util.UIComponent
 import tech.ketc.anktfw.util.bindView
 

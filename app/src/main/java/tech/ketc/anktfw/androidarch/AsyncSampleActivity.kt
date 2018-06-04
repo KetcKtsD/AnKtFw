@@ -9,7 +9,6 @@ import kotlinx.coroutines.experimental.CoroutineDispatcher
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.asCoroutineDispatcher
 import kotlinx.coroutines.experimental.delay
-import org.jetbrains.anko.setContentView
 import tech.ketc.anktfw.androidarch.croutine.Failure
 import tech.ketc.anktfw.androidarch.croutine.Success
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
@@ -35,7 +34,7 @@ class AsyncSampleActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(this)
+        setContentView()
         //setLifecycleOwner
         setOwner(this)
         setSupportActionBar(toolbar)

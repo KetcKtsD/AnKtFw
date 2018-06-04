@@ -14,14 +14,14 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.experimental.CoroutineContext
 
 interface ImageService {
-    fun load(url: String, context: CoroutineContext): DeferredResponse<Bitmap?>
+    fun load(context: CoroutineContext, url: String): DeferredResponse<Bitmap?>
 }
 
 private val mImageLoadDispatcher: CoroutineDispatcher
         by lazy { Executors.newFixedThreadPool(2).asCoroutineDispatcher() }
 
-class ImageServiveImpl() : ImageService {
-    override fun load(url: String, context: CoroutineContext) = asyncResponse(mImageLoadDispatcher + context) {
+class ImageServiceImpl : ImageService {
+    override fun load(context: CoroutineContext, url: String) = asyncResponse(context + mImageLoadDispatcher) {
         val connection = (URL(url).openConnection() as HttpURLConnection).apply {
             allowUserInteraction = false
             requestMethod = "GET"
