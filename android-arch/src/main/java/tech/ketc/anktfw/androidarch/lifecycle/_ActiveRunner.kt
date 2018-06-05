@@ -21,9 +21,6 @@ interface IOnActiveRunner {
     fun runOnActive(handle: () -> Unit)
 }
 
-/**
- *
- */
 class OnActiveRunner : IOnActiveRunner {
 
     private var mOwnerRef: WeakReference<LifecycleOwner>? = null
