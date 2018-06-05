@@ -1,5 +1,6 @@
 package tech.ketc.anktfw.di
 
-import tech.ketc.anktfw.MyApplication
+import android.app.Activity
+import tech.ketc.anktfw.module
 
-inline fun <reified T : Any> resolve() = MyApplication.module.resolve(T::class)
+inline fun <reified T : Any> Activity.resolve() = lazy { application.module.resolve(T::class).value }
