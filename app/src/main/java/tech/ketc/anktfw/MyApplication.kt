@@ -5,13 +5,16 @@ import tech.ketc.anktfw.di.SampleModule
 import tech.ketc.anktfw.di.module.Module
 
 class MyApplication : Application() {
+
     companion object {
-        var module: Module = SampleModule()
+        private lateinit var cModule: Module
+        val module: Module
+            get() = cModule
+
     }
 
     override fun onCreate() {
         super.onCreate()
+        cModule = SampleModule()
     }
 }
-
-val module = MyApplication.module

@@ -7,14 +7,8 @@ import android.widget.ImageView
 import tech.ketc.anktfw.androidarch.croutine.failureIf
 import tech.ketc.anktfw.androidarch.croutine.successIf
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
-import tech.ketc.anktfw.di.module.InjectionSupport
-import tech.ketc.anktfw.di.module.Module
-import tech.ketc.anktfw.di.module.resolve
 
-class DISampleActivity : AppCompatActivity(), InjectionSupport, IDISampleUI by DISampleUI() {
-    override val module: Module
-        get() = SampleModule
-
+class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {
     private val imageService: ImageService by resolve()
 
     override fun onCreate(savedInstanceState: Bundle?) {
