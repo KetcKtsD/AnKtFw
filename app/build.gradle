@@ -27,7 +27,6 @@ android {
     }
 }
 
-ext.anko_version = '0.10.5'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -36,7 +35,6 @@ dependencies {
     //android
 
     implementation "com.android.support:appcompat-v7:$android_support_ver"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation "com.android.support:design:$android_support_ver"
 
     //kotlin

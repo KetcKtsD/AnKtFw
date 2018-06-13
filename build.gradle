@@ -12,6 +12,7 @@ buildscript {
     ext.an_test_runner_ver = '1.0.2'
     ext.espresso_ver = '3.0.2'
     ext.junit_ver = '4.12'
+    ext.anko_version = '0.10.5'
 
     repositories {
         google()
