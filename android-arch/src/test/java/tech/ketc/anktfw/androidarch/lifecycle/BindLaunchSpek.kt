@@ -31,20 +31,22 @@ class BindLaunchSpek : Spek({
                 executed = true
             }.join()
             assertTrue(executed)
-            executed = false
 
-            owner.bindLaunch(CommonPool) {
-                println("execute 2")
-                asyncResponse(defaultContext) {
-                    println("async start")
-                    registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-                    println("owner destroyed")
-                    100
-                }.await()
-                println("destroyed")
-                executed = true
-            }.join()
-            assertFalse(executed)
+            executed = false
+            (0..100).forEach {
+                owner.bindLaunch(CommonPool) {
+                    println("execute 2")
+                    asyncResponse(defaultContext) {
+                        println("async start")
+                        registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+                        println("owner destroyed")
+                        100
+                    }.await()
+                    println("destroyed")
+                    executed = true
+                }.join()
+                assertFalse(executed)
+            }
         }
     }
 })

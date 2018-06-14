@@ -2,6 +2,7 @@ package tech.ketc.anktfw.androidarch.croutine
 
 import android.arch.lifecycle.*
 import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.NonCancellable.invokeOnCompletion
 import kotlinx.coroutines.experimental.android.UI
 import java.lang.ref.WeakReference
 import kotlin.coroutines.experimental.CoroutineContext
@@ -40,18 +41,16 @@ fun <R> asyncResponse(context: CoroutineContext,
 
 
 //bindLauncher
+private data class JobHolder(var job: Job?)
 
-private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
+private fun createLifecycleObserver(holder: JobHolder) = object : LifecycleObserver {
 
-    val mJobRef = WeakReference<Job>(job)
+    val mJobRef = WeakReference(holder)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         val j = mJobRef.get() ?: return
-        val completed = j.isCompleted
-        if (!completed) {
-            j.cancel()
-        }
+        j.job?.cancel()
     }
 }
 
@@ -65,11 +64,18 @@ private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
  */
 fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI, start: CoroutineStart = CoroutineStart.DEFAULT,
                parent: Job? = null,
-               block: suspend CoroutineScope.() -> Unit) = launch(context, start, parent, block).apply {
-    val observer = createLifecycleObserver(this)
+               block: suspend CoroutineScope.() -> Unit): Job {
+    val holder = JobHolder(null)
+    val observer = createLifecycleObserver(holder)
     val lifecycle = owner.lifecycle
     lifecycle.addObserver(observer)
     invokeOnCompletion { lifecycle.removeObserver(observer) }
+    return runBlocking(context) {
+        launch(coroutineContext, start, parent, block).also {
+            holder.job = it
+            it.join()
+        }
+    }
 }
 
 /**

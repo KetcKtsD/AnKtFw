@@ -73,3 +73,5 @@ gradle.taskGraph.whenReady { taskGraph ->
         }
     }
 }
+
+test.dependsOn junitPlatformTest
