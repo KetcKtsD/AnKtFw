@@ -4,6 +4,7 @@ import android.arch.lifecycle.*
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.NonCancellable.invokeOnCompletion
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.intrinsics.startCoroutineCancellable
 import java.lang.ref.WeakReference
 import kotlin.coroutines.experimental.CoroutineContext
 import kotlin.coroutines.experimental.coroutineContext
@@ -41,18 +42,28 @@ fun <R> asyncResponse(context: CoroutineContext,
 
 
 //bindLauncher
-private data class JobHolder(var job: Job?)
+private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
 
-private fun createLifecycleObserver(holder: JobHolder) = object : LifecycleObserver {
-
-    val mJobRef = WeakReference(holder)
+    val mJobRef = WeakReference(job)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         val j = mJobRef.get() ?: return
-        j.job?.cancel()
+        j.cancel()
     }
 }
+
+private fun createLazyCoroutine(context: CoroutineContext,
+                                block: suspend CoroutineScope.() -> Unit
+) = object : AbstractCoroutine<Unit>(context, false) {
+    override fun onStart() {
+        block.startCoroutineCancellable(this, this)
+    }
+}
+
+private fun createCoroutine(context: CoroutineContext) =
+        object : AbstractCoroutine<Unit>(context, true) {}
+
 
 /**
  * Start [Job] bound to [LifecycleOwner]
@@ -62,20 +73,22 @@ private fun createLifecycleObserver(holder: JobHolder) = object : LifecycleObser
  * @param parent explicitly specifies the parent job, overrides job from the [context] (if any).
  * @param block the coroutine code.
  */
-fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI, start: CoroutineStart = CoroutineStart.DEFAULT,
+fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI,
+               start: CoroutineStart = CoroutineStart.DEFAULT,
                parent: Job? = null,
                block: suspend CoroutineScope.() -> Unit): Job {
-    val holder = JobHolder(null)
-    val observer = createLifecycleObserver(holder)
+    val newContext = newCoroutineContext(context, parent)
+
+    val coroutine = if (start.isLazy)
+        createLazyCoroutine(newContext, block) else
+        createCoroutine(newContext)
+
+    val observer = createLifecycleObserver(coroutine)
     val lifecycle = owner.lifecycle
     lifecycle.addObserver(observer)
     invokeOnCompletion { lifecycle.removeObserver(observer) }
-    return runBlocking(context) {
-        launch(coroutineContext, start, parent, block).also {
-            holder.job = it
-            it.join()
-        }
-    }
+    coroutine.start(start, coroutine, block)
+    return coroutine
 }
 
 /**
