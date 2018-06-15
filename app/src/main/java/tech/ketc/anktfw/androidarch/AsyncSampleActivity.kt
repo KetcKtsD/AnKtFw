@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.asCoroutineDispatcher
 import kotlinx.coroutines.experimental.delay
 import tech.ketc.anktfw.androidarch.croutine.Failure
@@ -17,7 +16,7 @@ import tech.ketc.anktfw.androidarch.lifecycle.OnActiveRunner
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.experimental.coroutineContext
 
 class AsyncSampleActivity : AppCompatActivity(),
         IOnActiveRunner by OnActiveRunner(),
@@ -27,8 +26,8 @@ class AsyncSampleActivity : AppCompatActivity(),
     //To be an external file
     private val mTimeCountDispatcher: CoroutineDispatcher
             by lazy { Executors.newFixedThreadPool(2).asCoroutineDispatcher() }
-    private val CoroutineScope.timeCountContext: CoroutineContext
-        get() = mTimeCountDispatcher + coroutineContext
+
+    private suspend inline fun timeCountContext() = mTimeCountDispatcher + coroutineContext
     //like the above
 
 
@@ -47,7 +46,7 @@ class AsyncSampleActivity : AppCompatActivity(),
         //cancel job when onDestroy()
         bindLaunch {
 
-            val response = asyncResponse(timeCountContext) {
+            val response = asyncResponse(timeCountContext()) {
                 delay(5000L)
                 randomThrow()
             }.await()

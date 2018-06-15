@@ -11,14 +11,16 @@ import tech.ketc.anktfw.di.module.Module
 import tech.ketc.anktfw.di.module.resolve
 import java.net.HttpURLConnection.HTTP_OK
 import java.util.concurrent.Executors
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.experimental.coroutineContext
 
 interface ImageService {
-    fun load(context: CoroutineContext, url: String): DeferredResponse<Bitmap?>
+    suspend fun load(url: String): DeferredResponse<Bitmap?>
 }
 
 private val mImageLoadDispatcher: CoroutineDispatcher
         by lazy { Executors.newFixedThreadPool(2).asCoroutineDispatcher() }
+
+private suspend inline fun mImageLoadContext() = coroutineContext + mImageLoadDispatcher
 
 class ImageServiceImpl(override val module: Module = ServiceModule) :
         ImageService,
@@ -26,7 +28,7 @@ class ImageServiceImpl(override val module: Module = ServiceModule) :
 
     private val urlConnectionFactory: HttpURLConnectionFactory by resolve()
 
-    override fun load(context: CoroutineContext, url: String) = asyncResponse(context + mImageLoadDispatcher) {
+    override suspend fun load(url: String) = asyncResponse(mImageLoadContext()) {
         val connection = urlConnectionFactory.create(url)
         return@asyncResponse try {
             connection.connect()

@@ -94,5 +94,4 @@ fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI,
 /**
  * Get [CommonPool] with [coroutineContext]
  */
-val CoroutineScope.defaultContext: CoroutineContext
-    get() = coroutineContext + CommonPool
+suspend inline fun defaultContext() = coroutineContext + CommonPool
