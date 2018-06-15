@@ -58,11 +58,11 @@ dependencies {
 }
 
 gradle.taskGraph.whenReady { taskGraph ->
-    def junitPlatformTest = ":di:test"
+    def junitPlatformTest = ":di:junitPlatformTest"
     println("whenReady $junitPlatformTest")
     if (!taskGraph.hasTask(junitPlatformTest)) return
     println("hasTask")
-    taskGraph.allTasks.find { it.name == "test" }.doLast {
+    taskGraph.allTasks.find { it.name == "junitPlatformTest" }.doLast {
         def reportsDirPath = "$buildDir/test-reports"
         (new File(reportsDirPath)).mkdirs()
 
