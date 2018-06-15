@@ -45,6 +45,7 @@ targetCompatibility = "7"
 
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
+    test.kotlin.srcDirs += 'src/test/kotlin'
 }
 
 //test report xml to html
