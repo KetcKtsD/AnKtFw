@@ -9,6 +9,7 @@ import org.jetbrains.anko.*
 import tech.ketc.anktfw.anko.UI
 import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.util.appbarLayout
+import tech.ketc.anktfw.util.toolbar
 
 
 interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {
@@ -38,7 +39,7 @@ class DISampleUI : IDISampleUI {
             imageView {
                 id = imageId
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
-                backgroundColor = Color.parseColor("#FFFFFF")
+                backgroundColor = Color.parseColor("#00FFFFFF")
             }.lparams(matchParent, matchParent) {
                 centerInParent()
             }

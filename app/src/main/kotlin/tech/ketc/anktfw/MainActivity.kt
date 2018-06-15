@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity(), IMainUI by MainUI() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(this)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(appbarComponent.toolbar)
         startActivity(Intent(this, DISampleActivity::class.java))
     }
 }

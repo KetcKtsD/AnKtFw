@@ -3,7 +3,7 @@ package tech.ketc.anktfw.util
 import android.view.ViewManager
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
-import tech.ketc.anktfw.anko.util.view
+import tech.ketc.anktfw.anko.view
 
 fun ViewManager.toolbar(init: Toolbar.() -> Unit): Toolbar {
     return view { Toolbar(this).apply(init) }
