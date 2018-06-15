@@ -14,7 +14,7 @@ buildscript {
 
     ext.anko_version = '0.10.5'
 
-    ext.arch_ver = '1.1.1'
+    ext.arch_ver = '2.0.0-alpha1'
 
     ext.spek_ver = '1.1.5'
 

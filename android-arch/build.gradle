@@ -43,7 +43,13 @@ android {
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            java.srcDirs += 'src/main/kotlin'
+        }
+
+        test {
+            java.srcDirs += 'src/test/kotlin'
+        }
     }
 }
 
@@ -59,11 +65,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlin_croutine_ver"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_croutine_ver"
     //lifecycle
-    compileOnly "android.arch.lifecycle:common:$arch_ver"
-    compileOnly "android.arch.lifecycle:runtime:$arch_ver"
-    testImplementation "android.arch.lifecycle:common:$arch_ver"
-    testImplementation "android.arch.lifecycle:runtime:$arch_ver"
-    kapt "android.arch.lifecycle:compiler:$arch_ver"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$arch_ver"
+    implementation "androidx.lifecycle:lifecycle-runtime:$arch_ver"
+    kapt "androidx.lifecycle:lifecycle-compiler:$arch_ver"
     //spek
     testImplementation "org.jetbrains.spek:spek-junit-platform-engine:$spek_ver"
     testImplementation "org.jetbrains.spek:spek-api:$spek_ver"

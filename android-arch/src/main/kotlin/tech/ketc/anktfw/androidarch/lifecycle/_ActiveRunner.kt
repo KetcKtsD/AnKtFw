@@ -1,6 +1,6 @@
 package tech.ketc.anktfw.androidarch.lifecycle
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import java.lang.ref.WeakReference
 
 /**

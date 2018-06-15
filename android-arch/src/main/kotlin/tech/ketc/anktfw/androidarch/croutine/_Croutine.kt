@@ -1,6 +1,9 @@
 package tech.ketc.anktfw.androidarch.croutine
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.NonCancellable.invokeOnCompletion
 import kotlinx.coroutines.experimental.android.UI
