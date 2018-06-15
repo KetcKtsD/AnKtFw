@@ -8,8 +8,7 @@ android {
     defaultConfig {
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
-        versionCode 1
-        versionName "1.0"
+        versionName version_code
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -31,11 +30,11 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     //anko
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+    compileOnly "org.jetbrains.anko:anko-commons:$anko_version"
+    compileOnly "org.jetbrains.anko:anko-sdk25:$anko_version"
 
     //test
     testImplementation "junit:junit:$junit_ver"
