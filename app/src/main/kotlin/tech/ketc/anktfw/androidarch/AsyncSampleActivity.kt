@@ -1,8 +1,6 @@
 package tech.ketc.anktfw.androidarch
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.coroutines.experimental.CoroutineDispatcher
@@ -13,10 +11,12 @@ import tech.ketc.anktfw.androidarch.croutine.Success
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
 import tech.ketc.anktfw.androidarch.lifecycle.IOnActiveRunner
 import tech.ketc.anktfw.androidarch.lifecycle.OnActiveRunner
-import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.coroutines.experimental.coroutineContext
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
 
 class AsyncSampleActivity : AppCompatActivity(),
         IOnActiveRunner by OnActiveRunner(),

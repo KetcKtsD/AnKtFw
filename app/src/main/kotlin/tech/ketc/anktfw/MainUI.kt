@@ -1,15 +1,16 @@
 package tech.ketc.anktfw
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.design.appBarLayout
 import tech.ketc.anktfw.util.UIComponent
 import tech.ketc.anktfw.util.bindView
+
+import tech.ketc.anktfw.util.appbarLayout
+import tech.ketc.anktfw.util.toolbar
 
 interface IMainUI : UIComponent<MainActivity, RelativeLayout> {
     val textView: TextView
@@ -31,7 +32,7 @@ class MainUI : IMainUI {
         relativeLayout {
             root = this
 
-            appBarLayout {
+            appbarLayout {
                 toolbar {
                     id = toolbarId
                 }

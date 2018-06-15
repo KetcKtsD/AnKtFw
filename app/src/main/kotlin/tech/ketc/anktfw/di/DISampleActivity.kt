@@ -2,8 +2,8 @@ package tech.ketc.anktfw.di
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import tech.ketc.anktfw.androidarch.croutine.failureIf
 import tech.ketc.anktfw.androidarch.croutine.successIf
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch

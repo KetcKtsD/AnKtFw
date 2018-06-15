@@ -45,10 +45,11 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':android-arch')
     implementation project(':di')
-    //android
+    implementation project(':anko')
 
-    implementation "com.android.support:appcompat-v7:$android_support_ver"
-    implementation "com.android.support:design:$android_support_ver"
+    //android
+    implementation "androidx.appcompat:appcompat:$android_support_ver"
+    implementation "com.google.android.material:material:$android_support_ver"
 
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

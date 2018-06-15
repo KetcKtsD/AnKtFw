@@ -1,8 +1,8 @@
 package tech.ketc.anktfw
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import tech.ketc.anktfw.di.DISampleActivity
 
 class MainActivity : AppCompatActivity(), IMainUI by MainUI() {

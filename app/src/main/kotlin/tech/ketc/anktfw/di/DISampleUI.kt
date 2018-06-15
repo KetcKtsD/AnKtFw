@@ -1,16 +1,15 @@
 package tech.ketc.anktfw.di
 
 import android.graphics.Color
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import org.jetbrains.anko.design.appBarLayout
+import androidx.appcompat.widget.Toolbar
+import org.jetbrains.anko.*
 import tech.ketc.anktfw.util.UIComponent
 import tech.ketc.anktfw.util.bindView
-import android.widget.ImageView.ScaleType
-import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
+import tech.ketc.anktfw.util.appbarLayout
+
 
 interface IDISampleUI : UIComponent<DISampleActivity, RelativeLayout> {
     val image: ImageView
@@ -30,7 +29,7 @@ class DISampleUI : IDISampleUI {
     override fun createView(ui: AnkoContext<DISampleActivity>) = with(ui) {
         relativeLayout {
             root = this
-            appBarLayout {
+            appbarLayout {
                 toolbar {
                     id = toolbarId
                 }
@@ -38,12 +37,11 @@ class DISampleUI : IDISampleUI {
 
             imageView {
                 id = imageId
-                scaleType = ScaleType.CENTER_INSIDE
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
                 backgroundColor = Color.parseColor("#FFFFFF")
             }.lparams(matchParent, matchParent) {
                 centerInParent()
             }
         }
     }
-
 }

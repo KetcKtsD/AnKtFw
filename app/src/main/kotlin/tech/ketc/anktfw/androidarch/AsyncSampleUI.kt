@@ -1,14 +1,14 @@
 package tech.ketc.anktfw.androidarch
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.design.appBarLayout
 import tech.ketc.anktfw.util.UIComponent
+import tech.ketc.anktfw.util.appbarLayout
+import tech.ketc.anktfw.util.toolbar
 import tech.ketc.anktfw.util.bindView
 
 interface IAsyncSampleUI : UIComponent<AsyncSampleActivity, RelativeLayout> {
@@ -30,8 +30,8 @@ class AsyncSampleUI : IAsyncSampleUI {
     override fun createView(ui: AnkoContext<AsyncSampleActivity>) = with(ui) {
         relativeLayout {
             root = this
-            appBarLayout {
-                this.toolbar {
+            appbarLayout {
+                toolbar {
                     id = toolbarId
                 }
             }.lparams(matchParent, wrapContent)
