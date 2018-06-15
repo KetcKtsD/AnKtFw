@@ -41,6 +41,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    sourceSets {
+        main.kotlin.srcDirs += 'src/main/myKotlin'
+    }
 }
 
 jacoco {
@@ -50,10 +54,10 @@ jacoco {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //kotlin
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compileOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compileOnly "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlin_croutine_ver"
-    compileOnly "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_croutine_ver"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlin_croutine_ver"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_croutine_ver"
     //lifecycle
     compileOnly "android.arch.lifecycle:common:$arch_ver"
     compileOnly "android.arch.lifecycle:runtime:$arch_ver"
