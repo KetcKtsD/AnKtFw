@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import org.jetbrains.anko.setContentView
 import tech.ketc.anktfw.androidarch.croutine.failureIf
 import tech.ketc.anktfw.androidarch.croutine.successIf
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
@@ -13,7 +14,7 @@ class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {
     private val imageService: ImageService by resolve()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView()
+        setContentView(this)
         setSupportActionBar(toolbar)
         bindLaunch {
             val url = "any image url"

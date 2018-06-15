@@ -16,6 +16,7 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.experimental.coroutineContext
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import org.jetbrains.anko.setContentView
 import tech.ketc.anktfw.androidarch.lifecycle.bindLaunch
 
 class AsyncSampleActivity : AppCompatActivity(),
@@ -33,7 +34,7 @@ class AsyncSampleActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView()
+        setContentView(this)
         //setLifecycleOwner
         setOwner(this)
         setSupportActionBar(toolbar)

@@ -6,12 +6,12 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import tech.ketc.anktfw.util.UIComponent
+import tech.ketc.anktfw.anko.UI
+import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.util.appbarLayout
 import tech.ketc.anktfw.util.toolbar
-import tech.ketc.anktfw.util.bindView
 
-interface IAsyncSampleUI : UIComponent<AsyncSampleActivity, RelativeLayout> {
+interface IAsyncSampleUI : UI<AsyncSampleActivity, RelativeLayout> {
     val toolbar: Toolbar
     val button: Button
 }

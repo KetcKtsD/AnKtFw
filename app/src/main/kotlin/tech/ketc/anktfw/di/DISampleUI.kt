@@ -6,12 +6,12 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import tech.ketc.anktfw.util.UIComponent
-import tech.ketc.anktfw.util.bindView
+import tech.ketc.anktfw.anko.UI
+import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.util.appbarLayout
 
 
-interface IDISampleUI : UIComponent<DISampleActivity, RelativeLayout> {
+interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {
     val image: ImageView
     val toolbar: Toolbar
 }

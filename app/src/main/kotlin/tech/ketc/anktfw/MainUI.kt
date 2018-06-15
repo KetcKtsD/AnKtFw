@@ -6,13 +6,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import tech.ketc.anktfw.util.UIComponent
-import tech.ketc.anktfw.util.bindView
+import tech.ketc.anktfw.anko.UI
+import tech.ketc.anktfw.anko.bindView
 
 import tech.ketc.anktfw.util.appbarLayout
 import tech.ketc.anktfw.util.toolbar
 
-interface IMainUI : UIComponent<MainActivity, RelativeLayout> {
+interface IMainUI : UI<MainActivity, RelativeLayout> {
     val textView: TextView
     val toolbar: Toolbar
 }
@@ -22,7 +22,7 @@ class MainUI : IMainUI {
         private set
 
     private val textViewId = View.generateViewId()
-    override val textView: TextView  by bindView(textViewId)
+    override val textView: TextView by bindView(textViewId)
 
     private val toolbarId = View.generateViewId()
     override val toolbar: Toolbar by bindView(toolbarId)
