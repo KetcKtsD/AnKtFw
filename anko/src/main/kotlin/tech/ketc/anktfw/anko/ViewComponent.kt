@@ -19,22 +19,27 @@ interface ViewComponent<R : View> : Component<R> {
     fun createView(ctx: Context): R
 }
 
+
+private val DEFAULT_INIT: View.() -> Unit = {}
+
 /**
  * add [ViewComponent] to [ViewManager]
  *
  * @param component [ViewComponent]
  * @return created View
  */
-fun <R : View> ViewManager.component(component: ViewComponent<R>): R = when (this) {
-    is ViewGroup -> component.createView(context).also(::addView)
-    is AnkoContext<*> -> component.createView(ctx).also { addView(it, null) }
+fun <R : View> ViewManager.component(component: ViewComponent<R>,
+                                     init: R.() -> Unit = DEFAULT_INIT): R = when (this) {
+    is ViewGroup -> component.createView(context).apply(init).also(::addView)
+    is AnkoContext<*> -> component.createView(ctx).apply(init).also { addView(it, null) }
     else -> throw AnkoException("$this is the wrong parent")
 }
 
 /**
  * @see [ViewManager.component]
  */
-fun <R : View> ViewManager.addComponent(component: ViewComponent<R>): R = component(component)
+fun <R : View> ViewManager.addComponent(component: ViewComponent<R>,
+                                        init: R.() -> Unit = DEFAULT_INIT): R = component(component, init)
 
 /**
  * for making simple UI component
