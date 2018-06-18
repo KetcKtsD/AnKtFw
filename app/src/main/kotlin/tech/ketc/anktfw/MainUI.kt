@@ -10,31 +10,6 @@ import com.google.android.material.appbar.AppBarLayout
 import org.jetbrains.anko.*
 import tech.ketc.anktfw.anko.*
 
-import tech.ketc.anktfw.util.appbarLayout
-import tech.ketc.anktfw.util.toolbar
-import kotlin.properties.Delegates
-
-interface IAppbarComponent : ViewComponent<AppBarLayout> {
-
-    val toolbar: Toolbar
-}
-
-class AppbarComponent : IAppbarComponent {
-    override var root: AppBarLayout by Delegates.notNull()
-        private set
-
-    private val toolbarId = View.generateViewId()
-    override val toolbar: Toolbar by bindView(toolbarId)
-
-    override fun createView(ctx: Context) = with(ctx) {
-        appbarLayout {
-            root = this
-            toolbar {
-                id = toolbarId
-            }
-        }
-    }
-}
 
 interface IMainUI : UI<MainActivity, RelativeLayout> {
     val textView: TextView
@@ -55,9 +30,8 @@ class MainUI : IMainUI {
         relativeLayout {
             root = this
 
-            component(appbarComponent) {
-                //Appbarをなんか適当に初期化してみたり
-            }.lparams(matchParent, wrapContent)
+            component(appbarComponent)
+                    .lparams(matchParent, wrapContent)
 
             this.textView {
                 id = textViewId
