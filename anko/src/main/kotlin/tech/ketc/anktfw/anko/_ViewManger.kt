@@ -14,4 +14,4 @@ val ViewManager.context: Context
         else -> throw AnkoException("$this is the wrong parent")
     }
 
-fun <T : View> ViewManager.view(view: Context.() -> T): T = component(component { view(context) })
+fun <T : View> ViewManager.view(create: Context.() -> T): T = addComponent(component { create(context) })

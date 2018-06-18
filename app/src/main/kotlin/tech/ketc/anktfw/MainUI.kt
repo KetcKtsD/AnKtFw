@@ -1,8 +1,8 @@
 package tech.ketc.anktfw
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.View
-import android.view.ViewManager
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -26,7 +26,7 @@ class AppbarComponent : IAppbarComponent {
         private set
     private val toolbarId = View.generateViewId()
     override val toolbar: Toolbar by bindView(toolbarId)
-    override fun createView(manager: ViewManager) = manager.appbarLayout {
+    override fun createView(ctx: Context) = ctx.appbarLayout {
         root = this
         toolbar {
             id = toolbarId
@@ -53,7 +53,7 @@ class MainUI : IMainUI {
         relativeLayout {
             root = this
 
-            this@relativeLayout.component(appbarComponent)
+            component(appbarComponent)
                     .lparams(matchParent, wrapContent)
 
             this.textView {
