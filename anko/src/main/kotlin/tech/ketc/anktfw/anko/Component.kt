@@ -10,7 +10,7 @@ fun <R : View, T : View> Component<R>.bindView(id: Int) = lazy {
     root.findViewById<T>(id)
 }
 
-val <R : View> Component<R>.rootId: Int
+val Component<*>.rootId: Int
     get() {
         if (root.id == View.NO_ID) {
             root.id = View.generateViewId()
