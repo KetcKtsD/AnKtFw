@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/main_menu">
+        <item
+            android:id="@+id/di_sample"
+            android:title="@string/title_di_sample" />
+
+        <item
+            android:id="@+id/arch_sample"
+            android:title="@string/title_arch_sample" />
+    </group>
+</menu>

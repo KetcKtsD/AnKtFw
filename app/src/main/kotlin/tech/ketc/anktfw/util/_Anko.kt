@@ -24,3 +24,12 @@ fun ViewManager.appbarLayout(theme: Int = 0, init: AppBarLayout.() -> Unit = DEF
 fun Context.appbarLayout(theme: Int = 0, init: AppBarLayout.() -> Unit = DEFAULT_INIT): AppBarLayout {
     return customView(theme, init)
 }
+
+fun ViewManager.drawerLayout(theme: Int = 0, init: _DrawerLayout.() -> Unit = DEFAULT_INIT): _DrawerLayout {
+    return customView(theme, init)
+}
+
+
+fun Context.drawerLayout(theme: Int = 0, init: _DrawerLayout.() -> Unit = DEFAULT_INIT): _DrawerLayout {
+    return customView(theme, init)
+}
