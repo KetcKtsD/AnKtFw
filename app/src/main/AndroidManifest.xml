@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".androidarch.AsyncSampleActivity" />
         <activity android:name=".di.DISampleActivity" />
+        <activity android:name=".animation.AnimationSampleActivity" />
     </application>
 
 </manifest>
