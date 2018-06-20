@@ -11,6 +11,7 @@ import tech.ketc.anktfw.SimpleAppbarComponent
 import tech.ketc.anktfw.anko.UI
 import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.anko.component
+import kotlin.properties.Delegates
 
 interface IAnimationSampleUI : UI<AnimationSampleActivity, RelativeLayout> {
     val toolbar: Toolbar
@@ -19,8 +20,8 @@ interface IAnimationSampleUI : UI<AnimationSampleActivity, RelativeLayout> {
 }
 
 class AnimationSampleUI : IAnimationSampleUI {
-    override val root: RelativeLayout
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override var root: RelativeLayout by Delegates.notNull()
+        private set
 
     private val appbarComponent: AppbarComponent = SimpleAppbarComponent()
 
@@ -40,6 +41,7 @@ class AnimationSampleUI : IAnimationSampleUI {
 
     override fun createView(ui: AnkoContext<AnimationSampleActivity>) = with(ui) {
         relativeLayout {
+            root = this
             component(appbarComponent).lparams(matchParent, wrapContent) {
                 bottomMargin = dip(96)
             }
