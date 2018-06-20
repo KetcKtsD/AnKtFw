@@ -100,9 +100,9 @@ internal class DependencyContainer : DependencyProvider {
     }
 
     private fun <T : Any> checkUniqueness(clazz: KClass<T>) {
-        val existEach = eachMap.containsKey(clazz)
-        val existSingleton = singletonMap.containsKey(clazz)
-        if (existEach || existSingleton)
+        fun existEach() = eachMap.containsKey(clazz)
+        fun existSingleton() = singletonMap.containsKey(clazz)
+        if (existEach() || existSingleton())
             throw throw IllegalArgumentException("Added dependent classes [${clazz.simpleName}]")
     }
 }
