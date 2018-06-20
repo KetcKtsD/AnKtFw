@@ -9,7 +9,9 @@ import org.jetbrains.anko.AnkoException
 import kotlin.properties.Delegates
 
 /**
- * Interface for defining common components
+ * interface for defining common component
+ *
+ * @param R root view
  */
 interface ViewComponent<R : View> : Component<R> {
     /**
