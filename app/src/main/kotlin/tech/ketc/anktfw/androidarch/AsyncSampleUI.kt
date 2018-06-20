@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.*
-import tech.ketc.anktfw.AppbarComponent
+import tech.ketc.anktfw.SimpleAppbarComponent
 import tech.ketc.anktfw.anko.UI
 import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.anko.component
@@ -20,7 +20,7 @@ class AsyncSampleUI : IAsyncSampleUI {
     override lateinit var root: RelativeLayout
         private set
 
-    private val appbarComponent = AppbarComponent()
+    private val appbarComponent = SimpleAppbarComponent()
     override val toolbar: Toolbar by lazy { appbarComponent.toolbar }
 
     private val buttonId = View.generateViewId()

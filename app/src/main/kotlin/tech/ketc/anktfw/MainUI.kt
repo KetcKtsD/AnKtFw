@@ -18,7 +18,7 @@ import tech.ketc.anktfw.util.drawerLayout
 
 interface IMainUI : UI<MainActivity, DrawerLayout> {
     val textView: TextView
-    val appbarComponent: IAppbarComponent
+    val appbarComponent: AppbarComponent
 }
 
 class MainUI : IMainUI {
@@ -28,7 +28,7 @@ class MainUI : IMainUI {
     private val textViewId = View.generateViewId()
     override val textView: TextView by bindView(textViewId)
 
-    override val appbarComponent: IAppbarComponent = AppbarComponent()
+    override val appbarComponent: AppbarComponent = SimpleAppbarComponent()
 
     @SuppressLint("SetTextI18n")
     private val mainContent = component {
