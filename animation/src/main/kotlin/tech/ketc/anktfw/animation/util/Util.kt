@@ -32,9 +32,9 @@ fun isWearable(context: Context) =
  * @param context context
  * @param point point
  */
-fun dp(context: Context, point: Float): Float {
+fun dp(context: Context, point: Float): Int {
     val density = context.resources.displayMetrics.density
-    return point * density
+    return (point * density).toInt()
 }
 
 /**
