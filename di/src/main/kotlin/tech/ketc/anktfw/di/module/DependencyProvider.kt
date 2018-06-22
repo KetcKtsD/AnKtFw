@@ -3,15 +3,17 @@ package tech.ketc.anktfw.di.module
 import tech.ketc.anktfw.di.container.Container
 import tech.ketc.anktfw.di.container.LazyContainer
 import tech.ketc.anktfw.di.container.SimpleContainer
+import java.util.*
 import kotlin.reflect.KClass
 
 interface DependencyProvider {
 
     /**
-     * Register dependency with the same lifetime as the lifetime of the module.
-     * Also initialized when used for the first injection target.
+     * register dependency with the same lifetime as the lifetime of the [Module].
+     * also initialized when used for the first injection target.
      *
      * @param T Class of dependency
+     *
      * @param initializer Generate dependency
      *
      * @throws IllegalArgumentException thrown when adding an already registered dependency
@@ -19,39 +21,65 @@ interface DependencyProvider {
     infix fun <T : Any> KClass<T>.lazySingleton(initializer: () -> T)
 
     /**
-     * Register dependency with the same lifetime as the lifetime of the module.
-     * Dependency is generated when initializing the [Module].
+     * register dependency with the same lifetime as the lifetime of the module.
+     * dependency is generated when initializing the [Module].
+     *
      * @param T Class of dependency
+     *
      * @param initializer Generate dependency
+     *
+     * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
     infix fun <T : Any> KClass<T>.singleton(initializer: () -> T)
 
     /**
-     * Register dependency with the same lifetime as the lifetime of injection target.
-     * Also initialized when used for the first injection target.
+     * register dependency with the same lifetime as the lifetime of injection target.
+     * also initialized when used for the first injection target.
      *
      * @param T Class of dependency
+     *
      * @param initializer Generate dependency
+     *
+     * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
     infix fun <T : Any> KClass<T>.lazyEach(initializer: () -> T)
 
     /**
-     * Register dependency with the same lifetime as the lifetime of injection target.
-     * Also initialized at injection.
+     * register dependency with the same lifetime as the lifetime of injection target.
+     * also initialized at injection.
      *
      * @param T Class of dependency
+     *
      * @param initializer Generate dependency
+     *
+     * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
     infix fun <T : Any> KClass<T>.each(initializer: () -> T)
 }
 
-private typealias DP = DependencyProvider
+/**
+ * @see [DependencyProvider.lazySingleton]
+ */
+inline fun <reified T : Any> DependencyProvider.lazySingleton(noinline initialize: () -> T) =
+        T::class lazySingleton initialize
 
-inline fun <reified T : Any> DP.lazySingleton(noinline initialize: () -> T) = T::class lazySingleton initialize
-inline fun <reified T : Any> DP.singleton(noinline initialize: () -> T) = T::class singleton initialize
-inline fun <reified T : Any> DP.lazyEach(noinline initialize: () -> T) = T::class lazyEach initialize
-inline fun <reified T : Any> DP.each(noinline initialize: () -> T) = T::class each initialize
+/**
+ * @see [DependencyProvider.singleton]
+ */
+inline fun <reified T : Any> DependencyProvider.singleton(noinline initialize: () -> T) =
+        T::class singleton initialize
 
+/**
+ * @see [DependencyProvider.lazyEach]
+ */
+inline fun <reified T : Any> DependencyProvider.lazyEach(noinline initialize: () -> T) =
+        T::class lazyEach initialize
+
+/**
+ * @see [DependencyProvider.each]
+ */
+inline fun <reified T : Any> DependencyProvider.each(noinline initialize: () -> T) =
+        T::class each initialize
 
 internal class DependencyContainer : DependencyProvider {
 
@@ -59,7 +87,8 @@ internal class DependencyContainer : DependencyProvider {
         private const val INITIAL_CAPACITY = 16
         private const val LOAD_FACTOR = 0.75f
         private const val ACCESS_ORDER = true
-        private fun <K, V> lruMap() = LinkedHashMap<K, V>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
+        private fun <K, V> lruMap() =
+                LinkedHashMap<K, V>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
     }
 
     private val singletonMap: LinkedHashMap<KClass<*>, Container<*>> = lruMap()
@@ -81,12 +110,12 @@ internal class DependencyContainer : DependencyProvider {
         internalSingleton { SimpleContainer(initializer) }
     }
 
-    override fun <T : Any> KClass<T>.each(initializer: () -> T) {
-        internalEach { SimpleContainer(initializer) }
-    }
-
     override fun <T : Any> KClass<T>.lazyEach(initializer: () -> T) {
         internalEach { LazyContainer(initializer) }
+    }
+
+    override fun <T : Any> KClass<T>.each(initializer: () -> T) {
+        internalEach { SimpleContainer(initializer) }
     }
 
     private fun <T : Any> KClass<T>.internalSingleton(container: () -> Container<T>) {
@@ -100,9 +129,9 @@ internal class DependencyContainer : DependencyProvider {
     }
 
     private fun <T : Any> checkUniqueness(clazz: KClass<T>) {
-        fun existEach() = eachMap.containsKey(clazz)
         fun existSingleton() = singletonMap.containsKey(clazz)
-        if (existEach() || existSingleton())
+        fun existEach() = eachMap.containsKey(clazz)
+        if (existSingleton() || existEach())
             throw throw IllegalArgumentException("Added dependent classes [${clazz.simpleName}]")
     }
 }
