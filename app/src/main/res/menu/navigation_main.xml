@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/main_menu">
         <item
-            android:id="@+id/di_sample"
+            android:id="@+id/start_di_sample"
             android:title="@string/title_di_sample" />
 
         <item
-            android:id="@+id/arch_sample"
+            android:id="@+id/start_arch_sample"
             android:title="@string/title_arch_sample" />
 
         <item
-            android:id="@+id/animation_sample"
+            android:id="@+id/start_animation_sample"
             android:title="@string/title_animation_sample" />
     </group>
 </menu>
