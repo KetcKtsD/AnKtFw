@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AnKtFW</string>
-    <string name="title_activity_async_sample">AsyncSampleActivity</string>
+    <string name="title_async_sample">AsyncSample</string>
     <string name="title_di_sample">DISample</string>
     <string name="title_arch_sample">ArchSample</string>
+    <string name="title_animation_sample">AnimationSample</string>
 </resources>

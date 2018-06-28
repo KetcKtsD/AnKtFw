@@ -9,6 +9,7 @@ import com.google.android.material.navigation.NavigationView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.custom.customView
 import tech.ketc.anktfw.androidarch.AsyncSampleActivity
+import tech.ketc.anktfw.animation.AnimationSampleActivity
 import tech.ketc.anktfw.anko.UI
 import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.anko.component
@@ -54,6 +55,7 @@ class MainUI : IMainUI {
                 when (it.itemId) {
                     R.id.di_sample -> startActivity<DISampleActivity>()
                     R.id.arch_sample -> startActivity<AsyncSampleActivity>()
+                    R.id.animation_sample -> startActivity<AnimationSampleActivity>()
                 }
                 false
             }

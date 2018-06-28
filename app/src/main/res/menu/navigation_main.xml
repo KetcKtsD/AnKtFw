@@ -8,5 +8,9 @@
         <item
             android:id="@+id/arch_sample"
             android:title="@string/title_arch_sample" />
+
+        <item
+            android:id="@+id/animation_sample"
+            android:title="@string/title_animation_sample" />
     </group>
 </menu>
