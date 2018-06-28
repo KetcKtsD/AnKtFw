@@ -1,13 +1,13 @@
 package tech.ketc.anktfw
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.customView
 import tech.ketc.anktfw.androidarch.AsyncSampleActivity
 import tech.ketc.anktfw.animation.AnimationSampleActivity
 import tech.ketc.anktfw.anko.UI
@@ -15,6 +15,8 @@ import tech.ketc.anktfw.anko.bindView
 import tech.ketc.anktfw.anko.component
 import tech.ketc.anktfw.di.DISampleActivity
 import tech.ketc.anktfw.util.drawerLayout
+import tech.ketc.anktfw.util.menuId
+import tech.ketc.anktfw.util.navigationView
 
 
 interface IMainUI : UI<MainActivity, DrawerLayout> {
@@ -47,18 +49,10 @@ class MainUI : IMainUI {
         }
     }
 
-
     private val navigationContent = component {
-        customView<NavigationView> {
-            inflateMenu(R.menu.navigation_main)
-            setNavigationItemSelectedListener {
-                when (it.itemId) {
-                    R.id.di_sample -> startActivity<DISampleActivity>()
-                    R.id.arch_sample -> startActivity<AsyncSampleActivity>()
-                    R.id.animation_sample -> startActivity<AnimationSampleActivity>()
-                }
-                false
-            }
+        navigationView {
+            menuId = R.menu.navigation_main
+            setNavigationItemSelectedListener { onNavigationItemSelected(it) }
         }
     }
 
@@ -73,5 +67,14 @@ class MainUI : IMainUI {
                 gravity = Gravity.START
             }
         }
+    }
+
+    private fun Context.onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.di_sample -> startActivity<DISampleActivity>()
+            R.id.arch_sample -> startActivity<AsyncSampleActivity>()
+            R.id.animation_sample -> startActivity<AnimationSampleActivity>()
+        }
+        return false
     }
 }
