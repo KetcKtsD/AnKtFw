@@ -3,8 +3,11 @@ package tech.ketc.anktfw.androidarch.croutine
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 import kotlin.test.*
 
+@RunWith(JUnitPlatform::class)
 class ResponseSpek : Spek({
     describe("testing generate Response") {
         it("expect that Success will return") {

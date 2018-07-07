@@ -6,6 +6,8 @@ import androidx.lifecycle.LifecycleRegistry
 import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
 import tech.ketc.anktfw.androidarch.croutine.defaultContext
 import tech.ketc.anktfw.androidarch.croutine.successIf
@@ -13,6 +15,7 @@ import kotlin.coroutines.experimental.coroutineContext
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+@RunWith(JUnitPlatform::class)
 class BindLaunchSpek : Spek({
     fun owner() = object : LifecycleOwner {
         private val mRegistry = LifecycleRegistry(this)

@@ -5,9 +5,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
+@RunWith(JUnitPlatform::class)
 class ActiveRunnerSpek : Spek({
     val owner = object : LifecycleOwner {
         private val mRegistry = LifecycleRegistry(this)
