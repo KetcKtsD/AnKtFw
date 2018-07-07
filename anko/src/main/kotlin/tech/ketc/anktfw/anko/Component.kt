@@ -2,7 +2,16 @@ package tech.ketc.anktfw.anko
 
 import android.view.View
 
+/**
+ * interface for defining component of ui
+ *
+ * @param R root view
+ */
 interface Component<R : View> {
+
+    /**
+     * root view
+     */
     val root: R
 }
 

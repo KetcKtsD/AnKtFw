@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewManager
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.navigation.NavigationView
 import org.jetbrains.anko.custom.customView
 
 private val DEFAULT_INIT: View.() -> Unit = {}
@@ -31,5 +32,15 @@ fun ViewManager.drawerLayout(theme: Int = 0, init: _DrawerLayout.() -> Unit = DE
 
 
 fun Context.drawerLayout(theme: Int = 0, init: _DrawerLayout.() -> Unit = DEFAULT_INIT): _DrawerLayout {
+    return customView(theme, init)
+}
+
+
+fun ViewManager.navigationView(theme: Int = 0, init: NavigationView.() -> Unit = DEFAULT_INIT): NavigationView {
+    return customView(theme, init)
+}
+
+
+fun Context.navigationView(theme: Int = 0, init: NavigationView.() -> Unit = DEFAULT_INIT): NavigationView {
     return customView(theme, init)
 }

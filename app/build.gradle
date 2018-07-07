@@ -46,6 +46,8 @@ dependencies {
     implementation project(':android-arch')
     implementation project(':di')
     implementation project(':anko')
+    implementation project(':animation')
+
 
     //android
     implementation "androidx.appcompat:appcompat:$android_support_ver"

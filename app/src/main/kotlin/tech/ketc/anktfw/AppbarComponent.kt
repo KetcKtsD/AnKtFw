@@ -10,12 +10,12 @@ import tech.ketc.anktfw.util.appbarLayout
 import tech.ketc.anktfw.util.toolbar
 import kotlin.properties.Delegates
 
-interface IAppbarComponent : ViewComponent<AppBarLayout> {
+interface AppbarComponent : ViewComponent<AppBarLayout> {
 
     val toolbar: Toolbar
 }
 
-class AppbarComponent : IAppbarComponent {
+class SimpleAppbarComponent : AppbarComponent {
     override var root: AppBarLayout by Delegates.notNull()
         private set
 

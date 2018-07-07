@@ -22,8 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".androidarch.AsyncSampleActivity" />
-        <activity android:name=".di.DISampleActivity" />
+        <activity
+            android:name=".androidarch.AsyncSampleActivity"
+            android:label="@string/title_async_sample" />
+        <activity
+            android:name=".di.DISampleActivity"
+            android:label="@string/title_di_sample" />
+        <activity
+            android:name=".animation.AnimationSampleActivity"
+            android:label="@string/title_animation_sample" />
     </application>
 
 </manifest>
