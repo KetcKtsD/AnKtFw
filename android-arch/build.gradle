@@ -62,3 +62,18 @@ kotlin {
         coroutines "enable"
     }
 }
+
+apply plugin: 'maven'
+
+uploadArchives {
+    def repo = new File(rootDir, "repository")
+    repo.mkdir()
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = version_code
+            pom.groupId = 'tech.ketc.anktfw'
+            pom.artifactId = 'android-arch'
+        }
+    }
+}

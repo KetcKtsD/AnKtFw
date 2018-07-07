@@ -51,3 +51,18 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$an_test_runner_ver"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_ver"
 }
+
+apply plugin: 'maven'
+
+uploadArchives {
+    def repo = new File(rootDir, "repository")
+    repo.mkdir()
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = version_code
+            pom.groupId = 'tech.ketc.anktfw'
+            pom.artifactId = 'anko'
+        }
+    }
+}
