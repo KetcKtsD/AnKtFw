@@ -39,3 +39,18 @@ sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
     test.kotlin.srcDirs += 'src/test/kotlin'
 }
+
+apply plugin: 'maven'
+
+uploadArchives {
+    def repo = new File(rootDir, "repository")
+    repo.mkdir()
+    repositories {
+        mavenDeployer {
+            repository url: "https://ket"
+            pom.version = version_code
+            pom.groupId = 'tech.ketc.anktfw'
+            pom.artifactId = 'di'
+        }
+    }
+}
