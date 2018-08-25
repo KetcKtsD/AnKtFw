@@ -49,7 +49,7 @@ uploadArchives {
         mavenDeployer {
             repository url: "https://ket"
             pom.version = version_code
-            pom.groupId = 'tech.ketc.anktfw'
+            pom.groupId = 'io.github.ketcktsd.anktfw'
             pom.artifactId = 'di'
         }
     }
