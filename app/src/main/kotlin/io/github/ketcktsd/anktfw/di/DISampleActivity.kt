@@ -1,33 +1,30 @@
 package io.github.ketcktsd.anktfw.di
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import org.jetbrains.anko.setContentView
 import io.github.ketcktsd.anktfw.androidarch.croutine.failureIf
 import io.github.ketcktsd.anktfw.androidarch.croutine.successIf
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
+import kotlinx.coroutines.delay
 
 
 class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {
+    companion object {
+        private const val UNTIL_DOWNLOAD_START_MILLS = 1000L
+    }
+
     private val imageService: ImageService by resolve()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(this)
         setSupportActionBar(toolbar)
         bindLaunch {
-            val url = "any image url"
+            delay(UNTIL_DOWNLOAD_START_MILLS)
+            val url = "https://pbs.twimg.com/profile_banners/408464571/1398618018/1500x500"
             val response = imageService.load(url).await()
-            fun ImageView.setImage(bitmap: Bitmap?) {
-                setImageBitmap(bitmap)
-                this.animate().apply {
-                    duration = 300
-                    alphaBy(0f)
-                    alpha(1f)
-                }
-            }
-            response.successIf(image::setImage)
+            response.successIf(imageView::setImageBitmap)
             response.failureIf(Throwable::printStackTrace)
         }
     }

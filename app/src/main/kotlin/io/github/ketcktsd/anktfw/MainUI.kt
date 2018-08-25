@@ -18,7 +18,6 @@ import io.github.ketcktsd.anktfw.util.navigationView
 interface IMainUI : UI<MainActivity, DrawerLayout> {
     val textView: TextView
     val appbarComponent: AppbarComponent
-
     fun onNavigationItemSelected(func: (MenuItem) -> Boolean)
 }
 
@@ -29,6 +28,8 @@ class MainUI : IMainUI {
 
     private val mTextViewId = View.generateViewId()
     override val textView: TextView by bindView(mTextViewId)
+
+    private val mNavigationViewId = View.generateViewId()
 
     override val appbarComponent: AppbarComponent = SimpleAppbarComponent()
 
@@ -50,6 +51,7 @@ class MainUI : IMainUI {
 
     private val mNavigationContent = component {
         navigationView {
+            id = mNavigationViewId
             menuId = R.menu.navigation_main
         }
     }
@@ -60,7 +62,7 @@ class MainUI : IMainUI {
 
             component(mMainContent).lparams(matchParent, matchParent)
 
-            component(mNavigationContent).lparams(matchParent, matchParent) {
+            component(mNavigationContent).lparams(dip(280), matchParent) {
                 gravity = Gravity.START
             }
         }

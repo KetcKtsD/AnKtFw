@@ -35,9 +35,7 @@ class ImageServiceImpl(override val module: Module = ServiceModule) :
             connection.responseCode
                     .takeIf { it == HTTP_OK }
                     ?: return@asyncResponse null
-            connection.inputStream.use {
-                BitmapFactory.decodeStream(it)
-            }
+            connection.inputStream.use(BitmapFactory::decodeStream)
         } finally {
             connection.disconnect()
         }

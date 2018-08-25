@@ -46,7 +46,6 @@ class AsyncSampleActivity : AppCompatActivity(),
         Toast.makeText(this, "onClick", Toast.LENGTH_LONG).show()
         //cancel job when onDestroy()
         bindLaunch {
-
             val response = asyncResponse(timeCountContext()) {
                 delay(5000L)
                 randomThrow()

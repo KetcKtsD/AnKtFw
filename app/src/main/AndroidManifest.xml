@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".androidarch.AsyncSampleActivity"
-            android:label="@string/title_async_sample" />
+            android:label="@string/title_arch_sample" />
         <activity
             android:name=".di.DISampleActivity"
             android:label="@string/title_di_sample" />

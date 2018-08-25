@@ -12,7 +12,7 @@ import io.github.ketcktsd.anktfw.anko.bindView
 import io.github.ketcktsd.anktfw.anko.component
 
 interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {
-    val image: ImageView
+    val imageView: ImageView
     val toolbar: Toolbar
 }
 
@@ -25,7 +25,7 @@ class DISampleUI : IDISampleUI {
     override val toolbar: Toolbar by lazy { appbarComponent.toolbar }
 
     private val imageId = View.generateViewId()
-    override val image: ImageView by bindView(imageId)
+    override val imageView: ImageView by bindView(imageId)
 
     override fun createView(ui: AnkoContext<DISampleActivity>) = with(ui) {
         relativeLayout {
