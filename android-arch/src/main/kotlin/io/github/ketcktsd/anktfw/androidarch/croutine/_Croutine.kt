@@ -13,20 +13,19 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 import kotlin.reflect.KClass
 
-typealias DeferredResponse<R> = Deferred<Response<R>>
+typealias DeferredResult<T> = Deferred<SuccessOrFailure<T>>
 
 internal inline fun <R> generateResponse(vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                                         block: () -> R): Response<R> = try {
-    Success(block())
+                                         block: () -> R): SuccessOrFailure<R> = try {
+    SuccessOrFailure.success(block())
 } catch (t: Throwable) {
     if (expected.any { it.isInstance(t) })
-        Failure(t)
+        SuccessOrFailure.failure(t)
     else throw t
 }
 
-
 /**
- * Creates new coroutine and returns its future result as an implementation of [DeferredResponse].
+ * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
  *
  * @param R result object class
  * @param context context of the coroutine. The default value is [DefaultDispatcher].
@@ -34,15 +33,14 @@ internal inline fun <R> generateResponse(vararg expected: KClass<out Throwable> 
  * @param parent explicitly specifies the parent job, overrides job from the [context] (if any).*
  * @param block the coroutine code.
  * @param expected expected exceptions, default value is only [Throwable]
- * @return DeferredResponse
+ * @return DeferredResult
  */
 fun <R> asyncResponse(context: CoroutineContext,
                       start: CoroutineStart = CoroutineStart.DEFAULT,
                       parent: Job? = null,
                       vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                      block: suspend () -> R): DeferredResponse<R> =
+                      block: suspend () -> R): DeferredResult<R> =
         async(context, start, parent) { generateResponse(*expected) { block() } }
-
 
 //bindLauncher
 private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
