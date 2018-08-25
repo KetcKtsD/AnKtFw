@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import io.github.ketcktsd.anktfw.androidarch.croutine.Failure
-import io.github.ketcktsd.anktfw.androidarch.croutine.Success
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
@@ -46,15 +44,12 @@ class AsyncSampleActivity : AppCompatActivity(),
         Toast.makeText(this, "onClick", Toast.LENGTH_LONG).show()
         //cancel job when onDestroy()
         bindLaunch {
-            val response = asyncResponse(timeCountContext()) {
+            val result = asyncResponse(timeCountContext()) {
                 delay(5000L)
                 randomThrow()
             }.await()
 
-            val message = when (response) {
-                is Success -> response.result
-                is Failure -> requireNotNull(response.error.message)
-            }
+            val message = result.fold({ it }, { requireNotNull(it.message) })
             //run when activity is active
             runOnActive { Snackbar.make(v, message, Snackbar.LENGTH_LONG).show() }
         }

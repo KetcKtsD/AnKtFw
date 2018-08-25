@@ -2,7 +2,7 @@ package io.github.ketcktsd.anktfw.di
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import io.github.ketcktsd.anktfw.androidarch.croutine.DeferredResponse
+import io.github.ketcktsd.anktfw.androidarch.croutine.DeferredResult
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
 import io.github.ketcktsd.anktfw.di.module.InjectionSupport
 import io.github.ketcktsd.anktfw.di.module.Module
@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.coroutineContext
 
 interface ImageService {
-    suspend fun load(url: String): DeferredResponse<Bitmap?>
+    suspend fun load(url: String): DeferredResult<Bitmap?>
 }
 
 private val mImageLoadDispatcher: CoroutineDispatcher
