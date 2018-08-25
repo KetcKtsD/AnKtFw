@@ -1,10 +1,7 @@
 package io.github.ketcktsd.anktfw.di.module
 
 import io.github.ketcktsd.anktfw.di.container.Container
-import io.github.ketcktsd.anktfw.di.module.DependencyContainer
-import io.github.ketcktsd.anktfw.di.module.DependencyProvider
 import kotlin.reflect.KClass
-
 
 abstract class Module(dsl: DependencyProvider.() -> Unit) {
     private val dependencyContainer = DependencyContainer().apply(dsl)

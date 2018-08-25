@@ -5,7 +5,6 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
-import io.github.ketcktsd.anktfw.di.module.*
 import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
@@ -114,9 +113,9 @@ class ModuleSpek : Spek({
             var isInitializedB = false
 
             val nonLazyModule = module {
-                singleton<DependencyA> { DependencyAImpl({ isInitializedA = true }) }
+                singleton<DependencyA> { DependencyAImpl { isInitializedA = true } }
                 assertTrue(isInitializedA)
-                each<DependencyB> { DependencyBImpl({ isInitializedB = true }) }
+                each<DependencyB> { DependencyBImpl { isInitializedB = true } }
                 assertFalse(isInitializedB)
             }
 
@@ -130,9 +129,9 @@ class ModuleSpek : Spek({
             var isInitializedB = false
 
             val lazyModule = module {
-                lazySingleton<DependencyA> { DependencyAImpl({ isInitializedA = true }) }
+                lazySingleton<DependencyA> { DependencyAImpl { isInitializedA = true } }
                 assertFalse(isInitializedA)
-                lazyEach<DependencyB> { DependencyBImpl({ isInitializedB = true }) }
+                lazyEach<DependencyB> { DependencyBImpl { isInitializedB = true } }
                 assertFalse(isInitializedB)
             }
 

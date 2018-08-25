@@ -7,7 +7,6 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
