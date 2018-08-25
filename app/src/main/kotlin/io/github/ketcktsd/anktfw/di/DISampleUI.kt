@@ -5,11 +5,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
-import org.jetbrains.anko.*
 import io.github.ketcktsd.anktfw.SimpleAppbarComponent
 import io.github.ketcktsd.anktfw.anko.UI
 import io.github.ketcktsd.anktfw.anko.bindView
 import io.github.ketcktsd.anktfw.anko.component
+import org.jetbrains.anko.*
 
 interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {
     val imageView: ImageView

@@ -1,8 +1,8 @@
 package io.github.ketcktsd.anktfw.di
 
 import android.app.Activity
-import io.github.ketcktsd.anktfw.module
 import io.github.ketcktsd.anktfw.MyApplication
+import io.github.ketcktsd.anktfw.module
 
 /**
  * resolve dependency by [MyApplication.module]

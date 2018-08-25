@@ -3,21 +3,21 @@ package io.github.ketcktsd.anktfw.androidarch
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.delay
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import io.github.ketcktsd.anktfw.androidarch.croutine.Failure
 import io.github.ketcktsd.anktfw.androidarch.croutine.Success
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
+import org.jetbrains.anko.setContentView
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.coroutines.coroutineContext
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import org.jetbrains.anko.setContentView
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 
 class AsyncSampleActivity : AppCompatActivity(),
         IOnActiveRunner by OnActiveRunner(),

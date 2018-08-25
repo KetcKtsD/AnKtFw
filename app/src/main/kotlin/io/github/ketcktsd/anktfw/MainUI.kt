@@ -6,13 +6,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
-import org.jetbrains.anko.*
 import io.github.ketcktsd.anktfw.anko.UI
 import io.github.ketcktsd.anktfw.anko.bindView
 import io.github.ketcktsd.anktfw.anko.component
 import io.github.ketcktsd.anktfw.util.drawerLayout
 import io.github.ketcktsd.anktfw.util.menuId
 import io.github.ketcktsd.anktfw.util.navigationView
+import org.jetbrains.anko.*
 
 
 interface IMainUI : UI<MainActivity, DrawerLayout> {

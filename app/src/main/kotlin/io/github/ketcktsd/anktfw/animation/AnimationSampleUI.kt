@@ -4,13 +4,13 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.customView
 import io.github.ketcktsd.anktfw.AppbarComponent
 import io.github.ketcktsd.anktfw.SimpleAppbarComponent
 import io.github.ketcktsd.anktfw.anko.UI
 import io.github.ketcktsd.anktfw.anko.bindView
 import io.github.ketcktsd.anktfw.anko.component
+import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.customView
 import kotlin.properties.Delegates
 
 interface IAnimationSampleUI : UI<AnimationSampleActivity, RelativeLayout> {

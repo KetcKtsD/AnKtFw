@@ -2,11 +2,11 @@ package io.github.ketcktsd.anktfw.di
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.jetbrains.anko.setContentView
 import io.github.ketcktsd.anktfw.androidarch.croutine.failureIf
 import io.github.ketcktsd.anktfw.androidarch.croutine.successIf
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 import kotlinx.coroutines.delay
+import org.jetbrains.anko.setContentView
 
 
 class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {

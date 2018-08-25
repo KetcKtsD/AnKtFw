@@ -1,11 +1,11 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
 import androidx.lifecycle.LifecycleOwner
+import io.github.ketcktsd.anktfw.androidarch.croutine.bindLaunch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.android.UI
-import io.github.ketcktsd.anktfw.androidarch.croutine.bindLaunch
 import kotlin.coroutines.CoroutineContext
 
 /**

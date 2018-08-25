@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import org.jetbrains.anko.setContentView
-import org.jetbrains.anko.startActivity
 import io.github.ketcktsd.anktfw.androidarch.AsyncSampleActivity
 import io.github.ketcktsd.anktfw.animation.AnimationSampleActivity
 import io.github.ketcktsd.anktfw.di.DISampleActivity
+import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity(),
         IMainUI by MainUI() {
