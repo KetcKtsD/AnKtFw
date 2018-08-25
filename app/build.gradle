@@ -6,7 +6,7 @@ android {
     buildToolsVersion build_tool_ver
 
     defaultConfig {
-        applicationId "tech.ketc.anktfw"
+        applicationId "io.github.ketcktsd.anktfw"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionName version_code
