@@ -1,12 +1,12 @@
 package tech.ketc.anktfw.androidarch.lifecycle
 
 import androidx.lifecycle.LifecycleOwner
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.CoroutineStart
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.android.UI
 import tech.ketc.anktfw.androidarch.croutine.bindLaunch
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @see bindLaunch

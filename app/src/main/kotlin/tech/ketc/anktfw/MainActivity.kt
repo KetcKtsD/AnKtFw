@@ -7,6 +7,7 @@ import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
 import tech.ketc.anktfw.androidarch.AsyncSampleActivity
 import tech.ketc.anktfw.animation.AnimationSampleActivity
+import tech.ketc.anktfw.di.DISampleActivity
 
 class MainActivity : AppCompatActivity(), IMainUI by MainUI() {
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), IMainUI by MainUI() {
         when (item.itemId) {
             R.id.start_animation_sample -> startActivity<AnimationSampleActivity>()
             R.id.start_arch_sample -> startActivity<AsyncSampleActivity>()
-            R.id.start_di_sample -> startActivity<AsyncSampleActivity>()
+            R.id.start_di_sample -> startActivity<DISampleActivity>()
         }
         return false
     }

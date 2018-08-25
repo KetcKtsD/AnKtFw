@@ -4,13 +4,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.NonCancellable.invokeOnCompletion
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.intrinsics.startCoroutineCancellable
+import kotlinx.coroutines.*
+import kotlinx.coroutines.NonCancellable.invokeOnCompletion
+import kotlinx.coroutines.android.UI
+import kotlinx.coroutines.intrinsics.startCoroutineCancellable
 import java.lang.ref.WeakReference
-import kotlin.coroutines.experimental.CoroutineContext
-import kotlin.coroutines.experimental.coroutineContext
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 import kotlin.reflect.KClass
 
 typealias DeferredResponse<R> = Deferred<Response<R>>

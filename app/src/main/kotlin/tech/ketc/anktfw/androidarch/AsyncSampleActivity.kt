@@ -3,9 +3,9 @@ package tech.ketc.anktfw.androidarch
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.asCoroutineDispatcher
-import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
 import tech.ketc.anktfw.androidarch.croutine.Failure
 import tech.ketc.anktfw.androidarch.croutine.Success
 import tech.ketc.anktfw.androidarch.croutine.asyncResponse
@@ -13,7 +13,7 @@ import tech.ketc.anktfw.androidarch.lifecycle.IOnActiveRunner
 import tech.ketc.anktfw.androidarch.lifecycle.OnActiveRunner
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.coroutines.experimental.coroutineContext
+import kotlin.coroutines.coroutineContext
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.setContentView
