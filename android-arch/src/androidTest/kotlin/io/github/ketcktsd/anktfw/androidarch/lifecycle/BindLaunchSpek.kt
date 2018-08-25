@@ -3,14 +3,14 @@ package io.github.ketcktsd.anktfw.androidarch.lifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
+import io.github.ketcktsd.anktfw.androidarch.croutine.defaultContext
+import io.github.ketcktsd.anktfw.androidarch.croutine.successIf
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
-import io.github.ketcktsd.anktfw.androidarch.croutine.defaultContext
-import io.github.ketcktsd.anktfw.androidarch.croutine.successIf
 import kotlin.coroutines.coroutineContext
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

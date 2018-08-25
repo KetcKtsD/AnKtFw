@@ -5,14 +5,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.Toolbar
-import org.jetbrains.anko.*
 import io.github.ketcktsd.anktfw.SimpleAppbarComponent
 import io.github.ketcktsd.anktfw.anko.UI
 import io.github.ketcktsd.anktfw.anko.bindView
 import io.github.ketcktsd.anktfw.anko.component
+import org.jetbrains.anko.*
 
 interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {
-    val image: ImageView
+    val imageView: ImageView
     val toolbar: Toolbar
 }
 
@@ -25,7 +25,7 @@ class DISampleUI : IDISampleUI {
     override val toolbar: Toolbar by lazy { appbarComponent.toolbar }
 
     private val imageId = View.generateViewId()
-    override val image: ImageView by bindView(imageId)
+    override val imageView: ImageView by bindView(imageId)
 
     override fun createView(ui: AnkoContext<DISampleActivity>) = with(ui) {
         relativeLayout {

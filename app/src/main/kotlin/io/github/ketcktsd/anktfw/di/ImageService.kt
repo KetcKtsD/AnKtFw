@@ -2,13 +2,13 @@ package io.github.ketcktsd.anktfw.di
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.asCoroutineDispatcher
 import io.github.ketcktsd.anktfw.androidarch.croutine.DeferredResponse
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
 import io.github.ketcktsd.anktfw.di.module.InjectionSupport
 import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.resolve
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.asCoroutineDispatcher
 import java.net.HttpURLConnection.HTTP_OK
 import java.util.concurrent.Executors
 import kotlin.coroutines.coroutineContext
@@ -35,9 +35,7 @@ class ImageServiceImpl(override val module: Module = ServiceModule) :
             connection.responseCode
                     .takeIf { it == HTTP_OK }
                     ?: return@asyncResponse null
-            connection.inputStream.use {
-                BitmapFactory.decodeStream(it)
-            }
+            connection.inputStream.use(BitmapFactory::decodeStream)
         } finally {
             connection.disconnect()
         }

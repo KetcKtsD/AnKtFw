@@ -4,35 +4,52 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewPropertyAnimator
 import androidx.appcompat.app.AppCompatActivity
-import org.jetbrains.anko.setContentView
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 import io.github.ketcktsd.anktfw.animation.core.animator.animate
 import io.github.ketcktsd.anktfw.animation.core.animator.fromAlpha
 import io.github.ketcktsd.anktfw.animation.core.animator.toAlpha
-import io.github.ketcktsd.anktfw.animation.template.collapseMtrl
-import io.github.ketcktsd.anktfw.animation.template.expandMtrl
+import kotlinx.coroutines.android.UI
+import kotlinx.coroutines.delay
+import org.jetbrains.anko.setContentView
 
-class AnimationSampleActivity : AppCompatActivity(), IAnimationSampleUI by AnimationSampleUI() {
+class AnimationSampleActivity : AppCompatActivity(),
+        IOnActiveRunner by OnActiveRunner(),
+        IAnimationSampleUI by AnimationSampleUI() {
 
-    private fun View.fadeIn(): ViewPropertyAnimator = animate {
-        fromAlpha = 0f
-        toAlpha = 1f
-    }.withEndAction { this.fadeOut() }
-
-    private fun View.fadeOut(): ViewPropertyAnimator = animate {
-        fromAlpha = 1f
-        toAlpha = 0f
-    }.withEndAction { this.fadeIn() }
-
-    private fun View.collapse(): Unit = collapseMtrl { expand() }
-
-    private fun View.expand(): Unit = expandMtrl(1.5f, 1.5f) { collapse() }
+    companion object {
+        private const val ANIMATION_DELAY_MILLS = 1000L
+        private const val ANIMATION_DURATION = 300L
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setOwner(this)
         setContentView(this)
-
+        setSupportActionBar(toolbar)
         fadeView.fadeOut()
+    }
 
-        scaleView.expand()
+    private fun View.fadeIn(): ViewPropertyAnimator = animate {
+        duration = ANIMATION_DURATION
+        fromAlpha = 0f
+        toAlpha = 1f
+    }.withEndAction { delayFadeOut() }
+
+    private fun View.fadeOut(): ViewPropertyAnimator = animate {
+        duration = ANIMATION_DURATION
+        fromAlpha = 1f
+        toAlpha = 0f
+    }.withEndAction { delayFadeIn() }
+
+    private fun View.delayFadeOut() = bindLaunch(UI) {
+        delay(ANIMATION_DELAY_MILLS)
+        runOnActive { fadeOut() }
+    }
+
+    private fun View.delayFadeIn() = bindLaunch(UI) {
+        delay(ANIMATION_DELAY_MILLS)
+        runOnActive { fadeIn() }
     }
 }
