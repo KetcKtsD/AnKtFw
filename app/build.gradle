@@ -72,8 +72,3 @@ dependencies {
 repositories {
     jcenter()
 }
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
