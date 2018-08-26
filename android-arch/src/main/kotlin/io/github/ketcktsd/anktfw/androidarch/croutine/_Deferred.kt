@@ -5,7 +5,8 @@ import kotlinx.coroutines.Deferred
 private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
 
 /**
- * retry more than once [Deferred.await] depending on specific [predicate]
+ * retry more than once [Deferred.await] until it succeeds depending on specific [predicate]
+ *
  * @param maxTimes is max retry times
  * @param predicate retry when this function returns true.
  * default value is a function that returns true.
