@@ -15,8 +15,8 @@ import kotlin.reflect.KClass
 
 typealias DeferredResult<T> = Deferred<SuccessOrFailure<T>>
 
-internal inline fun <R> generateResponse(vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                                         block: () -> R): SuccessOrFailure<R> = try {
+internal inline fun <R> generateResult(vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+                                       block: () -> R): SuccessOrFailure<R> = try {
     SuccessOrFailure.success(block())
 } catch (t: Throwable) {
     if (expected.any { it.isInstance(t) })
@@ -35,12 +35,12 @@ internal inline fun <R> generateResponse(vararg expected: KClass<out Throwable> 
  * @param expected expected exceptions, default value is only [Throwable]
  * @return DeferredResult
  */
-fun <R> asyncResponse(context: CoroutineContext,
-                      start: CoroutineStart = CoroutineStart.DEFAULT,
-                      parent: Job? = null,
-                      vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                      block: suspend () -> R): DeferredResult<R> =
-        async(context, start, parent) { generateResponse(*expected) { block() } }
+fun <R> execAsync(context: CoroutineContext,
+                  start: CoroutineStart = CoroutineStart.DEFAULT,
+                  parent: Job? = null,
+                  vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+                  block: suspend () -> R): DeferredResult<R> =
+        async(context, start, parent) { generateResult(*expected) { block() } }
 
 //bindLauncher
 private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
