@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
-class CoroutineSpek : Spek({
+class ResponseSpek : Spek({
     describe("testing generate Success Or Failure") {
         it("expect that Success will return") {
             val result = generateResponse { 1 + 1 }
