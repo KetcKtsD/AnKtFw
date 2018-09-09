@@ -17,7 +17,7 @@ class RetrySpek : Spek({
         runBlocking {
             launch {
                 var retryCount = 0
-                val result = asyncResponse(coroutineContext) {
+                val result = execAsync(coroutineContext) {
                     retryCount++
                     throw IllegalArgumentException()
                 }.retryAwait(2)
@@ -31,9 +31,9 @@ class RetrySpek : Spek({
         runBlocking {
             launch {
                 var retryCount = 0
-                val result = asyncResponse(coroutineContext) {
+                val result = execAsync(coroutineContext) {
                     if (retryCount == 1) {
-                        return@asyncResponse 1
+                        return@execAsync 1
                     }
                     retryCount++
                     throw IllegalArgumentException()

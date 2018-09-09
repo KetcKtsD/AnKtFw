@@ -3,7 +3,7 @@ package io.github.ketcktsd.anktfw.androidarch.lifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
+import io.github.ketcktsd.anktfw.androidarch.croutine.execAsync
 import io.github.ketcktsd.anktfw.androidarch.croutine.defaultContext
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
@@ -29,7 +29,7 @@ class BindLaunchSpek : Spek({
             (1..100).forEach { _ ->
                 var executed = false
                 owner.bindLaunch(coroutineContext) {
-                    val result = asyncResponse(defaultContext()) {
+                    val result = execAsync(defaultContext()) {
                         100
                     }.await()
                     result.onSuccess { executed = true }
@@ -47,7 +47,7 @@ class BindLaunchSpek : Spek({
                 val registry = owner.lifecycle
                 registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
                 owner.bindLaunch(coroutineContext) {
-                    asyncResponse(defaultContext()) {
+                    execAsync(defaultContext()) {
                         registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                         100
                     }.await()

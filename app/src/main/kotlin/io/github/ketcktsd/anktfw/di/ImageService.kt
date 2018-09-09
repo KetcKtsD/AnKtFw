@@ -3,7 +3,7 @@ package io.github.ketcktsd.anktfw.di
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import io.github.ketcktsd.anktfw.androidarch.croutine.DeferredResult
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResponse
+import io.github.ketcktsd.anktfw.androidarch.croutine.execAsync
 import io.github.ketcktsd.anktfw.di.module.InjectionSupport
 import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.resolve
@@ -28,13 +28,13 @@ class ImageServiceImpl(override val module: Module = ServiceModule) :
 
     private val urlConnectionFactory: HttpURLConnectionFactory by resolve()
 
-    override suspend fun load(url: String) = asyncResponse(mImageLoadContext()) {
+    override suspend fun load(url: String) = execAsync(mImageLoadContext()) {
         val connection = urlConnectionFactory.create(url)
-        return@asyncResponse try {
+        return@execAsync try {
             connection.connect()
             connection.responseCode
                     .takeIf { it == HTTP_OK }
-                    ?: return@asyncResponse null
+                    ?: return@execAsync null
             connection.inputStream.use(BitmapFactory::decodeStream)
         } finally {
             connection.disconnect()
