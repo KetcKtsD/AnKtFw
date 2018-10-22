@@ -2,25 +2,16 @@ package io.github.ketcktsd.anktfw.di
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import io.github.ketcktsd.anktfw.androidarch.croutine.DeferredResult
-import io.github.ketcktsd.anktfw.androidarch.croutine.execAsync
 import io.github.ketcktsd.anktfw.di.module.InjectionSupport
 import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.resolve
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
 import java.net.HttpURLConnection.HTTP_OK
-import java.util.concurrent.Executors
-import kotlin.coroutines.coroutineContext
 
 interface ImageService {
-    suspend fun load(url: String): DeferredResult<Bitmap?>
+    suspend fun load(url: String): Bitmap?
 }
-
-private val mImageLoadDispatcher: CoroutineDispatcher
-        by lazy { Executors.newFixedThreadPool(2).asCoroutineDispatcher() }
-
-private suspend inline fun mImageLoadContext() = coroutineContext + mImageLoadDispatcher
 
 class ImageServiceImpl(override val module: Module = ServiceModule) :
         ImageService,
@@ -28,13 +19,13 @@ class ImageServiceImpl(override val module: Module = ServiceModule) :
 
     private val urlConnectionFactory: HttpURLConnectionFactory by resolve()
 
-    override suspend fun load(url: String) = execAsync(mImageLoadContext()) {
+    override suspend fun load(url: String): Bitmap? {
         val connection = urlConnectionFactory.create(url)
-        return@execAsync try {
+        return try {
             connection.connect()
             connection.responseCode
                     .takeIf { it == HTTP_OK }
-                    ?: return@execAsync null
+                    ?: return null
             connection.inputStream.use(BitmapFactory::decodeStream)
         } finally {
             connection.disconnect()

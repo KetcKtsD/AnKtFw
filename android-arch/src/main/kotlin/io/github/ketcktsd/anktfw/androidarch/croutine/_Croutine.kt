@@ -5,22 +5,25 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.*
-import kotlinx.coroutines.NonCancellable.invokeOnCompletion
-import kotlinx.coroutines.android.UI
-import kotlinx.coroutines.intrinsics.startCoroutineCancellable
+import java.lang.IllegalArgumentException
 import java.lang.ref.WeakReference
+import java.util.concurrent.ForkJoinPool
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 import kotlin.reflect.KClass
 
-typealias DeferredResult<T> = Deferred<SuccessOrFailure<T>>
+typealias DeferredResult<T> = Deferred<Result<T>>
 
-internal inline fun <R> generateResult(vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                                       block: () -> R): SuccessOrFailure<R> = try {
-    SuccessOrFailure.success(block())
+private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
+
+internal inline fun <R> generateResult(
+        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        block: () -> R
+): Result<R> = try {
+    Result.success(block())
 } catch (t: Throwable) {
     if (expected.any { it.isInstance(t) })
-        SuccessOrFailure.failure(t)
+        Result.failure(t)
     else throw t
 }
 
@@ -28,19 +31,57 @@ internal inline fun <R> generateResult(vararg expected: KClass<out Throwable> = 
  * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
  *
  * @param R result object class
- * @param context context of the coroutine. The default value is [DefaultDispatcher].
+ * @param context context of the coroutine. The default value is [coroutineContext].
  * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
- * @param parent explicitly specifies the parent job, overrides job from the [context] (if any).*
  * @param block the coroutine code.
  * @param expected expected exceptions, default value is only [Throwable]
  * @return DeferredResult
  */
-fun <R> execAsync(context: CoroutineContext,
-                  start: CoroutineStart = CoroutineStart.DEFAULT,
-                  parent: Job? = null,
-                  vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
-                  block: suspend () -> R): DeferredResult<R> =
-        async(context, start, parent) { generateResult(*expected) { block() } }
+fun <R> CoroutineScope.asyncResult(
+        context: CoroutineContext = coroutineContext,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        block: suspend () -> R
+): DeferredResult<R> = async(context, start) { generateResult(*expected) { block() } }
+
+/**
+ * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
+ *
+ * @param R result object class
+ * @param context context of the coroutine. The default value is [coroutineContext].
+ * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
+ * @param block the coroutine code.
+ * @param expected expected exceptions, default value is only [Throwable]
+ * @param maxTimes is max retry times
+ * @return DeferredResult
+ */
+fun <R> CoroutineScope.asyncResult(
+        context: CoroutineContext = coroutineContext,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        maxTimes: Int,
+        predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE,
+        block: suspend () -> R
+): DeferredResult<R> = async(context, start) {
+    if (maxTimes < 0) throw IllegalArgumentException()
+    suspend fun run() = generateResult(*expected) { block() }
+    var retryCount = 0
+    var result = run()
+    while (result.isFailure && retryCount < maxTimes) {
+        retryCount++
+        val exception = requireNotNull(result.exceptionOrNull())
+        if (predicate(exception)) {
+            result = run()
+        } else {
+            return@async result
+        }
+    }
+    return@async result
+}
+
+inline fun fuga(func: () -> Unit) {
+    func()
+}
 
 //bindLauncher
 private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
@@ -54,45 +95,26 @@ private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
     }
 }
 
-private fun createLazyCoroutine(context: CoroutineContext,
-                                block: suspend CoroutineScope.() -> Unit
-) = object : AbstractCoroutine<Unit>(context, false) {
-    override fun onStart() {
-        block.startCoroutineCancellable(this, this)
-    }
-}
-
-private fun createCoroutine(context: CoroutineContext) =
-        object : AbstractCoroutine<Unit>(context, true) {}
-
-
 /**
  * Start [Job] bound to [LifecycleOwner]
  * @param owner target of bind
- * @param context context of the coroutine. The default value is [DefaultDispatcher].
- * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
- * @param parent explicitly specifies the parent job, overrides job from the [context] (if any).
+ * @param context context of the coroutine. The default value is [Dispatchers.Main].
  * @param block the coroutine code.
  */
-fun bindLaunch(owner: LifecycleOwner, context: CoroutineContext = UI,
-               start: CoroutineStart = CoroutineStart.DEFAULT,
-               parent: Job? = null,
+fun bindLaunch(owner: LifecycleOwner,
+               context: CoroutineContext = Dispatchers.Main,
                block: suspend CoroutineScope.() -> Unit): Job {
-    val newContext = newCoroutineContext(context, parent)
-
-    val coroutine = if (start.isLazy)
-        createLazyCoroutine(newContext, block) else
-        createCoroutine(newContext)
-
-    val observer = createLifecycleObserver(coroutine)
+    val job = GlobalScope.launch(context, CoroutineStart.LAZY, block)
+    val observer = createLifecycleObserver(job)
     val lifecycle = owner.lifecycle
     lifecycle.addObserver(observer)
-    invokeOnCompletion { lifecycle.removeObserver(observer) }
-    coroutine.start(start, coroutine, block)
-    return coroutine
+    job.invokeOnCompletion { lifecycle.removeObserver(observer) }
+    job.start()
+    return job
 }
 
 /**
  * Get [CommonPool] with [coroutineContext]
  */
-suspend inline fun defaultContext() = coroutineContext + CommonPool
+suspend inline fun defaultContext() =
+        coroutineContext + ForkJoinPool.commonPool().asCoroutineDispatcher()

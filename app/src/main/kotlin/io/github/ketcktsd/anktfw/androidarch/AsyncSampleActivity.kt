@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import io.github.ketcktsd.anktfw.androidarch.croutine.execAsync
+import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
@@ -44,7 +44,7 @@ class AsyncSampleActivity : AppCompatActivity(),
         Toast.makeText(this, "onClick", Toast.LENGTH_LONG).show()
         //cancel job when onDestroy()
         bindLaunch {
-            val result = execAsync(timeCountContext()) {
+            val result = asyncResult(timeCountContext()) {
                 delay(5000L)
                 randomThrow()
             }.await()

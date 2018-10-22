@@ -5,7 +5,6 @@ import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
-import kotlin.coroutines.*
 import org.junit.runner.RunWith
 import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
@@ -17,9 +16,9 @@ class RetrySpek : Spek({
         runBlocking {
             launch {
                 var retryCount = 0
-                val result = execAsync(coroutineContext) {
+                val result = asyncResult {
                     retryCount++
-                    throw IllegalArgumentException()
+                    throw Exception(retryCount.toString())
                 }.retryAwait(2)
                 assertEquals(2, retryCount)
                 assertTrue(result.isFailure)
@@ -31,9 +30,9 @@ class RetrySpek : Spek({
         runBlocking {
             launch {
                 var retryCount = 0
-                val result = execAsync(coroutineContext) {
+                val result = asyncResult(coroutineContext) {
                     if (retryCount == 1) {
-                        return@execAsync 1
+                        return@asyncResult 1
                     }
                     retryCount++
                     throw IllegalArgumentException()

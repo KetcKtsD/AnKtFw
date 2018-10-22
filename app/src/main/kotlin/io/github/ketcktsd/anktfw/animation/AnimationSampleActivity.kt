@@ -10,7 +10,6 @@ import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 import io.github.ketcktsd.anktfw.animation.core.animator.animate
 import io.github.ketcktsd.anktfw.animation.core.animator.fromAlpha
 import io.github.ketcktsd.anktfw.animation.core.animator.toAlpha
-import kotlinx.coroutines.android.UI
 import kotlinx.coroutines.delay
 import org.jetbrains.anko.setContentView
 
@@ -43,12 +42,12 @@ class AnimationSampleActivity : AppCompatActivity(),
         toAlpha = 0f
     }.withEndAction { delayFadeIn() }
 
-    private fun View.delayFadeOut() = bindLaunch(UI) {
+    private fun View.delayFadeOut() = bindLaunch {
         delay(ANIMATION_DELAY_MILLS)
         runOnActive { fadeOut() }
     }
 
-    private fun View.delayFadeIn() = bindLaunch(UI) {
+    private fun View.delayFadeIn() = bindLaunch {
         delay(ANIMATION_DELAY_MILLS)
         runOnActive { fadeIn() }
     }

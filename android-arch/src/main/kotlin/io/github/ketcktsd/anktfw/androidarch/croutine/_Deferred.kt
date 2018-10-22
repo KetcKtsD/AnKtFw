@@ -14,12 +14,13 @@ private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
 suspend fun <T> DeferredResult<T>.retryAwait(
         maxTimes: Int,
         predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE
-): SuccessOrFailure<T> {
+): Result<T> {
     var retryCount = 0
     var result = await()
     while (result.isFailure && retryCount < maxTimes) {
         retryCount++
-        if (predicate(requireNotNull(result.exceptionOrNull()))) {
+        val exception = requireNotNull(result.exceptionOrNull())
+        if (predicate(exception)) {
             result = await()
         } else {
             return result
