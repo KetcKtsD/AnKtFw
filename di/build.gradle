@@ -47,7 +47,7 @@ uploadArchives {
     repo.mkdir()
     repositories {
         mavenDeployer {
-            repository url: "https://ket"
+            repository url: "file://${repo.absolutePath}"
             pom.version = version_code
             pom.groupId = 'io.github.ketcktsd.anktfw'
             pom.artifactId = 'di'
