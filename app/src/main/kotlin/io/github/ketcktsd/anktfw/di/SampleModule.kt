@@ -4,6 +4,6 @@ import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.singleton
 
 
-class SampleModule : Module({
+val sampleModule = Module {
     singleton<ImageService> { ImageServiceImpl() }
-})
+}

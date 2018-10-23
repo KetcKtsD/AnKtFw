@@ -1,8 +1,8 @@
 package io.github.ketcktsd.anktfw
 
 import android.app.Application
-import io.github.ketcktsd.anktfw.di.SampleModule
 import io.github.ketcktsd.anktfw.di.module.Module
+import io.github.ketcktsd.anktfw.di.sampleModule
 
 class MyApplication : Application() {
 
@@ -12,7 +12,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        module = SampleModule()
+        module = sampleModule
     }
 }
 

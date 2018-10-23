@@ -13,7 +13,7 @@ interface ImageService {
     suspend fun load(url: String): Bitmap?
 }
 
-class ImageServiceImpl(override val module: Module = ServiceModule) :
+class ImageServiceImpl(override val module: Module = serviceModule) :
         ImageService,
         InjectionSupport {
 

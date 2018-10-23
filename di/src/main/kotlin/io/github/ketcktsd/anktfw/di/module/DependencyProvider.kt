@@ -4,6 +4,9 @@ import io.github.ketcktsd.anktfw.di.container.Container
 import io.github.ketcktsd.anktfw.di.container.LazyContainer
 import io.github.ketcktsd.anktfw.di.container.SimpleContainer
 import java.util.*
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.concurrent.read
+import kotlin.concurrent.write
 import kotlin.reflect.KClass
 
 interface DependencyProvider {
@@ -95,9 +98,11 @@ internal class DependencyContainer : DependencyProvider {
 
     private val eachMap: LinkedHashMap<KClass<*>, () -> Container<*>> = lruMap()
 
+    private val lock = ReentrantReadWriteLock()
+
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> get(clazz: KClass<T>): Container<T> {
-        return singletonMap[clazz] as? Container<T>
+    fun <T : Any> get(clazz: KClass<T>): Container<T> = lock.read {
+        singletonMap[clazz] as? Container<T>
                 ?: eachMap[clazz]?.invoke() as? Container<T>
                 ?: throw IllegalArgumentException("Dependency[${clazz.simpleName}] not added")
     }
@@ -118,12 +123,12 @@ internal class DependencyContainer : DependencyProvider {
         internalEach { SimpleContainer(initializer) }
     }
 
-    private fun <T : Any> KClass<T>.internalSingleton(container: () -> Container<T>) {
+    private inline fun <T : Any> KClass<T>.internalSingleton(container: () -> Container<T>) = lock.write {
         checkUniqueness(this)
         singletonMap[this] = container()
     }
 
-    private fun <T : Any> KClass<T>.internalEach(container: () -> Container<T>) {
+    private fun <T : Any> KClass<T>.internalEach(container: () -> Container<T>) = lock.write {
         checkUniqueness(this)
         eachMap[this] = container
     }

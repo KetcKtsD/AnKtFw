@@ -3,6 +3,6 @@ package io.github.ketcktsd.anktfw.di
 import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.each
 
-object ServiceModule : Module({
+val serviceModule = Module {
     each<HttpURLConnectionFactory> { DefaultHttpURLConnectionFactory() }
-})
+}
