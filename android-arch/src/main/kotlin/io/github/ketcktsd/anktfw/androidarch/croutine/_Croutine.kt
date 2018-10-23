@@ -54,6 +54,7 @@ fun <R> CoroutineScope.asyncResult(
  * @param expected expected exceptions, default value is only [Throwable]
  * @param maxTimes is max retry times
  * @return DeferredResult
+ * @throws IllegalArgumentException if give a negative number to [maxTimes]
  */
 fun <R> CoroutineScope.asyncResult(
         context: CoroutineContext = coroutineContext,
@@ -62,25 +63,23 @@ fun <R> CoroutineScope.asyncResult(
         maxTimes: Int,
         predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE,
         block: suspend () -> R
-): DeferredResult<R> = async(context, start) {
+): DeferredResult<R> {
     if (maxTimes < 0) throw IllegalArgumentException()
-    suspend fun run() = generateResult(*expected) { block() }
-    var retryCount = 0
-    var result = run()
-    while (result.isFailure && retryCount < maxTimes) {
-        retryCount++
-        val exception = requireNotNull(result.exceptionOrNull())
-        if (predicate(exception)) {
-            result = run()
-        } else {
-            return@async result
+    return async(context, start) {
+        suspend fun run() = generateResult(*expected) { block() }
+        var retryCount = 0
+        var result = run()
+        while (result.isFailure && retryCount < maxTimes) {
+            retryCount++
+            val exception = requireNotNull(result.exceptionOrNull())
+            if (predicate(exception)) {
+                result = run()
+            } else {
+                return@async result
+            }
         }
+        return@async result
     }
-    return@async result
-}
-
-inline fun fuga(func: () -> Unit) {
-    func()
 }
 
 //bindLauncher
