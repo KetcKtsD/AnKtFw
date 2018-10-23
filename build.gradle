@@ -12,7 +12,7 @@ buildscript {
 
     ext.android_support_ver = '1.0.0-rc02'
 
-    ext.anko_version = '0.10.5'
+    ext.anko_version = '0.10.7-rc13'
 
     ext.arch_ver = '2.0.0'
 
