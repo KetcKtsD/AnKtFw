@@ -2,9 +2,8 @@ package io.github.ketcktsd.anktfw.di.module
 
 import io.github.ketcktsd.anktfw.di.container.*
 import java.util.*
-import java.util.concurrent.locks.ReentrantReadWriteLock
-import kotlin.concurrent.read
-import kotlin.concurrent.write
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 import kotlin.reflect.KClass
 
 interface DependencyProvider {
@@ -64,7 +63,7 @@ internal class DependencyContainer : DependencyProvider {
     }
 
     private val map: MutableMap<KClass<*>, ContainerFactory<*>> = lruMap()
-    private val lock = ReentrantReadWriteLock()
+    private val lock = ReentrantLock()
 
     override fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T) = clazz.run {
         put { SingletonContainerFactory(init, InjectionMode.LAZY) }
@@ -83,13 +82,13 @@ internal class DependencyContainer : DependencyProvider {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any> get(clazz: KClass<T>): Container<T> = lock.read {
+    fun <T : Any> get(clazz: KClass<T>): Container<T> {
         val factory = map[clazz]
                 ?: throw IllegalArgumentException("Dependency[${clazz.simpleName}] not added")
-        (factory as ContainerFactory<T>).get()
+        return (factory as ContainerFactory<T>).get()
     }
 
-    private inline fun <T : Any> KClass<T>.put(factory: () -> ContainerFactory<T>) = lock.write {
+    private inline fun <T : Any> KClass<T>.put(factory: () -> ContainerFactory<T>) = lock.withLock {
         if (map.containsKey(this))
             throw throw IllegalArgumentException("Added dependent classes [${this.simpleName}]")
         map[this] = factory()
