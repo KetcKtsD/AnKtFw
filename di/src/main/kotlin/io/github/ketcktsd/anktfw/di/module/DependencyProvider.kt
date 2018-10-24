@@ -1,8 +1,6 @@
 package io.github.ketcktsd.anktfw.di.module
 
-import io.github.ketcktsd.anktfw.di.container.Container
-import io.github.ketcktsd.anktfw.di.container.LazyContainer
-import io.github.ketcktsd.anktfw.di.container.SimpleContainer
+import io.github.ketcktsd.anktfw.di.container.*
 import java.util.*
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
@@ -16,76 +14,47 @@ interface DependencyProvider {
      * also initialized when used for the first injection target.
      *
      * @param T Class of dependency
-     *
-     * @param initializer Generate dependency
-     *
+     * @param clazz Class of dependency
+     * @param init Generate dependency
      * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
-    infix fun <T : Any> KClass<T>.lazySingleton(initializer: () -> T)
+    fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T)
 
     /**
      * register dependency with the same lifetime as the lifetime of the module.
      * dependency is generated when initializing the [Module].
      *
      * @param T Class of dependency
-     *
-     * @param initializer Generate dependency
-     *
+     * @param clazz Class of dependency
+     * @param init Generate dependency
      * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
-    infix fun <T : Any> KClass<T>.singleton(initializer: () -> T)
+    fun <T : Any> singleton(clazz: KClass<T>, init: () -> T)
 
     /**
      * register dependency with the same lifetime as the lifetime of injection target.
      * also initialized when used for the first injection target.
      *
      * @param T Class of dependency
-     *
-     * @param initializer Generate dependency
-     *
+     * @param clazz Class of dependency
+     * @param init Generate dependency
      * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
-    infix fun <T : Any> KClass<T>.lazyEach(initializer: () -> T)
+    fun <T : Any> lazyEach(clazz: KClass<T>, init: () -> T)
 
     /**
      * register dependency with the same lifetime as the lifetime of injection target.
      * also initialized at injection.
      *
      * @param T Class of dependency
-     *
-     * @param initializer Generate dependency
-     *
+     * @param clazz Class of dependency
+     * @param init Generate dependency
      * @throws IllegalArgumentException thrown when adding an already registered dependency
      */
-    infix fun <T : Any> KClass<T>.each(initializer: () -> T)
+    fun <T : Any> each(clazz: KClass<T>, init: () -> T)
 }
 
-/**
- * @see [DependencyProvider.lazySingleton]
- */
-inline fun <reified T : Any> DependencyProvider.lazySingleton(noinline initialize: () -> T) =
-        T::class lazySingleton initialize
-
-/**
- * @see [DependencyProvider.singleton]
- */
-inline fun <reified T : Any> DependencyProvider.singleton(noinline initialize: () -> T) =
-        T::class singleton initialize
-
-/**
- * @see [DependencyProvider.lazyEach]
- */
-inline fun <reified T : Any> DependencyProvider.lazyEach(noinline initialize: () -> T) =
-        T::class lazyEach initialize
-
-/**
- * @see [DependencyProvider.each]
- */
-inline fun <reified T : Any> DependencyProvider.each(noinline initialize: () -> T) =
-        T::class each initialize
-
 internal class DependencyContainer : DependencyProvider {
-
     companion object {
         private const val INITIAL_CAPACITY = 16
         private const val LOAD_FACTOR = 0.75f
@@ -94,49 +63,35 @@ internal class DependencyContainer : DependencyProvider {
                 LinkedHashMap<K, V>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
     }
 
-    private val singletonMap: LinkedHashMap<KClass<*>, Container<*>> = lruMap()
-
-    private val eachMap: LinkedHashMap<KClass<*>, () -> Container<*>> = lruMap()
-
+    private val map: MutableMap<KClass<*>, ContainerFactory<*>> = lruMap()
     private val lock = ReentrantReadWriteLock()
+
+    override fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T) = clazz.run {
+        put { SingletonContainerFactory(init, InjectionMode.LAZY) }
+    }
+
+    override fun <T : Any> singleton(clazz: KClass<T>, init: () -> T) = clazz.run {
+        put { SingletonContainerFactory(init, InjectionMode.DILIGENT) }
+    }
+
+    override fun <T : Any> lazyEach(clazz: KClass<T>, init: () -> T) = clazz.run {
+        put { EachContainerFactory(init, InjectionMode.LAZY) }
+    }
+
+    override fun <T : Any> each(clazz: KClass<T>, init: () -> T) = clazz.run {
+        put { EachContainerFactory(init, InjectionMode.DILIGENT) }
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> get(clazz: KClass<T>): Container<T> = lock.read {
-        singletonMap[clazz] as? Container<T>
-                ?: eachMap[clazz]?.invoke() as? Container<T>
+        val factory = map[clazz]
                 ?: throw IllegalArgumentException("Dependency[${clazz.simpleName}] not added")
+        (factory as ContainerFactory<T>).get()
     }
 
-    override infix fun <T : Any> KClass<T>.lazySingleton(initializer: () -> T) {
-        internalSingleton { LazyContainer(initializer) }
-    }
-
-    override fun <T : Any> KClass<T>.singleton(initializer: () -> T) {
-        internalSingleton { SimpleContainer(initializer) }
-    }
-
-    override fun <T : Any> KClass<T>.lazyEach(initializer: () -> T) {
-        internalEach { LazyContainer(initializer) }
-    }
-
-    override fun <T : Any> KClass<T>.each(initializer: () -> T) {
-        internalEach { SimpleContainer(initializer) }
-    }
-
-    private inline fun <T : Any> KClass<T>.internalSingleton(container: () -> Container<T>) = lock.write {
-        checkUniqueness(this)
-        singletonMap[this] = container()
-    }
-
-    private fun <T : Any> KClass<T>.internalEach(container: () -> Container<T>) = lock.write {
-        checkUniqueness(this)
-        eachMap[this] = container
-    }
-
-    private fun <T : Any> checkUniqueness(clazz: KClass<T>) {
-        fun existSingleton() = singletonMap.containsKey(clazz)
-        fun existEach() = eachMap.containsKey(clazz)
-        if (existSingleton() || existEach())
-            throw throw IllegalArgumentException("Added dependent classes [${clazz.simpleName}]")
+    private inline fun <T : Any> KClass<T>.put(factory: () -> ContainerFactory<T>) = lock.write {
+        if (map.containsKey(this))
+            throw throw IllegalArgumentException("Added dependent classes [${this.simpleName}]")
+        map[this] = factory()
     }
 }

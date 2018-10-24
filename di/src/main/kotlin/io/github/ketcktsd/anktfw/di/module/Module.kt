@@ -19,7 +19,9 @@ class Module(dsl: DependencyProvider.() -> Unit) {
 
 /**
  * Search and retrieve dependency.
- * @param C [Module] containing the dependency you want to resolve
  * @param T is the dependency to searched
  */
-inline fun <C : Module, reified T : Any> C.resolve() = this.resolve(T::class)
+inline fun <reified T : Any> Module.resolve() = this.resolve(T::class)
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun module(noinline dsl: DependencyProvider.() -> Unit) = Module(dsl)
