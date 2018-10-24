@@ -9,8 +9,6 @@ import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
 class ModuleSpek : Spek({
-    fun module(init: DependencyProvider.() -> Unit) = Module(init)
-
     describe("IllegalArgumentException is thrown at the time of Module create") {
         it("by singleton()") {
             assertFailsWith<IllegalArgumentException> {

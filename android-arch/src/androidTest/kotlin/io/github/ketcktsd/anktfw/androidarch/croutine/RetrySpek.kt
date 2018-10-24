@@ -1,6 +1,5 @@
 package io.github.ketcktsd.anktfw.androidarch.croutine
 
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
@@ -12,7 +11,6 @@ import java.lang.IllegalStateException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-import kotlin.test.expect
 
 @RunWith(JUnitPlatform::class)
 class RetrySpek : Spek({
