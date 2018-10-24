@@ -1,8 +1,8 @@
 package io.github.ketcktsd.anktfw.di
 
-import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.each
+import io.github.ketcktsd.anktfw.di.module.module
 
-val serviceModule = Module {
+val serviceModule = module {
     each<HttpURLConnectionFactory> { DefaultHttpURLConnectionFactory() }
 }

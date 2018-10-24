@@ -11,7 +11,6 @@ import kotlinx.coroutines.delay
 import org.jetbrains.anko.setContentView
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 
 class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {

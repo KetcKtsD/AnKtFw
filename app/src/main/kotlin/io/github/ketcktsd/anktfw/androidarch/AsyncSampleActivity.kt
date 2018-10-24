@@ -10,12 +10,13 @@ import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.delay
 import org.jetbrains.anko.setContentView
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.coroutines.coroutineContext
+import kotlin.coroutines.CoroutineContext
 
 class AsyncSampleActivity : AppCompatActivity(),
         IOnActiveRunner by OnActiveRunner(),
@@ -26,7 +27,8 @@ class AsyncSampleActivity : AppCompatActivity(),
     private val mTimeCountDispatcher: CoroutineDispatcher
             by lazy { Executors.newFixedThreadPool(2).asCoroutineDispatcher() }
 
-    private suspend inline fun timeCountContext() = mTimeCountDispatcher + coroutineContext
+    private val CoroutineScope.mTimeCountContext: CoroutineContext
+        get() = coroutineContext + mTimeCountDispatcher
     //like the above
 
 
@@ -44,7 +46,7 @@ class AsyncSampleActivity : AppCompatActivity(),
         Toast.makeText(this, "onClick", Toast.LENGTH_LONG).show()
         //cancel job when onDestroy()
         bindLaunch {
-            val result = asyncResult(timeCountContext()) {
+            val result = asyncResult(mTimeCountContext) {
                 delay(5000L)
                 randomThrow()
             }.await()
