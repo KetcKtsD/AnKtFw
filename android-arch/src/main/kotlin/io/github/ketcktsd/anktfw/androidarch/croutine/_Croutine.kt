@@ -16,6 +16,7 @@ typealias DeferredResult<T> = Deferred<Result<T>>
 
 private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
 
+@Suppress("ResultIsResult")
 internal inline fun <R> runOrThrowCatching(
         vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
         block: () -> R
@@ -42,7 +43,11 @@ fun <R> CoroutineScope.asyncResult(
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
         block: suspend () -> R
-): DeferredResult<R> = async(context, start) { runOrThrowCatching(*expected) { block() } }
+): DeferredResult<R> {
+    @Suppress("unused")
+    suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
+    return async(context, start, CoroutineScope::runCatching)
+}
 
 /**
  * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
@@ -64,9 +69,11 @@ fun <R> CoroutineScope.asyncResult(
         predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE,
         block: suspend () -> R
 ): DeferredResult<R> {
-    if (maxTimes < 0) throw IllegalArgumentException()
-    return async(context, start) {
-        suspend fun runCatching() = runOrThrowCatching(*expected) { block() }
+    if (maxTimes < 0)
+        throw IllegalArgumentException("give a negative number to maxTimes")
+    suspend fun runCatching() = runOrThrowCatching(*expected) { block() }
+    @Suppress("unused")
+    suspend fun CoroutineScope.retryCatching(): Result<R> {
         var retryCount = 0
         var result = runCatching()
         while (result.isFailure && retryCount < maxTimes) {
@@ -75,11 +82,12 @@ fun <R> CoroutineScope.asyncResult(
             if (predicate(exception)) {
                 result = runCatching()
             } else {
-                return@async result
+                return result
             }
         }
-        return@async result
+        return result
     }
+    return async(context, start, CoroutineScope::retryCatching)
 }
 
 //bindLauncher
@@ -87,6 +95,7 @@ private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
 
     val mJobRef = WeakReference(job)
 
+    @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         val j = mJobRef.get() ?: return

@@ -50,6 +50,7 @@ class RetrySpek : Spek({
         runBlocking {
             launch {
                 assertFailsWith(IllegalArgumentException::class) {
+                    @Suppress("DeferredResultUnused")
                     asyncResult(maxTimes = -1) { }
                 }
                 val result = asyncResult(maxTimes = 0) { 1 + 1 }.await()

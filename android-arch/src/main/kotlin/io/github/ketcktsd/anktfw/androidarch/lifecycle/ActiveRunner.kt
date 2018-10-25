@@ -56,11 +56,13 @@ class OnActiveRunner : IOnActiveRunner {
             }
         }
 
+        @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         fun onPause() {
             isSafe = false
         }
 
+        @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         fun onResume() {
             tasks.forEach { it() }
@@ -68,6 +70,7 @@ class OnActiveRunner : IOnActiveRunner {
             isSafe = true
         }
 
+        @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
             isSafe = false

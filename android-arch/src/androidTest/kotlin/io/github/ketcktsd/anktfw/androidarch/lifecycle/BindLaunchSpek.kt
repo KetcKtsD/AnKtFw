@@ -25,7 +25,8 @@ class BindLaunchSpek : Spek({
             val owner = owner()
             val registry = owner.lifecycle
             registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
-            (1..100).forEach { _ ->
+            @Suppress("ForEachParameterNotUsed")
+            (1..100).forEach {
                 var executed = false
                 owner.bindLaunch(coroutineContext) {
                     val result = asyncResult(defaultContext()) {
@@ -40,7 +41,8 @@ class BindLaunchSpek : Spek({
 
     it("expect that the job is bound to LifecycleOwner") {
         runBlocking {
-            (1..100).forEach { _ ->
+            @Suppress("ForEachParameterNotUsed")
+            (1..100).forEach {
                 var executed = false
                 val owner = owner()
                 val registry = owner.lifecycle
