@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import kotlinx.coroutines.*
-import java.lang.IllegalArgumentException
 import java.lang.ref.WeakReference
 import java.util.concurrent.ForkJoinPool
 import kotlin.coroutines.CoroutineContext
@@ -45,6 +44,7 @@ fun <R> CoroutineScope.asyncResult(
 ): DeferredResult<R> {
     @Suppress("unused")
     suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
+
     return async(context, start, CoroutineScope::runCatching)
 }
 
@@ -70,7 +70,9 @@ fun <R> CoroutineScope.asyncResult(
 ): DeferredResult<R> {
     if (maxTimes < 0)
         throw IllegalArgumentException("give a negative number to maxTimes")
+
     suspend fun runCatching() = runOrThrowCatching(*expected) { block() }
+
     @Suppress("unused")
     suspend fun CoroutineScope.retryCatching(): Result<R> {
         var retryCount = 0
@@ -86,6 +88,7 @@ fun <R> CoroutineScope.asyncResult(
         }
         return result
     }
+
     return async(context, start, CoroutineScope::retryCatching)
 }
 

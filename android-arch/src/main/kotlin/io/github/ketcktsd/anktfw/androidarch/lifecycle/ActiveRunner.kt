@@ -45,35 +45,35 @@ class OnActiveRunner : IOnActiveRunner {
 
     private fun createOnActiveLifeCycleObserver(owner: LifecycleOwner) = object : LifecycleObserver {
         private val mOwnerRef = WeakReference(owner)
-        private var isSafe = false
-        private val tasks = ArrayList<() -> Unit>()
+        private var mIsSafe = false
+        private val mTasks = ArrayList<() -> Unit>()
 
         fun run(task: () -> Unit) {
-            if (isSafe) {
+            if (mIsSafe) {
                 task()
             } else {
-                tasks.add(task)
+                mTasks.add(task)
             }
         }
 
         @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         fun onPause() {
-            isSafe = false
+            mIsSafe = false
         }
 
         @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         fun onResume() {
-            tasks.forEach { it() }
-            tasks.clear()
-            isSafe = true
+            mTasks.forEach { it() }
+            mTasks.clear()
+            mIsSafe = true
         }
 
         @Suppress("unused")
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
-            isSafe = false
+            mIsSafe = false
             val owner1 = mOwnerRef.get() ?: return
             owner1.lifecycle.removeObserver(this)
         }
