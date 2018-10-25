@@ -18,13 +18,12 @@ private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
 
 @Suppress("ResultIsResult")
 internal inline fun <R> runOrThrowCatching(
-        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        vararg expected: KClass<out Throwable>,
         block: () -> R
 ): Result<R> = try {
     Result.success(block())
 } catch (t: Throwable) {
-    if (expected.any { it.isInstance(t) })
-        Result.failure(t)
+    if (expected.isEmpty() || expected.any { it.isInstance(t) }) Result.failure(t)
     else throw t
 }
 
@@ -35,13 +34,13 @@ internal inline fun <R> runOrThrowCatching(
  * @param context context of the coroutine. The default value is [coroutineContext].
  * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
  * @param block the coroutine code.
- * @param expected expected exceptions, default value is only [Throwable]
+ * @param expected expected exceptions, default value is emptyArray
  * @return DeferredResult
  */
 fun <R> CoroutineScope.asyncResult(
         context: CoroutineContext = coroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        vararg expected: KClass<out Throwable> = emptyArray(),
         block: suspend () -> R
 ): DeferredResult<R> {
     @Suppress("unused")
@@ -56,7 +55,7 @@ fun <R> CoroutineScope.asyncResult(
  * @param context context of the coroutine. The default value is [coroutineContext].
  * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
  * @param block the coroutine code.
- * @param expected expected exceptions, default value is only [Throwable]
+ * @param expected expected exceptions, default value is emptyArray
  * @param maxTimes is max retry times
  * @return DeferredResult
  * @throws IllegalArgumentException if give a negative number to [maxTimes]
@@ -64,7 +63,7 @@ fun <R> CoroutineScope.asyncResult(
 fun <R> CoroutineScope.asyncResult(
         context: CoroutineContext = coroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
+        vararg expected: KClass<out Throwable> = emptyArray(),
         maxTimes: Int,
         predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE,
         block: suspend () -> R
