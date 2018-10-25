@@ -11,27 +11,27 @@ import kotlin.test.*
 class ResponseSpek : Spek({
     describe("testing generate Success Or Failure") {
         it("expect that Success will return") {
-            val result = generateResult { 1 + 1 }
+            val result = runOrThrowCatching { 1 + 1 }
             assertTrue { result.isSuccess }
             assertEquals(2, result.getOrThrow())
         }
 
         it("expect that failure will return") {
             val exception = Exception()
-            val result = generateResult { throw exception }
+            val result = runOrThrowCatching { throw exception }
             assertTrue { result.isFailure }
             assertEquals(exception, result.exceptionOrNull())
         }
 
         it("expect thrown IllegalStateException") {
             assertFailsWith<IllegalStateException> {
-                generateResult(IllegalArgumentException::class) { throw IllegalStateException() }
+                runOrThrowCatching(IllegalArgumentException::class) { throw IllegalStateException() }
             }
         }
 
         it("expect that illegalArgumentException will throw") {
             val illegalArgumentException = IllegalArgumentException()
-            val result = generateResult(IllegalArgumentException::class) {
+            val result = runOrThrowCatching(IllegalArgumentException::class) {
                 throw illegalArgumentException
             }
             when {

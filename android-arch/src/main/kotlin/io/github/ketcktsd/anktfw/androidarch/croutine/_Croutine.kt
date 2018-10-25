@@ -16,7 +16,7 @@ typealias DeferredResult<T> = Deferred<Result<T>>
 
 private val DEFAULT_PREDICATE: (Throwable) -> Boolean = { true }
 
-internal inline fun <R> generateResult(
+internal inline fun <R> runOrThrowCatching(
         vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
         block: () -> R
 ): Result<R> = try {
@@ -42,7 +42,7 @@ fun <R> CoroutineScope.asyncResult(
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = arrayOf(Throwable::class),
         block: suspend () -> R
-): DeferredResult<R> = async(context, start) { generateResult(*expected) { block() } }
+): DeferredResult<R> = async(context, start) { runOrThrowCatching(*expected) { block() } }
 
 /**
  * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
@@ -66,14 +66,14 @@ fun <R> CoroutineScope.asyncResult(
 ): DeferredResult<R> {
     if (maxTimes < 0) throw IllegalArgumentException()
     return async(context, start) {
-        suspend fun run() = generateResult(*expected) { block() }
+        suspend fun runCatching() = runOrThrowCatching(*expected) { block() }
         var retryCount = 0
-        var result = run()
+        var result = runCatching()
         while (result.isFailure && retryCount < maxTimes) {
             retryCount++
             val exception = requireNotNull(result.exceptionOrNull())
             if (predicate(exception)) {
-                result = run()
+                result = runCatching()
             } else {
                 return@async result
             }
