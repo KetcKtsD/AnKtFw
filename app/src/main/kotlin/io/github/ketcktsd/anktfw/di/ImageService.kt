@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory
 import io.github.ketcktsd.anktfw.di.module.InjectionSupport
 import io.github.ketcktsd.anktfw.di.module.Module
 import io.github.ketcktsd.anktfw.di.module.resolve
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.asCoroutineDispatcher
 import java.net.HttpURLConnection.HTTP_OK
 
 interface ImageService {

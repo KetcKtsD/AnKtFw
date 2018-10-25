@@ -5,6 +5,7 @@ import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
 
 
+@Suppress("ClassName")
 class _DrawerLayout(ctx: Context) : DrawerLayout(ctx) {
 
     companion object {
