@@ -40,9 +40,8 @@ fun <R> CoroutineScope.asyncResult(
         context: CoroutineContext = coroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = emptyArray(),
-        block: suspend () -> R
+        block: suspend CoroutineScope.() -> R
 ): DeferredResult<R> {
-    @Suppress("unused")
     suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
 
     return async(context, start, CoroutineScope::runCatching)
@@ -66,14 +65,13 @@ fun <R> CoroutineScope.asyncResult(
         vararg expected: KClass<out Throwable> = emptyArray(),
         maxTimes: Int,
         predicate: (Throwable) -> Boolean = DEFAULT_PREDICATE,
-        block: suspend () -> R
+        block: suspend CoroutineScope.() -> R
 ): DeferredResult<R> {
     if (maxTimes < 0)
         throw IllegalArgumentException("give a negative number to maxTimes")
 
-    suspend fun runCatching() = runOrThrowCatching(*expected) { block() }
+    suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
 
-    @Suppress("unused")
     suspend fun CoroutineScope.retryCatching(): Result<R> {
         var retryCount = 0
         var result = runCatching()
