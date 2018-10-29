@@ -15,7 +15,7 @@ class BindSampleActivity : AppCompatActivity(),
             bindable({ textView.text = it }, { textView.text })
 
     private val mLengthTextBindable =
-            bindable({ lengthTextView.text = "${it.toString().length}" }, { lengthTextView.text })
+            bindable({ lengthTextView.text = "${it.length}" }, { lengthTextView.text })
 
     private var mText: CharSequence by BindableDelegates
             .readWrite("", mTextBindable, mLengthTextBindable)
