@@ -12,7 +12,7 @@ interface ReadWriteBindableProperty<T> : ReadOnlyBindableProperty<T> {
 
 private open class ReadOnlyBindablePropertyInternal<T>(
         initialValue: T,
-        vararg containers: BindableContainer<T>
+        vararg containers: Bindable<T>
 ) : ReadOnlyBindableProperty<T> {
     protected var value: T = initialValue
 
@@ -30,11 +30,20 @@ private open class ReadOnlyBindablePropertyInternal<T>(
 
 private class ReadWriteBindablePropertyInternal<T>(
         initialValue: T,
-        private vararg val containers: BindableContainer<T>
+        private vararg val containers: Bindable<T>
 ) : ReadOnlyBindablePropertyInternal<T>(initialValue, *containers), ReadWriteBindableProperty<T> {
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         this.value = value
         containers.forEach { it.value = value }
     }
+}
+
+object BindableDelegates {
+
+    fun <T> readOnly(initialValue: T, vararg containers: Bindable<T>): ReadOnlyBindableProperty<T> =
+            ReadOnlyBindablePropertyInternal(initialValue, *containers)
+
+    fun <T> readWrite(initialValue: T, vararg containers: Bindable<T>): ReadWriteBindableProperty<T> =
+            ReadWriteBindablePropertyInternal(initialValue, *containers)
 }
