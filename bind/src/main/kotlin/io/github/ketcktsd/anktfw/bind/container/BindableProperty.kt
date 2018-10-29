@@ -12,30 +12,38 @@ interface ReadWriteBindableProperty<T> : ReadOnlyBindableProperty<T> {
 
 private open class ReadOnlyBindablePropertyInternal<T>(
         initialValue: T,
-        vararg containers: Bindable<T>
+        private vararg val bindables: Bindable<T>
 ) : ReadOnlyBindableProperty<T> {
     protected var value: T = initialValue
+    private var mInitialized = false
+    private val mOnChange: (T) -> Unit = { new ->
+        this.value = new
+    }
 
-    init {
-        containers.forEach { container ->
-            container.value = this.value
-            container.onChange = { new ->
-                this.value = new
-            }
+    protected fun initialize() {
+        if (mInitialized) return
+        mInitialized = true
+        bindables.forEach { bindable ->
+            bindable.value = this.value
+            bindable.onChange = mOnChange
         }
     }
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        initialize()
+        return value
+    }
 }
 
 private class ReadWriteBindablePropertyInternal<T>(
         initialValue: T,
-        private vararg val containers: Bindable<T>
-) : ReadOnlyBindablePropertyInternal<T>(initialValue, *containers), ReadWriteBindableProperty<T> {
+        private vararg val bindables: Bindable<T>
+) : ReadOnlyBindablePropertyInternal<T>(initialValue, *bindables), ReadWriteBindableProperty<T> {
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        initialize()
         this.value = value
-        containers.forEach { it.value = value }
+        bindables.forEach { it.setInternal(value) }
     }
 }
 

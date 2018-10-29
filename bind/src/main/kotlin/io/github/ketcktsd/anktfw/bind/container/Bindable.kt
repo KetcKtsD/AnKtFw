@@ -16,4 +16,13 @@ abstract class Bindable<T> {
 
     protected abstract fun set(value: T)
     protected abstract fun get(): T
+
+    internal fun setInternal(value: T) = set(value)
+}
+
+fun <T> bindable(set: (value: T) -> Unit, get: () -> T) = object : Bindable<T>() {
+
+    override fun set(value: T) = set(value)
+
+    override fun get(): T = get()
 }
