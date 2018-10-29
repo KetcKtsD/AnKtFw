@@ -12,5 +12,9 @@
         <item
             android:id="@+id/start_animation_sample"
             android:title="@string/title_animation_sample" />
+
+        <item
+            android:id="@+id/bind_sample"
+            android:title="@string/title_bind_sample" />
     </group>
 </menu>

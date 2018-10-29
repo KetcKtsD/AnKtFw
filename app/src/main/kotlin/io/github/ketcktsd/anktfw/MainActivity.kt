@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import io.github.ketcktsd.anktfw.androidarch.AsyncSampleActivity
 import io.github.ketcktsd.anktfw.animation.AnimationSampleActivity
+import io.github.ketcktsd.anktfw.bind.BindSampleActivity
 import io.github.ketcktsd.anktfw.di.DISampleActivity
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity(),
             R.id.start_animation_sample -> startActivity<AnimationSampleActivity>()
             R.id.start_arch_sample -> startActivity<AsyncSampleActivity>()
             R.id.start_di_sample -> startActivity<DISampleActivity>()
+            R.id.bind_sample -> startActivity<BindSampleActivity>()
         }
         return false
     }
