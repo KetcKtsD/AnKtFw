@@ -11,7 +11,7 @@ interface DependencyProvider {
 
     /**
      * register dependency with the same lifetime as the lifetime of the [Module].
-     * also initialized when used for the first injection target.
+     * dependencies are generated the first time they are used at the injection target.
      *
      * @param T Class of dependency
      * @param clazz Class of dependency
@@ -33,7 +33,7 @@ interface DependencyProvider {
 
     /**
      * register dependency with the same lifetime as the lifetime of injection target.
-     * also initialized when used for the first injection target.
+     * dependency are generated when used for the first time at the injection target.
      *
      * @param T Class of dependency
      * @param clazz Class of dependency
@@ -44,7 +44,7 @@ interface DependencyProvider {
 
     /**
      * register dependency with the same lifetime as the lifetime of injection target.
-     * also initialized at injection.
+     * dependency is initialized at injection.
      *
      * @param T Class of dependency
      * @param clazz Class of dependency
