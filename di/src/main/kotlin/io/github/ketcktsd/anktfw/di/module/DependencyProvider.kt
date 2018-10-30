@@ -7,6 +7,9 @@ import kotlin.concurrent.withLock
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
+/**
+ * it provides an interface for registering dependencies.
+ */
 interface DependencyProvider {
 
     /**

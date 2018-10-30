@@ -3,6 +3,9 @@ package io.github.ketcktsd.anktfw.di.module
 import io.github.ketcktsd.anktfw.di.container.Container
 import kotlin.reflect.KClass
 
+/**
+ * for resolving dependencies from registered [DependencyProvider].
+ */
 class Module(dsl: DependencyProvider.() -> Unit) {
     private val provider = DependencyProviderInternal().apply(dsl)
 
