@@ -29,7 +29,7 @@ class BindLaunchSpek : Spek({
             (1..100).forEach {
                 var executed = false
                 owner.bindLaunch(coroutineContext) {
-                    val result = asyncResult(defaultContext()) {
+                    val result = asyncResult(defaultContext) {
                         100
                     }.await()
                     result.onSuccess { executed = true }
@@ -48,7 +48,7 @@ class BindLaunchSpek : Spek({
                 val registry = owner.lifecycle
                 registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
                 owner.bindLaunch(coroutineContext) {
-                    asyncResult(defaultContext()) {
+                    asyncResult(defaultContext) {
                         registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                         100
                     }.await()
