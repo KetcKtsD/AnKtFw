@@ -124,5 +124,5 @@ fun bindLaunch(owner: LifecycleOwner,
 /**
  * Get [CommonPool] with [coroutineContext]
  */
-suspend inline fun defaultContext() =
-        coroutineContext + ForkJoinPool.commonPool().asCoroutineDispatcher()
+inline val CoroutineScope.defaultContext: CoroutineContext
+    get() = coroutineContext + ForkJoinPool.commonPool().asCoroutineDispatcher()
