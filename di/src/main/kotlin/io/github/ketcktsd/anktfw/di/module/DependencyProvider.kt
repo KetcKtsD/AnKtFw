@@ -5,6 +5,7 @@ import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 
 interface DependencyProvider {
 
@@ -62,7 +63,7 @@ internal class DependencyContainer : DependencyProvider {
                 LinkedHashMap<K, V>(INITIAL_CAPACITY, LOAD_FACTOR, ACCESS_ORDER)
     }
 
-    private val map: MutableMap<KClass<*>, ContainerFactory<*>> = lruMap()
+    private val map: MutableMap<String, ContainerFactory<*>> = lruMap()
     private val lock = ReentrantLock()
 
     override fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T) = clazz.run {
@@ -83,14 +84,15 @@ internal class DependencyContainer : DependencyProvider {
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> get(clazz: KClass<T>): Container<T> {
-        val factory = map[clazz]
+        val factory = map[clazz.jvmName]
                 ?: throw IllegalArgumentException("Dependency[${clazz.simpleName}] not added")
         return (factory as ContainerFactory<T>).get()
     }
 
     private inline fun <T : Any> KClass<T>.put(factory: () -> ContainerFactory<T>) = lock.withLock {
-        if (map.containsKey(this))
+        val name = this.jvmName
+        if (map.containsKey(name))
             throw throw IllegalArgumentException("Added dependent classes [${this.simpleName}]")
-        map[this] = factory()
+        map[name] = factory()
     }
 }
