@@ -4,7 +4,7 @@ import io.github.ketcktsd.anktfw.di.container.Container
 import kotlin.reflect.KClass
 
 class Module(dsl: DependencyProvider.() -> Unit) {
-    private val dependencyContainer = DependencyContainer().apply(dsl)
+    private val provider = DependencyProviderInternal().apply(dsl)
 
     /**
      * Search and retrieve dependency.
@@ -14,7 +14,7 @@ class Module(dsl: DependencyProvider.() -> Unit) {
      * @return Property object with dependency
      * @throws IllegalArgumentException thrown when dependency can not be resolved
      */
-    fun <T : Any> resolve(clazz: KClass<T>): Container<T> = dependencyContainer.get(clazz)
+    fun <T : Any> resolve(clazz: KClass<T>): Container<T> = provider.get(clazz)
 }
 
 /**

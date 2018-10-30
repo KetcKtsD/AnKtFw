@@ -54,7 +54,7 @@ interface DependencyProvider {
     fun <T : Any> each(clazz: KClass<T>, init: () -> T)
 }
 
-internal class DependencyContainer : DependencyProvider {
+internal class DependencyProviderInternal : DependencyProvider {
     companion object {
         private const val INITIAL_CAPACITY = 16
         private const val LOAD_FACTOR = 0.75f
