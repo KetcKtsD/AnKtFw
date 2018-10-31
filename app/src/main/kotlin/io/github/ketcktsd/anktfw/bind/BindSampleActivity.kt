@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import io.github.ketcktsd.anktfw.bind.container.BindableDelegates
-import io.github.ketcktsd.anktfw.bind.container.bindable
 import org.jetbrains.anko.setContentView
 
 class BindSampleActivity : AppCompatActivity(),
