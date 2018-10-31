@@ -21,11 +21,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
     sourceSets {
         main {
             java.srcDirs += 'src/main/kotlin'
@@ -81,14 +76,13 @@ kotlin {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = java_compatibility
+    targetCompatibility = java_compatibility
 
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs = [
-                '-XXLanguage:+InlineClasses',
-                '-Xallow-result-return-type',
+                '-Xallow-result-return-type'
         ]
     }
 }
