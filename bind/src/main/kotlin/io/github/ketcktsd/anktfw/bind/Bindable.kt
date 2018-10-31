@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.bind.container
+package io.github.ketcktsd.anktfw.bind
 
 abstract class Bindable<T> {
     companion object {
