@@ -14,10 +14,21 @@ private open class ReadOnlyBindablePropertyInternal<T>(
         initialValue: T,
         private vararg val bindables: Bindable<T>
 ) : ReadOnlyBindableProperty<T> {
+
     protected var value: T = initialValue
     private var mInitialized = false
     private val mOnChange: (T) -> Unit = { new ->
-        this.value = new
+        bindables.forEach {
+            this.value = new
+            it.setInternal(new)
+        }
+        if (!mInitialized) mInitialized = true
+    }
+
+    init {
+        bindables.forEach {
+            it.onChange = mOnChange
+        }
     }
 
     protected fun initialize() {
@@ -25,7 +36,6 @@ private open class ReadOnlyBindablePropertyInternal<T>(
         mInitialized = true
         bindables.forEach { bindable ->
             bindable.value = this.value
-            bindable.onChange = mOnChange
         }
     }
 
