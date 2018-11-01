@@ -20,9 +20,12 @@ abstract class Bindable<T> {
     internal fun setInternal(value: T) = set(value)
 }
 
-fun <T> bindable(set: (value: T) -> Unit, get: () -> T) = object : Bindable<T>() {
+private class BindableImpl<T>(private val set: (value: T) -> Unit,
+                              private val get: () -> T) : Bindable<T>() {
 
-    override fun set(value: T) = set(value)
+    override fun set(value: T) = this.set.invoke(value)
 
-    override fun get(): T = get()
+    override fun get(): T = this.get.invoke()
 }
+
+fun <T> bindable(set: (value: T) -> Unit, get: () -> T): Bindable<T> = BindableImpl(set, get)
