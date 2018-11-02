@@ -17,7 +17,8 @@ abstract class Bindable<T> {
     protected abstract fun set(value: T)
     protected abstract fun get(): T
 
-    internal fun setInternal(value: T) = set(value)
+    @Suppress("NOTHING_TO_INLINE")
+    internal inline fun setInternal(value: T) = set(value)
 }
 
 private class BindableImpl<T>(private val set: (value: T) -> Unit,
