@@ -51,7 +51,7 @@ dependencies {
 
     //android
     implementation "androidx.appcompat:appcompat:$android_support_ver"
-    implementation "com.google.android.material:material:$android_support_ver"
+    implementation "com.google.android.material:material:$android_material_ver"
 
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
