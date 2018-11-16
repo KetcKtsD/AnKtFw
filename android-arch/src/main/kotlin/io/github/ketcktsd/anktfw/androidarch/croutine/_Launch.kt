@@ -18,22 +18,21 @@ fun bindLaunch(owner: LifecycleOwner,
                context: CoroutineContext = Dispatchers.Main,
                block: suspend CoroutineScope.() -> Unit): Job {
     val job = GlobalScope.launch(context, CoroutineStart.LAZY, block)
-    val observer = createLifecycleObserver(job)
+    val destroyer = JobDestroyer(job)
     val lifecycle = owner.lifecycle
-    lifecycle.addObserver(observer)
-    job.invokeOnCompletion { lifecycle.removeObserver(observer) }
+    lifecycle.addObserver(destroyer)
+    job.invokeOnCompletion { lifecycle.removeObserver(destroyer) }
     job.start()
     return job
 }
 
-private fun createLifecycleObserver(job: Job) = object : LifecycleObserver {
+private class JobDestroyer(job: Job) : LifecycleObserver {
 
     val mJobRef = WeakReference(job)
 
-    @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-        val j = mJobRef.get() ?: return
-        j.cancel()
+        val job = mJobRef.get() ?: return
+        job.cancel()
     }
 }

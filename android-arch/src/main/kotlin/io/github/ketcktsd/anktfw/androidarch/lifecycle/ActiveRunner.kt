@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import java.lang.ref.WeakReference
+import kotlin.properties.Delegates
 
 /**
  * A interface that run arbitrary functions when [LifecycleOwner] is Active
@@ -26,9 +27,9 @@ interface IOnActiveRunner {
 
 class OnActiveRunner : IOnActiveRunner {
 
-    private var mOwnerRef: WeakReference<LifecycleOwner>? = null
-    private val mOwner by lazy { requireNotNull(mOwnerRef?.get()) }
-    private val mObserver by lazy { createOnActiveLifeCycleObserver(mOwner) }
+    private var mOwnerRef: WeakReference<LifecycleOwner> by Delegates.notNull()
+    private val mOwner by lazy { requireNotNull(mOwnerRef.get()) }
+    private val mObserver by lazy { OnActiveLifeCycleObserver(mOwner) }
     private var mIsOwnerInitialized = false
 
     override fun setOwner(owner: LifecycleOwner) {
@@ -42,40 +43,37 @@ class OnActiveRunner : IOnActiveRunner {
         if (!mIsOwnerInitialized) throw IllegalStateException("owner is not set")
         mObserver.run(handle)
     }
+}
 
-    private fun createOnActiveLifeCycleObserver(owner: LifecycleOwner) = object : LifecycleObserver {
-        private val mOwnerRef = WeakReference(owner)
-        private var mIsSafe = false
-        private val mTasks = ArrayList<() -> Unit>()
+private class OnActiveLifeCycleObserver(owner: LifecycleOwner) : LifecycleObserver {
+    private val mOwnerRef = WeakReference(owner)
+    private var mIsSafe = false
+    private val mTasks = ArrayList<() -> Unit>()
 
-        fun run(task: () -> Unit) {
-            if (mIsSafe) {
-                task()
-            } else {
-                mTasks.add(task)
-            }
+    fun run(task: () -> Unit) {
+        if (mIsSafe) {
+            task()
+        } else {
+            mTasks.add(task)
         }
+    }
 
-        @Suppress("unused")
-        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-        fun onPause() {
-            mIsSafe = false
-        }
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPause() {
+        mIsSafe = false
+    }
 
-        @Suppress("unused")
-        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        fun onResume() {
-            mTasks.forEach { it() }
-            mTasks.clear()
-            mIsSafe = true
-        }
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        mTasks.forEach { it() }
+        mTasks.clear()
+        mIsSafe = true
+    }
 
-        @Suppress("unused")
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy() {
-            mIsSafe = false
-            val owner1 = mOwnerRef.get() ?: return
-            owner1.lifecycle.removeObserver(this)
-        }
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy() {
+        mIsSafe = false
+        val owner = mOwnerRef.get() ?: return
+        owner.lifecycle.removeObserver(this)
     }
 }
