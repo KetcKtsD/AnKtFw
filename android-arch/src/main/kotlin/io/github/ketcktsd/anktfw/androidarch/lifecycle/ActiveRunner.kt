@@ -28,8 +28,7 @@ interface IOnActiveRunner {
 class OnActiveRunner : IOnActiveRunner {
 
     private var mOwnerRef: WeakReference<LifecycleOwner> by Delegates.notNull()
-    private val mOwner by lazy { requireNotNull(mOwnerRef.get()) }
-    private val mObserver by lazy { OnActiveLifeCycleObserver(mOwner) }
+    private val mObserver by lazy { createOnActiveLifeCycleObserver(requireNotNull(mOwnerRef.get())) }
     private var mIsOwnerInitialized = false
 
     override fun setOwner(owner: LifecycleOwner) {
@@ -45,7 +44,7 @@ class OnActiveRunner : IOnActiveRunner {
     }
 }
 
-private class OnActiveLifeCycleObserver(owner: LifecycleOwner) : LifecycleObserver {
+private fun createOnActiveLifeCycleObserver(owner: LifecycleOwner) = object : LifecycleObserver {
     private val mOwnerRef = WeakReference(owner)
     private var mIsSafe = false
     private val mTasks = ArrayList<() -> Unit>()
@@ -58,11 +57,13 @@ private class OnActiveLifeCycleObserver(owner: LifecycleOwner) : LifecycleObserv
         }
     }
 
+    @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         mIsSafe = false
     }
 
+    @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         mTasks.forEach { it() }
@@ -70,10 +71,13 @@ private class OnActiveLifeCycleObserver(owner: LifecycleOwner) : LifecycleObserv
         mIsSafe = true
     }
 
+    @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         mIsSafe = false
-        val owner = mOwnerRef.get() ?: return
-        owner.lifecycle.removeObserver(this)
+        mTasks.clear()
+        val o = mOwnerRef.get() ?: return
+        o.lifecycle.removeObserver(this)
+        mOwnerRef.clear()
     }
 }

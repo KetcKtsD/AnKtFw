@@ -34,13 +34,13 @@ class AnimationSampleActivity : AppCompatActivity(),
         duration = ANIMATION_DURATION
         fromAlpha = 0f
         toAlpha = 1f
-    }.withEndAction { delayFadeOut() }
+    }.withEndAction { if (!isDestroyed) delayFadeOut() }
 
     private fun View.fadeOut(): ViewPropertyAnimator = animate {
         duration = ANIMATION_DURATION
         fromAlpha = 1f
         toAlpha = 0f
-    }.withEndAction { delayFadeIn() }
+    }.withEndAction { if (!isDestroyed)  delayFadeIn() }
 
     private fun View.delayFadeOut() = bindLaunch {
         delay(ANIMATION_DELAY_MILLS)
