@@ -1,5 +1,6 @@
 package io.github.ketcktsd.anktfw.di.module
 
+import io.github.ketcktsd.anktfw.di.container.getValue
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it

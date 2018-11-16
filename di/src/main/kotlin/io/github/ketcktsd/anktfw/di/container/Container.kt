@@ -4,19 +4,17 @@ import kotlin.reflect.KProperty
 
 interface Container<T : Any> {
     val value: T
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T
 }
+
+@Suppress("NOTHING_TO_INLINE")
+inline operator fun <T : Any> Container<T>.getValue(thisRef: Any?, property: KProperty<*>): T = value
 
 private class LazyContainer<T : Any>(init: () -> T) : Container<T> {
     override val value by lazy(init)
-
-    override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
 }
 
 private class DiligentContainer<T : Any>(init: () -> T) : Container<T> {
-    override val value = init()
-
-    override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
+    override val value = synchronized(this, init)
 }
 
 enum class InjectionMode {

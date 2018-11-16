@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
+import io.github.ketcktsd.anktfw.di.container.getValue
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
