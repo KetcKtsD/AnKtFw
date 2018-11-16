@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.di.container
 
-interface ContainerFactory<T : Any> {
+internal interface ContainerFactory<T : Any> {
     fun get(): Container<T>
 }
 
