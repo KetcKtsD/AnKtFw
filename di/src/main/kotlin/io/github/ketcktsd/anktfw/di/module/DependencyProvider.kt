@@ -24,7 +24,7 @@ interface DependencyProvider {
     fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T)
 
     /**
-     * register dependency with the same lifetime as the lifetime of the module.
+     * register the dependency of the same scope as injection target property.
      * dependency is generated when initializing the [Module].
      *
      * @param T Class of dependency
@@ -46,7 +46,7 @@ interface DependencyProvider {
     fun <T : Any> lazyEach(clazz: KClass<T>, init: () -> T)
 
     /**
-     * register dependency with the same lifetime as the lifetime of injection target.
+     * register the dependency of the same scope as injection target property.
      * dependency is initialized at injection.
      *
      * @param T Class of dependency

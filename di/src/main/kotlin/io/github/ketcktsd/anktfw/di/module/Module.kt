@@ -5,6 +5,8 @@ import kotlin.reflect.KClass
 
 /**
  * for resolving dependencies from registered [DependencyProvider].
+ * Injection code example:
+ * `val value:T by module.resolve()`
  */
 class Module(dsl: DependencyProvider.() -> Unit) {
     private val provider = DependencyProviderInternal().apply(dsl)
