@@ -15,11 +15,12 @@ interface Component<R : View> {
     val root: R
 }
 
-fun <R : View, T : View> Component<R>.bindView(id: Int) = lazy {
+@Suppress("NOTHING_TO_INLINE")
+inline fun <R : View, T : View> Component<R>.bindView(id: Int) = lazy {
     root.findViewById<T>(id)
 }
 
-val Component<*>.rootId: Int
+inline val Component<*>.rootId: Int
     get() {
         if (root.id == View.NO_ID) {
             root.id = View.generateViewId()
