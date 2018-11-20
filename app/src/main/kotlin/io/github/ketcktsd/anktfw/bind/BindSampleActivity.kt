@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import io.github.ketcktsd.anktfw.bind.collective.bindableCollective
+import io.github.ketcktsd.anktfw.bind.collective.getValue
+import io.github.ketcktsd.anktfw.bind.collective.setValue
+import io.github.ketcktsd.anktfw.bind.property.bindable
 import org.jetbrains.anko.setContentView
 
 class BindSampleActivity : AppCompatActivity(),
@@ -15,8 +19,7 @@ class BindSampleActivity : AppCompatActivity(),
     private val mLengthTextBindable =
             bindable({ lengthTextView.text = "${it.length}" }, { lengthTextView.text })
 
-    private var mText: CharSequence by BindableDelegates
-            .readWrite("", mTextBindable, mLengthTextBindable)
+    private var mText: CharSequence by bindableCollective("", mTextBindable, mLengthTextBindable)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

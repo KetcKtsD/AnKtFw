@@ -1,5 +1,9 @@
 package io.github.ketcktsd.anktfw.bind
 
+import io.github.ketcktsd.anktfw.bind.collective.bindableCollective
+import io.github.ketcktsd.anktfw.bind.collective.getValue
+import io.github.ketcktsd.anktfw.bind.collective.setValue
+import io.github.ketcktsd.anktfw.bind.property.bindable
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
@@ -16,8 +20,7 @@ class BindableSpek : Spek({
         val dataValue2 = bindable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        val readOnly: String by BindableDelegates
-                .readOnly("", *dataValueArray)
+        val readOnly: String by bindableCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -45,8 +48,7 @@ class BindableSpek : Spek({
         val dataValue2 = bindable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        val readOnly: String by BindableDelegates
-                .readOnly("", *dataValueArray)
+        val readOnly: String by bindableCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -76,8 +78,7 @@ class BindableSpek : Spek({
         val dataValue2 = bindable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        var readWrite: String by BindableDelegates
-                .readWrite("", *dataValueArray)
+        var readWrite: String by bindableCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -108,8 +109,7 @@ class BindableSpek : Spek({
         val dataValue2 = bindable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        var readWrite: String by BindableDelegates
-                .readWrite("", *dataValueArray)
+        var readWrite: String by bindableCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
