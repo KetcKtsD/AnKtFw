@@ -7,8 +7,11 @@ interface ObservableProperty<T> {
     fun clearListener(listener: (T) -> Unit)
 }
 
-private class ObservablePropertyImpl<T>(internal val set: (value: T) -> Unit,
-                                internal val get: () -> T) : ObservableProperty<T> {
+private class ObservablePropertyImpl<T>(
+        private val set: (value: T) -> Unit,
+        private val get: () -> T
+) : ObservableProperty<T> {
+
     override var value: T
         set(value) {
             if (get() == value) return
