@@ -7,15 +7,15 @@ interface CollectiveBindDelegate<T> {
     fun get(): T
 }
 
-internal class CollectiveBindDelegateImpl<T>(private var value: T,
-                                    private val observables: Array<ObservableProperty<T>>) : CollectiveBindDelegate<T> {
+internal class CollectiveBindDelegateImpl<T>(
+        private var value: T,
+        private val observables: Array<ObservableProperty<T>>
+) : CollectiveBindDelegate<T> {
 
     private var mInitialized = false
 
     init {
-        observables.forEach {
-            it.addListener(::onChange)
-        }
+        observables.forEach { it.addListener(::onChange) }
     }
 
     override fun set(value: T) {
