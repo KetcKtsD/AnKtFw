@@ -22,6 +22,6 @@ inline operator fun <T> CollectiveBind<T>.setValue(thisRef: Any?, property: KPro
     this.value = value
 }
 
-fun <T> bindableCollective(initialValue: T,
-                           vararg observables: ObservableProperty<T>
+fun <T> bindCollective(initialValue: T,
+                       vararg observables: ObservableProperty<T>
 ): CollectiveBind<T> = CollectiveBindImpl(CollectiveBindDelegateImpl(initialValue, arrayOf(*observables)))

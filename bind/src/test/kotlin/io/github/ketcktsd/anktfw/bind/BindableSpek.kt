@@ -1,9 +1,9 @@
 package io.github.ketcktsd.anktfw.bind
 
-import io.github.ketcktsd.anktfw.bind.collective.bindableCollective
+import io.github.ketcktsd.anktfw.bind.collective.bindCollective
 import io.github.ketcktsd.anktfw.bind.collective.getValue
 import io.github.ketcktsd.anktfw.bind.collective.setValue
-import io.github.ketcktsd.anktfw.bind.property.bindable
+import io.github.ketcktsd.anktfw.bind.property.observable
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
@@ -12,15 +12,15 @@ import kotlin.test.assertEquals
 
 @RunWith(JUnitPlatform::class)
 class BindableSpek : Spek({
-    it("readOnly: bind from bindable") {
+    it("readOnly: bind from observable") {
         var data1 = "data1"
         var data2 = "data2"
 
-        val dataValue1 = bindable({ data1 = it }, { data1 })
-        val dataValue2 = bindable({ data2 = it }, { data2 })
+        val dataValue1 = observable({ data1 = it }, { data1 })
+        val dataValue2 = observable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        val readOnly: String by bindableCollective("", *dataValueArray)
+        val readOnly: String by bindCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -40,15 +40,15 @@ class BindableSpek : Spek({
         checkBind("bind2")
     }
 
-    it("readOnly: bind to bindable (at readOnly initialization)") {
+    it("readOnly: bind to observable (at readOnly initialization)") {
         var data1 = "data1"
         var data2 = "data2"
 
-        val dataValue1 = bindable({ data1 = it }, { data1 })
-        val dataValue2 = bindable({ data2 = it }, { data2 })
+        val dataValue1 = observable({ data1 = it }, { data1 })
+        val dataValue2 = observable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        val readOnly: String by bindableCollective("", *dataValueArray)
+        val readOnly: String by bindCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -70,15 +70,15 @@ class BindableSpek : Spek({
         checkBind("bind1")
     }
 
-    it("readWrite: bind from bindable > bind to bindable") {
+    it("readWrite: bind from observable > bind to observable") {
         var data1 = "data1"
         var data2 = "data2"
 
-        val dataValue1 = bindable({ data1 = it }, { data1 })
-        val dataValue2 = bindable({ data2 = it }, { data2 })
+        val dataValue1 = observable({ data1 = it }, { data1 })
+        val dataValue2 = observable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        var readWrite: String by bindableCollective("", *dataValueArray)
+        var readWrite: String by bindCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)
@@ -101,15 +101,15 @@ class BindableSpek : Spek({
         readWrite = "bind3"
         checkBind("bind3")
     }
-    it("readWrite: bind to bindable(at readWrite initialization) > bind from bindable") {
+    it("readWrite: bind to observable(at readWrite initialization) > bind from observable") {
         var data1 = "data1"
         var data2 = "data2"
 
-        val dataValue1 = bindable({ data1 = it }, { data1 })
-        val dataValue2 = bindable({ data2 = it }, { data2 })
+        val dataValue1 = observable({ data1 = it }, { data1 })
+        val dataValue2 = observable({ data2 = it }, { data2 })
 
         val dataValueArray = arrayOf(dataValue1, dataValue2)
-        var readWrite: String by bindableCollective("", *dataValueArray)
+        var readWrite: String by bindCollective("", *dataValueArray)
 
         assertEquals("data1", data1)
         assertEquals("data2", data2)

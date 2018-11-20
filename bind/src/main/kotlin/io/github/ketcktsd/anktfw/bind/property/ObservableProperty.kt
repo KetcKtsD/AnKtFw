@@ -30,4 +30,4 @@ private class ObservablePropertyImpl<T>(internal val set: (value: T) -> Unit,
     override fun clearListener(listener: (T) -> Unit) = mListeners.clear()
 }
 
-fun <T> bindable(set: (value: T) -> Unit, get: () -> T): ObservableProperty<T> = ObservablePropertyImpl(set, get)
+fun <T> observable(set: (value: T) -> Unit, get: () -> T): ObservableProperty<T> = ObservablePropertyImpl(set, get)
