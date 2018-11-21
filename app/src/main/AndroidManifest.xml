@@ -31,9 +31,6 @@
         <activity
             android:name=".animation.AnimationSampleActivity"
             android:label="@string/title_animation_sample" />
-
-        <activity android:name=".bind.BindSampleActivity"
-            android:label="@string/title_bind_sample"/>
     </application>
 
 </manifest>

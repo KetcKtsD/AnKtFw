@@ -1,1 +1,1 @@
-include ':app', ':anko', ':android-arch', ':di', ':animation', ':bind'
+include ':app', ':anko', ':android-arch', ':di', ':animation'
