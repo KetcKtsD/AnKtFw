@@ -1,5 +1,8 @@
 package io.github.ketcktsd.anktfw.bind.property
 
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
+
 interface ObservableProperty<T> {
     var value: T
     fun addListener(listener: (T) -> Unit)
@@ -12,11 +15,16 @@ private class ObservablePropertyImpl<T>(
         private val get: () -> T
 ) : ObservableProperty<T> {
 
+    private var mIsUpdating = false
+    private val mLock = ReentrantLock()
+
     override var value: T
-        set(value) {
-            if (get() == value) return
+        set(value) = mLock.withLock {
+            if (mIsUpdating) return
+            mIsUpdating = true
             set(value)
             mListeners.forEach { it(value) }
+            mIsUpdating = false
         }
         get() = get()
 
