@@ -14,10 +14,10 @@ typealias AnimatorCallback = (Animator) -> Unit
  * @param onEnd run on [Animator.AnimatorListener.onAnimationEnd]
  * @return receiver
  */
-fun ViewPropertyAnimator.listener(onStart: AnimatorCallback = {},
-                                  onCancel: AnimatorCallback = {},
-                                  onRepeat: AnimatorCallback = {},
-                                  onEnd: AnimatorCallback = {}): ViewPropertyAnimator {
+inline fun ViewPropertyAnimator.listener(crossinline onStart: AnimatorCallback = {},
+                                         crossinline onCancel: AnimatorCallback = {},
+                                         crossinline onRepeat: AnimatorCallback = {},
+                                         crossinline onEnd: AnimatorCallback = {}): ViewPropertyAnimator {
     this.setListener(object : Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
             onStart(animation)
@@ -47,10 +47,10 @@ fun ViewPropertyAnimator.listener(onStart: AnimatorCallback = {},
  * @param onEnd run on [Animator.AnimatorListener.onAnimationEnd]
  * @return receiver
  */
-fun Animator.listener(onStart: AnimatorCallback = {},
-                      onCancel: AnimatorCallback = {},
-                      onRepeat: AnimatorCallback = {},
-                      onEnd: AnimatorCallback = {}): Animator {
+inline fun Animator.listener(crossinline onStart: AnimatorCallback = {},
+                             crossinline onCancel: AnimatorCallback = {},
+                             crossinline onRepeat: AnimatorCallback = {},
+                             crossinline onEnd: AnimatorCallback = {}): Animator {
     this.addListener(object : Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
             onStart(animation)

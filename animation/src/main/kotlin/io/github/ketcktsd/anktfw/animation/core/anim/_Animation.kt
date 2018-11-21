@@ -3,10 +3,7 @@ package io.github.ketcktsd.anktfw.animation.core.anim
 import android.view.animation.Animation
 import android.view.animation.Animation.AnimationListener
 
-typealias AnimCallback = (anim:Animation) -> Unit
-
-
-private val DEFAULT_CALLBACK: AnimCallback = {}
+typealias AnimCallback = (anim: Animation) -> Unit
 
 /**
  * set listener to animation
@@ -16,9 +13,9 @@ private val DEFAULT_CALLBACK: AnimCallback = {}
  * @param onEnd run on [Animation.AnimationListener.onAnimationEnd]
  * @return receiver
  */
-fun <T : Animation> T.listener(onStart: AnimCallback = DEFAULT_CALLBACK,
-                               onRepeat: AnimCallback = DEFAULT_CALLBACK,
-                               onEnd: AnimCallback = DEFAULT_CALLBACK): T {
+inline fun <T : Animation> T.listener(crossinline onStart: AnimCallback = {},
+                                      crossinline onRepeat: AnimCallback = {},
+                                      crossinline onEnd: AnimCallback = {}): T {
     setAnimationListener(object : AnimationListener {
         override fun onAnimationStart(animation: Animation) {
             onStart(animation)

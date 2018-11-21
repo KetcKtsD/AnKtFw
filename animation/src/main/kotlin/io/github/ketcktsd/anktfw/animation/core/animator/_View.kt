@@ -8,7 +8,7 @@ import android.view.ViewPropertyAnimator
  *
  * @param init initialize [ViewPropertyAnimator]
  */
-fun View.animate(init: ViewPropertyAnimator.() -> Unit): ViewPropertyAnimator = animate().apply {
+inline fun View.animate(init: ViewPropertyAnimator.() -> Unit): ViewPropertyAnimator = animate().apply {
     withLayer()
     init()
 }
