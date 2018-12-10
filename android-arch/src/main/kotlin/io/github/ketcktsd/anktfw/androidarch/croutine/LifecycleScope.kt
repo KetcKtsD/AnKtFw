@@ -33,16 +33,7 @@ fun LifecycleScope(
         coroutineScope: CoroutineScope = AndroidScope
 ): LifecycleScope = LifecycleScopeImpl(lifecycleOwner, coroutineScope)
 
-interface LifecycleScopeSupport {
-    val scope: LifecycleScope
-}
-
 fun LifecycleScope.bindLaunch(
         start: CoroutineStart = CoroutineStart.DEFAULT,
         block: suspend CoroutineScope.() -> Unit
 ) = launch(coroutineContext, start, block)
-
-fun LifecycleScopeSupport.bindLaunch(
-        start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
-) = scope.bindLaunch(start, block)
