@@ -1,23 +1,24 @@
 package io.github.ketcktsd.anktfw.di
 
-import android.os.Bundle
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
+import io.github.ketcktsd.anktfw.androidarch.croutine.*
 import io.github.ketcktsd.anktfw.di.container.getValue
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import org.jetbrains.anko.setContentView
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
 
-class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {
+class DISampleActivity : AppCompatActivity(),
+        LifecycleScopeSupport,
+        IDISampleUI by DISampleUI() {
+
     companion object {
         private const val UNTIL_DOWNLOAD_START_MILLS = 1000L
     }
+
+    override val scope: LifecycleScope = LifecycleScope(this)
 
     private val imageService: ImageService by resolve()
 
@@ -37,5 +38,18 @@ class DISampleActivity : AppCompatActivity(), IDISampleUI by DISampleUI() {
             val result = asyncResult(mImageLoadContext) { imageService.load(url) }.await()
             result.fold(imageView::setImageBitmap, Throwable::printStackTrace)
         }
+    }
+}
+
+class SampleActivity : AppCompatActivity(), LifecycleScopeSupport {
+    override val scope = LifecycleScope(this)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //setContentViewとかごにょごにょ
+        bindLaunch {
+            //なんかごにょごにょ
+        }
+        scope.launch {  }
     }
 }

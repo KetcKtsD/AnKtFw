@@ -3,8 +3,11 @@ package io.github.ketcktsd.anktfw.androidarch.lifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import io.github.ketcktsd.anktfw.androidarch.croutine.LifecycleScope
 import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
+import io.github.ketcktsd.anktfw.androidarch.croutine.bindLaunch
 import io.github.ketcktsd.anktfw.androidarch.croutine.defaultContext
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
@@ -24,11 +27,12 @@ class BindLaunchSpek : Spek({
         runBlocking {
             val owner = owner()
             val registry = owner.lifecycle
+            val scope = LifecycleScope(owner, GlobalScope)
             registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
             @Suppress("ForEachParameterNotUsed")
             (1..100).forEach {
                 var executed = false
-                owner.bindLaunch(coroutineContext) {
+                scope.bindLaunch {
                     val result = asyncResult(defaultContext) {
                         100
                     }.await()
@@ -46,8 +50,9 @@ class BindLaunchSpek : Spek({
                 var executed = false
                 val owner = owner()
                 val registry = owner.lifecycle
+                val scope = LifecycleScope(owner, GlobalScope)
                 registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
-                owner.bindLaunch(coroutineContext) {
+                scope.bindLaunch {
                     asyncResult(defaultContext) {
                         registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                         100

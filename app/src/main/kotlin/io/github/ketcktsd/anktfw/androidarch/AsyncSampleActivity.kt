@@ -5,10 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
+import io.github.ketcktsd.anktfw.androidarch.croutine.*
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
 import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.bindLaunch
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -19,8 +18,11 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
 class AsyncSampleActivity : AppCompatActivity(),
+        LifecycleScopeSupport,
         IOnActiveRunner by OnActiveRunner(),
         IAsyncSampleUI by AsyncSampleUI() {
+
+    override val scope: LifecycleScope = LifecycleScope(this)
 
     //For example, define such a frequently used asynchronous CoroutineContext in an external file.
     //To be an external file
