@@ -1,17 +1,13 @@
 package io.github.ketcktsd.anktfw.animation
 
-import android.os.Bundle
-import android.view.View
-import android.view.ViewPropertyAnimator
-import androidx.appcompat.app.AppCompatActivity
+import android.os.*
+import android.view.*
+import androidx.appcompat.app.*
 import io.github.ketcktsd.anktfw.androidarch.croutine.*
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
-import io.github.ketcktsd.anktfw.animation.core.animator.animate
-import io.github.ketcktsd.anktfw.animation.core.animator.fromAlpha
-import io.github.ketcktsd.anktfw.animation.core.animator.toAlpha
-import kotlinx.coroutines.delay
-import org.jetbrains.anko.setContentView
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.*
+import io.github.ketcktsd.anktfw.animation.core.animator.*
+import kotlinx.coroutines.*
+import org.jetbrains.anko.*
 
 class AnimationSampleActivity : AppCompatActivity(),
         LifecycleScopeSupport,

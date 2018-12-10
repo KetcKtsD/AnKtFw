@@ -1,10 +1,7 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
-import java.lang.ref.WeakReference
+import androidx.lifecycle.*
+import java.lang.ref.*
 
 /**
  * A interface that run arbitrary functions when [LifecycleOwner] is Active

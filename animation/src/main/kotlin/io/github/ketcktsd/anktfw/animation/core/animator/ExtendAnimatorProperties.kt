@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.animation.core.animator
 
-import android.view.ViewPropertyAnimator
+import android.view.*
 
 var ViewPropertyAnimator.fromAlpha: Float
     set(value) {

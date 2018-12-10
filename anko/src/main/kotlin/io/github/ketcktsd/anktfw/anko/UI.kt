@@ -1,9 +1,8 @@
 package io.github.ketcktsd.anktfw.anko
 
-import android.app.Activity
-import android.view.View
-import org.jetbrains.anko.AnkoComponent
-import org.jetbrains.anko.AnkoContext
+import android.app.*
+import android.view.*
+import org.jetbrains.anko.*
 
 /**
  * interface for defining activity of ui

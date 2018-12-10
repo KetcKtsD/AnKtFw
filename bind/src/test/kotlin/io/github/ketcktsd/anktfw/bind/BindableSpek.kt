@@ -1,14 +1,12 @@
 package io.github.ketcktsd.anktfw.bind
 
-import io.github.ketcktsd.anktfw.bind.collective.bindCollective
-import io.github.ketcktsd.anktfw.bind.collective.getValue
-import io.github.ketcktsd.anktfw.bind.collective.setValue
-import io.github.ketcktsd.anktfw.bind.property.observable
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import kotlin.test.assertEquals
+import io.github.ketcktsd.anktfw.bind.collective.*
+import io.github.ketcktsd.anktfw.bind.property.*
+import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.dsl.*
+import org.junit.platform.runner.*
+import org.junit.runner.*
+import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
 class BindableSpek : Spek({

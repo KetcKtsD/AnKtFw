@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.bind.collective
 
-import io.github.ketcktsd.anktfw.bind.property.ObservableProperty
+import io.github.ketcktsd.anktfw.bind.property.*
 
 interface CollectiveBindDelegate<T> {
     fun set(value: T)

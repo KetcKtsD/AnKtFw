@@ -1,7 +1,7 @@
 package io.github.ketcktsd.anktfw.di.module
 
-import io.github.ketcktsd.anktfw.di.container.Container
-import kotlin.reflect.KClass
+import io.github.ketcktsd.anktfw.di.container.*
+import kotlin.reflect.*
 
 /**
  * for resolving dependencies from registered [DependencyProvider].

@@ -1,12 +1,9 @@
 package io.github.ketcktsd.anktfw.anko
 
-import android.content.Context
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewManager
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.AnkoException
-import kotlin.properties.Delegates
+import android.content.*
+import android.view.*
+import org.jetbrains.anko.*
+import kotlin.properties.*
 
 /**
  * interface for defining common component

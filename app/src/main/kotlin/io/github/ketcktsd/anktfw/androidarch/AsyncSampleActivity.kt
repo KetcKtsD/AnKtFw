@@ -1,21 +1,17 @@
 package io.github.ketcktsd.anktfw.androidarch
 
-import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
+import android.os.*
+import android.view.*
+import android.widget.*
+import androidx.appcompat.app.*
+import com.google.android.material.snackbar.*
 import io.github.ketcktsd.anktfw.androidarch.croutine.*
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.IOnActiveRunner
-import io.github.ketcktsd.anktfw.androidarch.lifecycle.OnActiveRunner
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.delay
-import org.jetbrains.anko.setContentView
+import io.github.ketcktsd.anktfw.androidarch.lifecycle.*
+import kotlinx.coroutines.*
+import org.jetbrains.anko.*
 import java.util.*
-import java.util.concurrent.Executors
-import kotlin.coroutines.CoroutineContext
+import java.util.concurrent.*
+import kotlin.coroutines.*
 
 class AsyncSampleActivity : AppCompatActivity(),
         LifecycleScopeSupport,

@@ -1,16 +1,14 @@
 package io.github.ketcktsd.anktfw
 
-import android.content.res.Configuration
-import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import io.github.ketcktsd.anktfw.androidarch.AsyncSampleActivity
-import io.github.ketcktsd.anktfw.animation.AnimationSampleActivity
-import io.github.ketcktsd.anktfw.bind.BindSampleActivity
-import io.github.ketcktsd.anktfw.di.DISampleActivity
-import org.jetbrains.anko.setContentView
-import org.jetbrains.anko.startActivity
+import android.content.res.*
+import android.os.*
+import android.view.*
+import androidx.appcompat.app.*
+import io.github.ketcktsd.anktfw.androidarch.*
+import io.github.ketcktsd.anktfw.animation.*
+import io.github.ketcktsd.anktfw.bind.*
+import io.github.ketcktsd.anktfw.di.*
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity(),
         IMainUI by MainUI() {

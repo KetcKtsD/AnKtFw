@@ -1,7 +1,7 @@
 package io.github.ketcktsd.anktfw.anko.util
 
-import android.content.Context
-import android.util.TypedValue
+import android.content.*
+import android.util.*
 
 /**
  * get resource ID of theme attribute

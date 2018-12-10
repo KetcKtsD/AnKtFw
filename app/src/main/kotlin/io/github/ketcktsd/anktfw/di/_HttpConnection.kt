@@ -1,7 +1,6 @@
 package io.github.ketcktsd.anktfw.di
 
-import java.net.HttpURLConnection
-import java.net.URL
+import java.net.*
 
 interface HttpURLConnectionFactory {
     fun create(url: String): HttpURLConnection

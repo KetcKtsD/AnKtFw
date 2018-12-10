@@ -1,17 +1,11 @@
 package io.github.ketcktsd.anktfw
 
-import android.annotation.SuppressLint
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
-import io.github.ketcktsd.anktfw.anko.UI
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.anko.component
-import io.github.ketcktsd.anktfw.util.drawerLayout
-import io.github.ketcktsd.anktfw.util.menuId
-import io.github.ketcktsd.anktfw.util.navigationView
+import android.annotation.*
+import android.view.*
+import android.widget.*
+import androidx.drawerlayout.widget.*
+import io.github.ketcktsd.anktfw.anko.*
+import io.github.ketcktsd.anktfw.util.*
 import org.jetbrains.anko.*
 
 

@@ -1,13 +1,13 @@
 package io.github.ketcktsd.anktfw.di
 
 import android.os.*
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.*
 import io.github.ketcktsd.anktfw.androidarch.croutine.*
-import io.github.ketcktsd.anktfw.di.container.getValue
+import io.github.ketcktsd.anktfw.di.container.*
 import kotlinx.coroutines.*
-import org.jetbrains.anko.setContentView
-import java.util.concurrent.Executors
-import kotlin.coroutines.CoroutineContext
+import org.jetbrains.anko.*
+import java.util.concurrent.*
+import kotlin.coroutines.*
 
 
 class DISampleActivity : AppCompatActivity(),

@@ -2,7 +2,7 @@ package io.github.ketcktsd.anktfw.androidarch.croutine
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.*
 
 interface LifecycleScope : LifecycleObserver, CoroutineScope
 

@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.di.module
 
-import io.github.ketcktsd.anktfw.di.container.Container
+import io.github.ketcktsd.anktfw.di.container.*
 
 interface InjectionSupport {
     val module: Module

@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.animation.core.anim
 
-import android.view.animation.Animation
+import android.view.animation.*
 import android.view.animation.Animation.AnimationListener
 
 typealias AnimCallback = (anim:Animation) -> Unit

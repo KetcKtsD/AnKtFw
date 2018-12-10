@@ -1,14 +1,12 @@
 package io.github.ketcktsd.anktfw
 
-import android.content.Context
-import android.view.View
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.appbar.AppBarLayout
-import io.github.ketcktsd.anktfw.anko.ViewComponent
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.util.appbarLayout
-import io.github.ketcktsd.anktfw.util.toolbar
-import kotlin.properties.Delegates
+import android.content.*
+import android.view.*
+import androidx.appcompat.widget.*
+import com.google.android.material.appbar.*
+import io.github.ketcktsd.anktfw.anko.*
+import io.github.ketcktsd.anktfw.util.*
+import kotlin.properties.*
 
 interface AppbarComponent : ViewComponent<AppBarLayout> {
 

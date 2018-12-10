@@ -1,7 +1,7 @@
 package io.github.ketcktsd.anktfw.bind.collective
 
-import io.github.ketcktsd.anktfw.bind.property.ObservableProperty
-import kotlin.reflect.KProperty
+import io.github.ketcktsd.anktfw.bind.property.*
+import kotlin.reflect.*
 
 
 interface CollectiveBind<T> {

@@ -1,14 +1,11 @@
 package io.github.ketcktsd.anktfw.bind
 
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.appcompat.app.AppCompatActivity
-import io.github.ketcktsd.anktfw.bind.collective.bindCollective
-import io.github.ketcktsd.anktfw.bind.collective.getValue
-import io.github.ketcktsd.anktfw.bind.collective.setValue
-import io.github.ketcktsd.anktfw.bind.property.observable
-import org.jetbrains.anko.setContentView
+import android.os.*
+import android.text.*
+import androidx.appcompat.app.*
+import io.github.ketcktsd.anktfw.bind.collective.*
+import io.github.ketcktsd.anktfw.bind.property.*
+import org.jetbrains.anko.*
 
 class BindSampleActivity : AppCompatActivity(),
         IBindSampleUI by BindSampleUI() {

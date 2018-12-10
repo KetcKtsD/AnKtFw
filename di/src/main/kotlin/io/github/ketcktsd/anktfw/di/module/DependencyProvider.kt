@@ -2,10 +2,10 @@ package io.github.ketcktsd.anktfw.di.module
 
 import io.github.ketcktsd.anktfw.di.container.*
 import java.util.*
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
-import kotlin.reflect.KClass
-import kotlin.reflect.jvm.jvmName
+import java.util.concurrent.locks.*
+import kotlin.concurrent.*
+import kotlin.reflect.*
+import kotlin.reflect.jvm.*
 
 /**
  * it provides an interface for registering dependencies.

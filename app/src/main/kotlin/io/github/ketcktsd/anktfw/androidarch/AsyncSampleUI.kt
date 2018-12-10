@@ -1,14 +1,11 @@
 package io.github.ketcktsd.anktfw.androidarch
 
-import android.annotation.SuppressLint
-import android.view.View
-import android.widget.Button
-import android.widget.RelativeLayout
+import android.annotation.*
+import android.view.*
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import io.github.ketcktsd.anktfw.SimpleAppbarComponent
-import io.github.ketcktsd.anktfw.anko.UI
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.anko.component
+import io.github.ketcktsd.anktfw.*
+import io.github.ketcktsd.anktfw.anko.*
 import org.jetbrains.anko.*
 
 interface IAsyncSampleUI : UI<AsyncSampleActivity, RelativeLayout> {

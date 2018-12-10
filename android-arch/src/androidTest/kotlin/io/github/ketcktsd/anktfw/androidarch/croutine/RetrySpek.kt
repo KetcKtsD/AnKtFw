@@ -1,14 +1,11 @@
 package io.github.ketcktsd.anktfw.androidarch.croutine
 
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
+import kotlinx.coroutines.*
+import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.dsl.*
+import org.junit.platform.runner.*
+import org.junit.runner.*
+import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
 class RetrySpek : Spek({

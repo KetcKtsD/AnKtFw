@@ -1,8 +1,8 @@
 package io.github.ketcktsd.anktfw.util
 
-import android.content.Context
-import android.view.View
-import androidx.drawerlayout.widget.DrawerLayout
+import android.content.*
+import android.view.*
+import androidx.drawerlayout.widget.*
 
 
 @Suppress("ClassName")

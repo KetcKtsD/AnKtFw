@@ -1,17 +1,14 @@
 package io.github.ketcktsd.anktfw.animation
 
-import android.view.View
-import android.widget.RelativeLayout
+import android.view.*
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
-import io.github.ketcktsd.anktfw.AppbarComponent
-import io.github.ketcktsd.anktfw.SimpleAppbarComponent
-import io.github.ketcktsd.anktfw.anko.UI
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.anko.component
+import androidx.cardview.widget.*
+import io.github.ketcktsd.anktfw.*
+import io.github.ketcktsd.anktfw.anko.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.customView
-import kotlin.properties.Delegates
+import org.jetbrains.anko.custom.*
+import kotlin.properties.*
 
 interface IAnimationSampleUI : UI<AnimationSampleActivity, RelativeLayout> {
     val toolbar: Toolbar

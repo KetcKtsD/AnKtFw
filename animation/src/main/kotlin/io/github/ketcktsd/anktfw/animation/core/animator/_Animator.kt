@@ -1,7 +1,7 @@
 package io.github.ketcktsd.anktfw.animation.core.animator
 
-import android.animation.Animator
-import android.view.ViewPropertyAnimator
+import android.animation.*
+import android.view.*
 
 typealias AnimatorCallback = (Animator) -> Unit
 

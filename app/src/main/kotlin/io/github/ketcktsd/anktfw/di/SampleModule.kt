@@ -1,9 +1,7 @@
 package io.github.ketcktsd.anktfw.di
 
-import io.github.ketcktsd.anktfw.di.container.Container
-import io.github.ketcktsd.anktfw.di.module.module
-import io.github.ketcktsd.anktfw.di.module.resolve
-import io.github.ketcktsd.anktfw.di.module.singleton
+import io.github.ketcktsd.anktfw.di.container.*
+import io.github.ketcktsd.anktfw.di.module.*
 
 
 val DISampleActivity.module by lazy {

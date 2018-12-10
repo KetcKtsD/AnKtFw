@@ -1,12 +1,11 @@
 package io.github.ketcktsd.anktfw.util
 
-import android.content.Context
-import android.view.View
-import android.view.ViewManager
-import androidx.appcompat.widget.Toolbar
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.navigation.NavigationView
-import org.jetbrains.anko.custom.customView
+import android.content.*
+import android.view.*
+import androidx.appcompat.widget.*
+import com.google.android.material.appbar.*
+import com.google.android.material.navigation.*
+import org.jetbrains.anko.custom.*
 
 private val DEFAULT_INIT: View.() -> Unit = {}
 

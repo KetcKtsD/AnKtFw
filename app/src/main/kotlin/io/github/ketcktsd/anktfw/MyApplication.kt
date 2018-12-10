@@ -1,5 +1,5 @@
 package io.github.ketcktsd.anktfw
 
-import android.app.Application
+import android.app.*
 
 class MyApplication : Application()

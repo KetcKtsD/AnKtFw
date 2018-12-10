@@ -1,11 +1,8 @@
 package io.github.ketcktsd.anktfw.di
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import io.github.ketcktsd.anktfw.di.container.getValue
-import io.github.ketcktsd.anktfw.di.module.InjectionSupport
-import io.github.ketcktsd.anktfw.di.module.Module
-import io.github.ketcktsd.anktfw.di.module.resolve
+import android.graphics.*
+import io.github.ketcktsd.anktfw.di.container.*
+import io.github.ketcktsd.anktfw.di.module.*
 import java.net.HttpURLConnection.HTTP_OK
 
 interface ImageService {

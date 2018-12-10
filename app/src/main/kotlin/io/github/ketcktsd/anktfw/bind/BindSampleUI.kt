@@ -1,17 +1,12 @@
 package io.github.ketcktsd.anktfw.bind
 
-import android.view.View
-import android.widget.EditText
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import io.github.ketcktsd.anktfw.AppbarComponent
-import io.github.ketcktsd.anktfw.SimpleAppbarComponent
-import io.github.ketcktsd.anktfw.anko.UI
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.anko.component
+import io.github.ketcktsd.anktfw.*
+import io.github.ketcktsd.anktfw.anko.*
 import org.jetbrains.anko.*
-import kotlin.properties.Delegates
+import kotlin.properties.*
 
 interface IBindSampleUI : UI<BindSampleActivity, RelativeLayout> {
     val toolbar: Toolbar

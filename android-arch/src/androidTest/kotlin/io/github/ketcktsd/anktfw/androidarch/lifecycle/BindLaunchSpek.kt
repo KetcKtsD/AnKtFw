@@ -1,20 +1,13 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import io.github.ketcktsd.anktfw.androidarch.croutine.LifecycleScope
-import io.github.ketcktsd.anktfw.androidarch.croutine.asyncResult
-import io.github.ketcktsd.anktfw.androidarch.croutine.bindLaunch
-import io.github.ketcktsd.anktfw.androidarch.croutine.defaultContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.runBlocking
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import androidx.lifecycle.*
+import io.github.ketcktsd.anktfw.androidarch.croutine.*
+import kotlinx.coroutines.*
+import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.dsl.*
+import org.junit.platform.runner.*
+import org.junit.runner.*
+import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
 class BindLaunchSpek : Spek({

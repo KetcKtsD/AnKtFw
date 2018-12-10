@@ -1,12 +1,8 @@
 package io.github.ketcktsd.anktfw.androidarch.croutine
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
-import kotlin.reflect.KClass
+import kotlinx.coroutines.*
+import kotlin.coroutines.*
+import kotlin.reflect.*
 
 typealias DeferredResult<T> = Deferred<Result<T>>
 

@@ -1,14 +1,11 @@
 package io.github.ketcktsd.anktfw.di
 
-import android.graphics.Color
-import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.graphics.*
+import android.view.*
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import io.github.ketcktsd.anktfw.SimpleAppbarComponent
-import io.github.ketcktsd.anktfw.anko.UI
-import io.github.ketcktsd.anktfw.anko.bindView
-import io.github.ketcktsd.anktfw.anko.component
+import io.github.ketcktsd.anktfw.*
+import io.github.ketcktsd.anktfw.anko.*
 import org.jetbrains.anko.*
 
 interface IDISampleUI : UI<DISampleActivity, RelativeLayout> {

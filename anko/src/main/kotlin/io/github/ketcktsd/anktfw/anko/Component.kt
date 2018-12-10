@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.anko
 
-import android.view.View
+import android.view.*
 
 /**
  * interface for defining component of ui

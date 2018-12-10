@@ -1,7 +1,7 @@
 package io.github.ketcktsd.anktfw.anko.util
 
-import android.graphics.drawable.Drawable
-import org.jetbrains.anko.AnkoContext
+import android.graphics.drawable.*
+import org.jetbrains.anko.*
 
 /**
  * get drawable by id

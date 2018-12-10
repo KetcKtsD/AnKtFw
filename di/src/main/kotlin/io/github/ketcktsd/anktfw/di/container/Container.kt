@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.di.container
 
-import kotlin.reflect.KProperty
+import kotlin.reflect.*
 
 interface Container<T : Any> {
     val value: T

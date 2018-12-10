@@ -1,6 +1,6 @@
 package io.github.ketcktsd.anktfw.animation.util
 
-import android.content.Context
+import android.content.*
 
 val Context.isTablet: Boolean
     get() = isTablet(this)

@@ -1,13 +1,10 @@
 package io.github.ketcktsd.anktfw.androidarch.croutine
 
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
+import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.dsl.*
+import org.junit.platform.runner.*
+import org.junit.runner.*
+import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
 class ResponseSpek : Spek({
