@@ -33,12 +33,6 @@ private class OnActiveRunnerImpl(
         else mTasks.addLast(handle)
     }
 
-    private fun runAllTasks() {
-        mTasks.forEach { it() }
-        mTasks.clear()
-        mIsSafe = true
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() = runAllTasks()
 
@@ -55,5 +49,11 @@ private class OnActiveRunnerImpl(
         mIsDestroy = true
         mTasks.clear()
         owner.lifecycle.removeObserver(this)
+    }
+
+    private fun runAllTasks() {
+        mTasks.forEach { it() }
+        mTasks.clear()
+        mIsSafe = true
     }
 }
