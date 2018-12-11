@@ -4,11 +4,12 @@ import androidx.lifecycle.*
 import java.util.*
 
 /**
- * A interface that run arbitrary functions when [LifecycleOwner] is Active
+ * A interface that run arbitrary function when [LifecycleOwner] is Active
  */
 interface OnActiveRunner {
+
     /**
-     * @param handle If the [handle] is called after [Lifecycle.Event.ON_PAUSE], the [handle] is called when [Lifecycle.Event.ON_RESUME] is called.
+     * @param handle If the [handle] is called after [Lifecycle.Event.ON_PAUSE], the [handle] is called on [Lifecycle.Event.ON_RESUME] is called.
      */
     fun runOnActive(handle: () -> Unit)
 }
