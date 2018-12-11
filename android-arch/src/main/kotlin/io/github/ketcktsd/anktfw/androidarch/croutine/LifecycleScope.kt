@@ -8,17 +8,19 @@ interface LifecycleScope : CoroutineScope
 
 private class LifecycleScopeImpl(
         private val lifecycleOwner: LifecycleOwner,
-        private val coroutineScope: CoroutineScope
+        coroutineScope: CoroutineScope
 ) : LifecycleScope, LifecycleObserver {
+
+    init {
+        coroutineScope.coroutineContext[Job]
+                ?.let { throw IllegalArgumentException("A Context with Job already passed") }
+
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
 
     private val mJob = SupervisorJob()
 
-    override val coroutineContext: CoroutineContext
-        get() = coroutineScope.coroutineContext + mJob
-
-    init {
-        lifecycleOwner.lifecycle.addObserver(this)
-    }
+    override val coroutineContext: CoroutineContext = (coroutineScope + mJob).coroutineContext
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {

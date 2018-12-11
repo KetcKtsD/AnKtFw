@@ -7,5 +7,5 @@ import kotlin.coroutines.*
 /**
  * Get commonPool with [coroutineContext]
  */
-inline val CoroutineScope.defaultContext: CoroutineContext
+inline val CoroutineScope.commonPoolContext: CoroutineContext
     get() = coroutineContext + ForkJoinPool.commonPool().asCoroutineDispatcher()

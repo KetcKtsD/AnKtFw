@@ -1,7 +1,6 @@
-package io.github.ketcktsd.anktfw.androidarch.lifecycle
+package io.github.ketcktsd.anktfw.androidarch.croutine
 
 import androidx.lifecycle.*
-import io.github.ketcktsd.anktfw.androidarch.croutine.*
 import kotlinx.coroutines.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
@@ -16,7 +15,7 @@ class BindLaunchSpek : Spek({
         override fun getLifecycle(): LifecycleRegistry = mRegistry
     }
 
-    it("expected to be executed without problems") {
+    it("expect to be executed without problems") {
         runBlocking {
             val owner = owner()
             val registry = owner.lifecycle
@@ -26,7 +25,7 @@ class BindLaunchSpek : Spek({
             (1..100).forEach {
                 var executed = false
                 scope.bindLaunch {
-                    val result = asyncResult(defaultContext) {
+                    val result = asyncResult(commonPoolContext) {
                         100
                     }.await()
                     result.onSuccess { executed = true }
@@ -46,7 +45,7 @@ class BindLaunchSpek : Spek({
                 val scope = LifecycleScope(owner, GlobalScope)
                 registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
                 scope.bindLaunch {
-                    asyncResult(defaultContext) {
+                    asyncResult(commonPoolContext) {
                         registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                         100
                     }.await()
@@ -54,6 +53,12 @@ class BindLaunchSpek : Spek({
                 }.join()
                 assertFalse(executed)
             }
+        }
+    }
+
+    it("Expect IllegalArgumentException to be thrown") {
+        assertFailsWith<IllegalArgumentException> {
+            LifecycleScope(owner(), GlobalScope + Job())
         }
     }
 })
