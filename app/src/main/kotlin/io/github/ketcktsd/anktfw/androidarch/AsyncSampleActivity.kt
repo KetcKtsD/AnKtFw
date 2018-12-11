@@ -15,10 +15,11 @@ import kotlin.coroutines.*
 
 class AsyncSampleActivity : AppCompatActivity(),
         LifecycleScopeSupport,
-        IOnActiveRunner by OnActiveRunner(),
+        OnActiveRunnerSupport,
         IAsyncSampleUI by AsyncSampleUI() {
 
     override val scope: LifecycleScope = LifecycleScope(this)
+    override val onActiveRunner: OnActiveRunner = OnActiveRunner(this)
 
     //For example, define such a frequently used asynchronous CoroutineContext in an external file.
     //To be an external file
@@ -33,8 +34,6 @@ class AsyncSampleActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(this)
-        //setLifecycleOwner
-        setOwner(this)
         setSupportActionBar(toolbar)
 
         button.setOnClickListener(::showSnackbar)

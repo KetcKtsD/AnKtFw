@@ -11,8 +11,10 @@ import org.jetbrains.anko.*
 
 class AnimationSampleActivity : AppCompatActivity(),
         LifecycleScopeSupport,
-        IOnActiveRunner by OnActiveRunner(),
+        OnActiveRunnerSupport,
         IAnimationSampleUI by AnimationSampleUI() {
+
+    override val onActiveRunner: OnActiveRunner = OnActiveRunner(this)
 
     companion object {
         private const val ANIMATION_DELAY_MILLS = 1000L
@@ -23,7 +25,6 @@ class AnimationSampleActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setOwner(this)
         setContentView(this)
         setSupportActionBar(toolbar)
         fadeView.fadeOut()
