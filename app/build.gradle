@@ -72,3 +72,12 @@ dependencies {
 repositories {
     jcenter()
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    sourceCompatibility = java_compatibility
+    targetCompatibility = java_compatibility
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
