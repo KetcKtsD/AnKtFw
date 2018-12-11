@@ -4,12 +4,12 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.*
 
-interface LifecycleScope : LifecycleObserver, CoroutineScope
+interface LifecycleScope : CoroutineScope
 
 private class LifecycleScopeImpl(
         private val lifecycleOwner: LifecycleOwner,
         private val coroutineScope: CoroutineScope
-) : LifecycleScope {
+) : LifecycleScope, LifecycleObserver {
 
     private val mJob = SupervisorJob()
 
@@ -33,7 +33,8 @@ fun LifecycleScope(
         coroutineScope: CoroutineScope = AndroidScope
 ): LifecycleScope = LifecycleScopeImpl(lifecycleOwner, coroutineScope)
 
-fun LifecycleScope.bindLaunch(
+@Suppress("NOTHING_TO_INLINE")
+inline fun LifecycleScope.bindLaunch(
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
+        noinline block: suspend CoroutineScope.() -> Unit
 ) = launch(coroutineContext, start, block)
