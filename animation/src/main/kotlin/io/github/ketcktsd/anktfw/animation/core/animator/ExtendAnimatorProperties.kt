@@ -2,7 +2,7 @@ package io.github.ketcktsd.anktfw.animation.core.animator
 
 import android.view.*
 
-var ViewPropertyAnimator.fromAlpha: Float
+inline var ViewPropertyAnimator.fromAlpha: Float
     set(value) {
         alphaBy(value)
     }
@@ -10,7 +10,7 @@ var ViewPropertyAnimator.fromAlpha: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toAlpha: Float
+inline var ViewPropertyAnimator.toAlpha: Float
     set(value) {
         alpha(value)
     }
@@ -19,7 +19,7 @@ var ViewPropertyAnimator.toAlpha: Float
     }
 
 
-var ViewPropertyAnimator.fromXScale: Float
+inline var ViewPropertyAnimator.fromXScale: Float
     set(value) {
         scaleXBy(value)
     }
@@ -27,7 +27,7 @@ var ViewPropertyAnimator.fromXScale: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toXScale: Float
+inline var ViewPropertyAnimator.toXScale: Float
     set(value) {
         scaleX(value)
     }
@@ -35,7 +35,7 @@ var ViewPropertyAnimator.toXScale: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.fromYScale: Float
+inline var ViewPropertyAnimator.fromYScale: Float
     set(value) {
         scaleYBy(value)
     }
@@ -43,7 +43,7 @@ var ViewPropertyAnimator.fromYScale: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toYScale: Float
+inline var ViewPropertyAnimator.toYScale: Float
     set(value) {
         scaleY(value)
     }
@@ -52,7 +52,7 @@ var ViewPropertyAnimator.toYScale: Float
     }
 
 
-var ViewPropertyAnimator.fromDegrees: Float
+inline var ViewPropertyAnimator.fromDegrees: Float
     set(value) {
         rotationBy(value)
     }
@@ -60,7 +60,7 @@ var ViewPropertyAnimator.fromDegrees: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toDegrees: Float
+inline var ViewPropertyAnimator.toDegrees: Float
     set(value) {
         rotation(value)
     }
@@ -68,7 +68,7 @@ var ViewPropertyAnimator.toDegrees: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.fromDegreesX: Float
+inline var ViewPropertyAnimator.fromDegreesX: Float
     set(value) {
         rotationXBy(value)
     }
@@ -76,7 +76,7 @@ var ViewPropertyAnimator.fromDegreesX: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toDegreesX: Float
+inline var ViewPropertyAnimator.toDegreesX: Float
     set(value) {
         rotationX(value)
     }
@@ -85,7 +85,7 @@ var ViewPropertyAnimator.toDegreesX: Float
     }
 
 
-var ViewPropertyAnimator.fromDegreesY: Float
+inline var ViewPropertyAnimator.fromDegreesY: Float
     set(value) {
         rotationYBy(value)
     }
@@ -93,7 +93,7 @@ var ViewPropertyAnimator.fromDegreesY: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toDegreesY: Float
+inline var ViewPropertyAnimator.toDegreesY: Float
     set(value) {
         rotationY(value)
     }
@@ -101,7 +101,7 @@ var ViewPropertyAnimator.toDegreesY: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.fromXDelta: Float
+inline var ViewPropertyAnimator.fromXDelta: Float
     set(value) {
         translationXBy(value)
     }
@@ -110,7 +110,7 @@ var ViewPropertyAnimator.fromXDelta: Float
     }
 
 
-var ViewPropertyAnimator.toXDelta: Float
+inline var ViewPropertyAnimator.toXDelta: Float
     set(value) {
         translationX(value)
     }
@@ -118,7 +118,7 @@ var ViewPropertyAnimator.toXDelta: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.fromYDelta: Float
+inline var ViewPropertyAnimator.fromYDelta: Float
     set(value) {
         translationYBy(value)
     }
@@ -126,7 +126,7 @@ var ViewPropertyAnimator.fromYDelta: Float
         throw UnsupportedOperationException()
     }
 
-var ViewPropertyAnimator.toYDelta: Float
+inline var ViewPropertyAnimator.toYDelta: Float
     set(value) {
         translationY(value)
     }

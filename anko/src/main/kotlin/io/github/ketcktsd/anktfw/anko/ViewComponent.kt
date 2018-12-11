@@ -19,16 +19,14 @@ interface ViewComponent<R : View> : Component<R> {
 }
 
 
-private val DEFAULT_INIT: View.() -> Unit = {}
-
 /**
  * add [ViewComponent] to [ViewManager]
  *
  * @param component [ViewComponent]
  * @return created View
  */
-fun <R : View> ViewManager.component(component: ViewComponent<R>,
-                                     init: R.() -> Unit = DEFAULT_INIT): R {
+inline fun <R : View> ViewManager.component(component: ViewComponent<R>,
+                                            crossinline init: R.() -> Unit = {}): R {
     val initialize: R.() -> Unit = {
         init()
         if (id == View.NO_ID) id = View.generateViewId()
@@ -44,17 +42,21 @@ fun <R : View> ViewManager.component(component: ViewComponent<R>,
 /**
  * @see [ViewManager.component]
  */
-fun <R : View> ViewManager.addComponent(component: ViewComponent<R>,
-                                        init: R.() -> Unit = DEFAULT_INIT): R = component(component, init)
+inline fun <R : View> ViewManager.addComponent(
+        component: ViewComponent<R>,
+        crossinline init: R.() -> Unit = {}
+): R = component(component, init)
 
 /**
  * for making simple UI component
  * @param  create create view
  * @return created Component
  */
-fun <R : View> component(create: Context.() -> R): ViewComponent<R> = object : ViewComponent<R> {
+inline fun <R : View> component(
+        crossinline create: Context.() -> R
+): ViewComponent<R> = object : ViewComponent<R> {
     override var root: R by Delegates.notNull()
         private set
 
-    override fun createView(ctx: Context) = ctx.create().also { root = it }
+    override fun createView(ctx: Context) = create(ctx).also { root = it }
 }

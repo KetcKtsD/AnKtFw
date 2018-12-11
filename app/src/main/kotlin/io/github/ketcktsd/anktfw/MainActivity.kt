@@ -6,7 +6,6 @@ import android.view.*
 import androidx.appcompat.app.*
 import io.github.ketcktsd.anktfw.androidarch.*
 import io.github.ketcktsd.anktfw.animation.*
-import io.github.ketcktsd.anktfw.bind.*
 import io.github.ketcktsd.anktfw.di.*
 import org.jetbrains.anko.*
 
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity(),
             R.id.start_animation_sample -> startActivity<AnimationSampleActivity>()
             R.id.start_arch_sample -> startActivity<AsyncSampleActivity>()
             R.id.start_di_sample -> startActivity<DISampleActivity>()
-            R.id.bind_sample -> startActivity<BindSampleActivity>()
         }
         return false
     }

@@ -69,20 +69,20 @@ internal class DependencyProviderInternal : DependencyProvider {
     private val map: MutableMap<String, ContainerFactory<*>> = lruMap()
     private val lock = ReentrantLock()
 
-    override fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T) = clazz.run {
-        put { SingletonContainerFactory(init, InjectionMode.LAZY) }
+    override fun <T : Any> lazySingleton(clazz: KClass<T>, init: () -> T) = put(clazz) {
+        SingletonContainerFactory(init, InjectionMode.LAZY)
     }
 
-    override fun <T : Any> singleton(clazz: KClass<T>, init: () -> T) = clazz.run {
-        put { SingletonContainerFactory(init, InjectionMode.DILIGENT) }
+    override fun <T : Any> singleton(clazz: KClass<T>, init: () -> T) = put(clazz) {
+        SingletonContainerFactory(init, InjectionMode.DILIGENT)
     }
 
-    override fun <T : Any> lazyEach(clazz: KClass<T>, init: () -> T) = clazz.run {
-        put { EachContainerFactory(init, InjectionMode.LAZY) }
+    override fun <T : Any> lazyEach(clazz: KClass<T>, init: () -> T) = put(clazz) {
+        EachContainerFactory(init, InjectionMode.LAZY)
     }
 
-    override fun <T : Any> each(clazz: KClass<T>, init: () -> T) = clazz.run {
-        put { EachContainerFactory(init, InjectionMode.DILIGENT) }
+    override fun <T : Any> each(clazz: KClass<T>, init: () -> T) = put(clazz) {
+        EachContainerFactory(init, InjectionMode.DILIGENT)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -92,10 +92,10 @@ internal class DependencyProviderInternal : DependencyProvider {
         return (factory as ContainerFactory<T>).get()
     }
 
-    private inline fun <T : Any> KClass<T>.put(factory: () -> ContainerFactory<T>) = lock.withLock {
-        val name = this.jvmName
+    private inline fun <T : Any> put(clazz: KClass<T>, factory: () -> ContainerFactory<T>) = lock.withLock {
+        val name = clazz.jvmName
         if (map.containsKey(name))
-            throw throw IllegalArgumentException("Added dependent classes [${this.simpleName}]")
+            throw throw IllegalArgumentException("Added dependent classes [${clazz.simpleName}]")
         map[name] = factory()
     }
 }
