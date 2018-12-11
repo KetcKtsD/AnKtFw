@@ -1,10 +1,13 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
 import androidx.lifecycle.*
+import io.github.ketcktsd.anktfw.androidarch.croutine.*
+import kotlinx.coroutines.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
 import org.junit.platform.runner.*
 import org.junit.runner.*
+import java.util.concurrent.*
 import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)
@@ -16,41 +19,61 @@ class ActiveRunnerSpek : Spek({
 
     it("execute when active") {
         val lifecycle = owner.lifecycle
-        lifecycle.markState(Lifecycle.State.CREATED)
-        val runner = OnActiveRunner()
 
-        runner.setOwner(owner)
-        lifecycle.markState(Lifecycle.State.STARTED)
+        val runner = OnActiveRunner(owner)
         var count = 0
-        fun run() = runner.runOnActive { count++ }
+        var callCount = 0
+        fun run() {
+            println("call runOnActive: callCount=${callCount++}, executedCount=$count")
+            runner.runOnActive {
+                println("execute: ${++count}")
+            }
+        }
 
+        fun handleLifecycleEvent(event: Lifecycle.Event) = lifecycle.handleLifecycleEvent(event.also(::println))
+
+        //not safe
         run()
-        assertEquals(0, count)//not run
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        assertEquals(1, count)//run
-
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)//stop
         run()
-        assertEquals(1, count)//not run
-        for (i in 1..3) run()
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)//restart
-        assertEquals(5, count)//run all
+        assertEquals(0, count)
+
+        //on safe
+        handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        assertEquals(2, count)
+        //safe
         run()
-        assertEquals(6, count)//run
-
-        lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        assertEquals(3, count)
         run()
-        assertEquals(6, count)//not run
-    }
+        assertEquals(4, count)
 
-    it("expect thrown IllegalStateException by runOnActive") {
-        val runner = OnActiveRunner()
-        assertFailsWith<IllegalStateException> { runner.runOnActive { print("not call") } }
-    }
+        //Follow the Lifecycle
+        handleLifecycleEvent(Lifecycle.Event.ON_START)
+        handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
-    it("expect thrown IllegalStateException by setOwner") {
-        val runner = OnActiveRunner()
-        runner.setOwner(owner)
-        assertFailsWith<IllegalStateException> { runner.setOwner(owner) }
+        //on not safe
+        handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+        //not safe
+        run()
+        run()
+        assertEquals(4, count)
+
+        //on safe
+        handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        assertEquals(6, count)
+        //safe
+        run()
+        assertEquals(7, count)
+        run()
+        assertEquals(8, count)
+
+        //on not safe (destroy)
+        handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        run()
+        run()
+        assertEquals(8, count)
+
+        //no reaction
+        handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        assertEquals(8, count)
     }
 })
