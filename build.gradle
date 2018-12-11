@@ -34,7 +34,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha04'
+        classpath 'com.android.tools.build:gradle:3.4.0-alpha07'
         //noinspection DifferentKotlinGradleVersion
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -53,5 +53,5 @@ task clean(type: Delete) {
 }
 
 wrapper {
-    gradleVersion = '5.0-rc-3'
+    gradleVersion = '5.0'
 }
