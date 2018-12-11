@@ -1,13 +1,10 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
 import androidx.lifecycle.*
-import io.github.ketcktsd.anktfw.androidarch.croutine.*
-import kotlinx.coroutines.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.api.dsl.*
 import org.junit.platform.runner.*
 import org.junit.runner.*
-import java.util.concurrent.*
 import kotlin.test.*
 
 @RunWith(JUnitPlatform::class)

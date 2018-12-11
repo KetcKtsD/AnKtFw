@@ -1,9 +1,6 @@
 package io.github.ketcktsd.anktfw.androidarch.lifecycle
 
 import androidx.lifecycle.*
-import io.github.ketcktsd.anktfw.androidarch.croutine.*
-import kotlinx.coroutines.*
-import java.lang.ref.*
 import java.util.*
 
 /**
