@@ -33,14 +33,14 @@ private class OnActiveRunnerImpl(
         else mTasks.addLast(handle)
     }
 
-    private fun allRun() {
+    private fun runAllTasks() {
         mTasks.forEach { it() }
         mTasks.clear()
         mIsSafe = true
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() = allRun()
+    fun onCreate() = runAllTasks()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
@@ -48,7 +48,7 @@ private class OnActiveRunnerImpl(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() = allRun()
+    fun onResume() = runAllTasks()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
