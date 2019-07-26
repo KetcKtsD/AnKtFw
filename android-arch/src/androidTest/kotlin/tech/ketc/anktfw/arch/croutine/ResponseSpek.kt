@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.androidarch.croutine
+package tech.ketc.anktfw.arch.croutine
 
 import org.junit.platform.runner.*
 import org.junit.runner.*

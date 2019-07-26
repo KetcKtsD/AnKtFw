@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.androidarch.lifecycle
+package tech.ketc.anktfw.arch.lifecycle
 
 import androidx.lifecycle.*
 import java.util.*

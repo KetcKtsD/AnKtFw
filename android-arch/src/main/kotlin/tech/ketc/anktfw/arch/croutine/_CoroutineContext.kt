@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.androidarch.croutine
+package tech.ketc.anktfw.arch.croutine
 
 import kotlinx.coroutines.*
 import java.util.concurrent.*
