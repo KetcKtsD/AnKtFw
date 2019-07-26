@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.anko
+package tech.ketc.anktfw.anko
 
 import android.content.*
 import android.view.*
