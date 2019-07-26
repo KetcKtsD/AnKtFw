@@ -6,5 +6,5 @@ subprojects {
     val androidBuildToolVersion by extra { "29.0.1" }
 
     val libraryVersionCode by extra { 1 }
-    val libraryVersionName by extra { "1.0.0" }
+    val libraryVersionName by extra { "1.1.0" }
 }

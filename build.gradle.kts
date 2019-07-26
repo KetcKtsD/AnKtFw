@@ -24,7 +24,6 @@ subprojects {
     }
 
     group = "tech.ketc.anktfw"
-    version = "0.1"
 
     tasks {
         withType<KotlinCompile> {
