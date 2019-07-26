@@ -29,15 +29,13 @@ internal inline fun <R> runOrThrowCatching(
  * @param expected expected exceptions, default value is emptyArray
  * @return DeferredResult
  */
-fun <R> CoroutineScope.asyncResult(
+fun <R> CoroutineScope.resultAsync(
         context: CoroutineContext = coroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = emptyArray(),
         block: suspend CoroutineScope.() -> R
-): DeferredResult<R> {
-    suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
-
-    return async(context, start, CoroutineScope::runCatching)
+): DeferredResult<R> = async(context, start) {
+    runOrThrowCatching(*expected) { block() }
 }
 
 /**
@@ -52,7 +50,7 @@ fun <R> CoroutineScope.asyncResult(
  * @return DeferredResult
  * @throws IllegalArgumentException if give a negative number to [maxTimes]
  */
-fun <R> CoroutineScope.asyncResult(
+fun <R> CoroutineScope.resultAsync(
         context: CoroutineContext = coroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = emptyArray(),
@@ -63,16 +61,14 @@ fun <R> CoroutineScope.asyncResult(
     if (maxTimes < 0)
         throw IllegalArgumentException("give a negative number to maxTimes")
 
-    suspend fun CoroutineScope.runCatching() = runOrThrowCatching(*expected) { block() }
-
-    suspend fun CoroutineScope.retryCatching(): Result<R> {
+    suspend fun retryCatching(): Result<R> {
         var retryCount = 0
-        var result = runCatching()
+        var result = runOrThrowCatching(*expected) { block() }
         while (result.isFailure && retryCount < maxTimes) {
             retryCount++
             val exception = requireNotNull(result.exceptionOrNull())
             if (predicate(exception)) {
-                result = runCatching()
+                result = runOrThrowCatching(*expected) { block() }
             } else {
                 return result
             }
@@ -80,5 +76,5 @@ fun <R> CoroutineScope.asyncResult(
         return result
     }
 
-    return async(context, start, CoroutineScope::retryCatching)
+    return async(context, start) { retryCatching() }
 }

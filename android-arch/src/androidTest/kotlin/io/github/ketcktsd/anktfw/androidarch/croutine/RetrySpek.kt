@@ -14,7 +14,7 @@ class RetrySpek : Spek({
             runBlocking {
                 launch {
                     var retryCount = 0
-                    val result = asyncResult(maxTimes = 1) {
+                    val result = resultAsync(maxTimes = 1) {
                         retryCount++
                         throw Exception(retryCount.toString())
                     }.await()
@@ -29,7 +29,7 @@ class RetrySpek : Spek({
                 launch {
                     var retryCount = 0
                     val predicate: (Throwable) -> Boolean = { it is IllegalArgumentException }
-                    val result = asyncResult(maxTimes = 5, predicate = predicate) {
+                    val result = resultAsync(maxTimes = 5, predicate = predicate) {
                         if (retryCount == 1) {
                             throw IllegalStateException()
                         }
@@ -47,9 +47,9 @@ class RetrySpek : Spek({
                 launch {
                     assertFailsWith(IllegalArgumentException::class) {
                         @Suppress("DeferredResultUnused")
-                        asyncResult(maxTimes = -1) { }
+                        resultAsync(maxTimes = -1) { }
                     }
-                    val result = asyncResult(maxTimes = 0) { 1 + 1 }.await()
+                    val result = resultAsync(maxTimes = 0) { 1 + 1 }.await()
                     assertEquals(2, result.getOrThrow())
                 }
             }

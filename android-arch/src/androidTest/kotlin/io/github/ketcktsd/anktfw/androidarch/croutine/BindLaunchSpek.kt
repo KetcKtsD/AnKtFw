@@ -25,7 +25,7 @@ class BindLaunchSpek : Spek({
                 (1..100).forEach {
                     var executed = false
                     scope.bindLaunch {
-                        val result = asyncResult(commonPoolContext) {
+                        val result = resultAsync(commonPoolContext) {
                             100
                         }.await()
                         result.onSuccess { executed = true }
@@ -45,7 +45,7 @@ class BindLaunchSpek : Spek({
                     val scope = LifecycleScope(owner, GlobalScope)
                     registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
                     scope.bindLaunch {
-                        asyncResult(commonPoolContext) {
+                        resultAsync(commonPoolContext) {
                             registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
                             100
                         }.await()

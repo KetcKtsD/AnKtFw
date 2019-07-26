@@ -6,7 +6,7 @@ interface LifecycleScopeSupport {
     val scope: LifecycleScope
 }
 
-@Suppress("NOTHING_TO_INLINE")
+@Suppress("NOTHING_TO_INLINE", "unused")
 inline fun LifecycleScopeSupport.bindLaunch(
         start: CoroutineStart = CoroutineStart.DEFAULT,
         noinline block: suspend CoroutineScope.() -> Unit
