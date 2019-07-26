@@ -4,6 +4,7 @@ buildscript {
     val kotlinVersion = "1.3.41"
     apply(from = "android_sdk_settings.gradle.kts")
     apply(from = "notation_functions.gradle.kts")
+    apply(from = "task_utils.gradle.kts")
 
     repositories {
         jcenter()
@@ -28,6 +29,7 @@ subprojects {
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
+                jvmTarget = "1.8"
                 freeCompilerArgs = listOf(
                         "-Xuse-experimental=kotlin.Experimental",
                         "-XXLanguage:+InlineClasses",

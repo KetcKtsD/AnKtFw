@@ -4,14 +4,16 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("kotlin-kapt")
+    maven
 }
+
+val libraryVersionName: String by extra
 
 android {
     val minAndroidSdkVersion: Int by extra
     val targetAndroidSdkVersion: Int by extra
     val androidBuildToolVersion: String by extra
     val libraryVersionCode: Int by extra
-    val libraryVersionName: String by extra
 
     compileSdkVersion(targetAndroidSdkVersion)
 
@@ -62,4 +64,10 @@ dependencies {
     testImplementation(spek2("dsl-jvm"))
     testImplementation(spek2("runner-junit5"))
     testImplementation(junit_test_runner_notation)
+}
+
+val uploadArchives: TaskContainerScope.(String) -> TaskProvider<Upload> by extra
+
+tasks {
+    uploadArchives("arch")
 }
