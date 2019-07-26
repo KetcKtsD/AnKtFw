@@ -7,12 +7,11 @@ plugins {
     maven
 }
 
-val libraryVersionName: String by extra
-
 android {
     val minAndroidSdkVersion: Int by extra
     val targetAndroidSdkVersion: Int by extra
     val androidBuildToolVersion: String by extra
+    val libraryVersionName: String by extra
     val libraryVersionCode: Int by extra
 
     compileSdkVersion(targetAndroidSdkVersion)
