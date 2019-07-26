@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.animation.core.animator
+package tech.ketc.anktfw.animation.core.animator
 
 import android.animation.*
 import android.view.*

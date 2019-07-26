@@ -1,2 +1,2 @@
 //include ':app', ':anko', ':android-arch', ':di', ':animation'
-include(":arch","anko")
+include(":arch","anko","animation")

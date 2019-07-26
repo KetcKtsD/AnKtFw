@@ -1,4 +1,4 @@
-package io.github.ketcktsd.anktfw.animation.util
+package tech.ketc.anktfw.animation.util
 
 import android.content.*
 
