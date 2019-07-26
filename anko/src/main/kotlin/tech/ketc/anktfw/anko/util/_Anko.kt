@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tech.ketc.anktfw.anko.util
 
 import android.graphics.drawable.*

@@ -10,6 +10,7 @@ import org.jetbrains.anko.*
  * @param A activity
  * @param R root view
  */
+@Suppress("unused")
 interface UI<A : Activity, R : View> : Component<R>, AnkoComponent<A> {
     override fun createView(ui: AnkoContext<A>): R
 }
