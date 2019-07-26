@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package tech.ketc.anktfw.animation.core.anim
 
 import android.view.animation.*
