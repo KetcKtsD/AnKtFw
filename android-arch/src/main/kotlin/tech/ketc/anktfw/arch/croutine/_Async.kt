@@ -23,14 +23,14 @@ internal inline fun <R> runOrThrowCatching(
  * Creates new coroutine and returns its future result as an implementation of [DeferredResult].
  *
  * @param R result object class
- * @param context context of the coroutine. The default value is [coroutineContext].
+ * @param context context of the coroutine. The default value is [EmptyCoroutineContext].
  * @param start coroutine start option. The default value is [CoroutineStart.DEFAULT].
  * @param block the coroutine code.
  * @param expected expected exceptions, default value is emptyArray
- * @return DeferredResult
+ * @return [DeferredResult]
  */
 fun <R> CoroutineScope.resultAsync(
-        context: CoroutineContext = coroutineContext,
+        context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
         vararg expected: KClass<out Throwable> = emptyArray(),
         block: suspend CoroutineScope.() -> R
