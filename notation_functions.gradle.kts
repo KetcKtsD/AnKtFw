@@ -1,12 +1,12 @@
 subprojects {
     //runtime
     val kotlinVersion by extra { "1.3.41" }
-    val ktxCoroutinesVersion = "1.3.0-RC"
+    val ktxCoroutinesVersion = "1.3.0-RC2"
     val androidxLifecycleVersion = "2.0.0"
     val androidxInterpolatorVersion = "1.0.0"
     val ankoVersion = "0.10.8"
     //test
-    val spek2Version = "2.0.5"
+    val spek2Version = "2.0.6"
     val junitTestRunnerVersion = "1.0.0"
     //runtime
     extensions.notation("_kotlin") { "org.jetbrains.kotlin:kotlin-$it:$kotlinVersion" }
