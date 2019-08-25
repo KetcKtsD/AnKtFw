@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.*
 
 buildscript {
-    val kotlinVersion = "1.3.41"
+    val kotlinVersion = "1.3.50"
     apply(from = "android_sdk_settings.gradle.kts")
     apply(from = "notation_functions.gradle.kts")
     apply(from = "task_utils.gradle.kts")
@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:3.6.0-alpha06")
+        classpath("com.android.tools.build:gradle:3.6.0-alpha07")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
