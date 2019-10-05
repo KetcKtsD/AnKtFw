@@ -5,6 +5,6 @@ subprojects {
     val targetAndroidSdkVersion by extra { 29 }
     val androidBuildToolVersion by extra { "29.0.2" }
 
-    val libraryVersionCode by extra { 2 }
-    val libraryVersionName by extra { "1.1.1" }
+    val libraryVersionCode by extra { 4 }
+    val libraryVersionName by extra { "1.1.3" }
 }
