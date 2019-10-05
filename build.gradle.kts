@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:3.6.0-alpha07")
+        classpath("com.android.tools.build:gradle:3.6.0-alpha12")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
@@ -42,5 +42,5 @@ subprojects {
 }
 
 tasks {
-    wrapper { gradleVersion = "5.5.1" }
+    wrapper { gradleVersion = "5.6.2" }
 }
