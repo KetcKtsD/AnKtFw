@@ -6,7 +6,7 @@ subprojects {
     val androidxInterpolatorVersion = "1.0.0"
     val ankoVersion = "0.10.8"
     //test
-    val spek2Version = "2.0.7"
+    val spek2Version = "2.0.8"
     val junitTestRunnerVersion = "1.0.0"
     //runtime
     extensions.notation("_kotlin") { "org.jetbrains.kotlin:kotlin-$it:$kotlinVersion" }
